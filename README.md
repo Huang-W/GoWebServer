@@ -14,6 +14,5 @@ The Final Frontier
 
 ## Project Description
 
-Game Rules:
-> https://senseis.xmp.net/?BasicRulesOfGo 
+[Game Rules](https://senseis.xmp.net/?BasicRulesOfGo) 
 
