@@ -18,7 +18,7 @@ import java.awt.event.MouseEvent;
 public class AppView implements ActionListener {
 	
 	public static final Dimension NORTH_DIM = new Dimension( 800, 200);
-	public static final Dimension CENTER_DIM = new Dimension( 600, 600);
+	public static final Dimension CENTER_DIM = new Dimension( 700, 700);
 	public static final Dimension EAST_DIM = new Dimension( 200, 600);
 	
 	private JFrame appFrame;
