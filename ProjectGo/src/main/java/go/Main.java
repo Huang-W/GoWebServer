@@ -1,6 +1,6 @@
 package go;
 
-import go.view.ViewController;
+import go.view.AppView;
 
 /**
  * Builds UI and starts the game.
@@ -19,7 +19,7 @@ public class Main {
 
 	private static void init() {
 		
-		ViewController goApp = new ViewController();
+		AppView goApp = new AppView();
 		goApp.startup();
 		
 	}

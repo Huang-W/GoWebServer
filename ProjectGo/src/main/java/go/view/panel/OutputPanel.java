@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-
 @SuppressWarnings("serial")
 public class OutputPanel extends JScrollPane implements ActionListener {
 	
@@ -16,14 +15,15 @@ public class OutputPanel extends JScrollPane implements ActionListener {
 	
 	public OutputPanel()
 	{
-		textArea = new JTextArea(20, 20);
+		this.textArea = new JTextArea(20, 20);
 		this.setViewportView(textArea);
 		textArea.setEditable(false);
+		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				textArea.append("MouseClick Event X: " + ((MouseEvent) e).getX() + " Y: " +
-						((MouseEvent) e).getY() + " in " + getClass().toString() + "\n");
+				textArea.append("MouseClick Event at X: " + ((MouseEvent) e).getX() + " Y: " +
+						((MouseEvent) e).getY() + " from " + e.getSource().getClass().toString() + "\n");
 			}
 		});
 	}
@@ -33,4 +33,5 @@ public class OutputPanel extends JScrollPane implements ActionListener {
 		textArea.append("ActionEvent " + ((ActionEvent) e).getActionCommand() +
 				" in " + getClass().toString() + "\n");
 	}
+	
 }

@@ -1,9 +1,8 @@
 package go.view.screen;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
-import go.view.ViewController;
+import go.view.AppView;
 import go.view.panel.BoardPanel;
 import go.view.panel.CommandPanel;
 import go.view.panel.OutputPanel;
@@ -31,7 +30,9 @@ public class GameScreen extends JPanel implements ActionListener {
 		commandPanel = new CommandPanel(this);
 		
 		JPanel eastPanel = new JPanel();
-		eastPanel.setPreferredSize(ViewController.EAST_DIM);
+		//eastPanel.setPreferredSize(AppView.EAST_DIM);
+		// temporarily make eastPanel larger for debug purposes
+		eastPanel.setPreferredSize(AppView.CENTER_DIM);
 		eastPanel.setLayout(new BorderLayout());
 		eastPanel.add(commandPanel, BorderLayout.NORTH);
 		eastPanel.add(outputPanel, BorderLayout.SOUTH);
@@ -41,15 +42,13 @@ public class GameScreen extends JPanel implements ActionListener {
 		this.add(boardPanel, BorderLayout.CENTER);
 		this.add(eastPanel, BorderLayout.EAST);
 		//this.add(statusPanel, BorderLayout.NORTH);
-		
-		boardPanel.addMouseListener(new MouseAdapter() {
+
+		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				MouseEvent converted = SwingUtilities.convertMouseEvent(boardPanel, e, outputPanel);
-				outputPanel.dispatchEvent(converted);
+				outputPanel.dispatchEvent(e);
 			}
 		});
-
 	}
 
 	@Override

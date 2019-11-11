@@ -1,8 +1,6 @@
 package go.view;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.WindowConstants;
 
 import go.view.screen.GameScreen;
@@ -14,9 +12,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class ViewController implements ActionListener {
+public class AppView implements ActionListener {
 	
 	public static final Dimension NORTH_DIM = new Dimension( 800, 200);
 	public static final Dimension CENTER_DIM = new Dimension( 600, 600);
@@ -27,9 +26,7 @@ public class ViewController implements ActionListener {
 	private Container gameScreen;
 	private Container currentScreen;
 	
-	private JMenuBar menuBar;
-	
-	public ViewController() { }
+	public AppView() { }
 	
 	public void startup()
 	{   
@@ -38,27 +35,26 @@ public class ViewController implements ActionListener {
 		gameScreen = new GameScreen();
 		currentScreen = welcomeScreen;
 		
-		//Create the menu bar.
-		menuBar = new JMenuBar();
-
-		//Build the first menu.
-		JMenu menu = new JMenu("A Menu");
-		menu.setMnemonic(KeyEvent.VK_A);
-		menu.getAccessibleContext().setAccessibleDescription(
-		        "The only menu in this program that has menu items");
-		menuBar.add(menu);
-		
 		appFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		appFrame.setBackground(Color.GRAY);
 		appFrame.setLayout(new BorderLayout());
 		
         appFrame.setContentPane(currentScreen);
-        appFrame.setJMenuBar(menuBar);
+        
         appFrame.setResizable(false);
         appFrame.setLocationByPlatform(true);
-        
         appFrame.pack();
         appFrame.setVisible(true);
+        appFrame.addMouseListener(new MouseAdapter() {
+        	
+        	@Override
+			public void mousePressed(MouseEvent e) {
+        		//make sure click is within boardPanel
+				currentScreen.dispatchEvent(e);
+			}
+        	
+        });
+       
 	}
 
 	@Override

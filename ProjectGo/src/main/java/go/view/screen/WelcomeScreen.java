@@ -2,6 +2,7 @@ package go.view.screen;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -59,11 +60,12 @@ public class WelcomeScreen extends JLabel {
 		}
 		
 		// Fill in welcomeScreen panels
-		addComponent(configNewGame, GridBagConstraints.LINE_START);
-		addComponent(startNewGame, GridBagConstraints.LAST_LINE_START);
-		addComponent(editSgf, GridBagConstraints.CENTER);
-		addComponent(createSgf, GridBagConstraints.PAGE_END);
-		addComponent(reviewOldGame, GridBagConstraints.LAST_LINE_END);
+		addComponent(startNewGame, GridBagConstraints.LINE_START);
+		addComponent(Box.createRigidArea(buttonDim), GridBagConstraints.CENTER);
+		addComponent(configNewGame, GridBagConstraints.LINE_END);
+		//addComponent(editSgf, GridBagConstraints.CENTER);
+		//addComponent(createSgf, GridBagConstraints.PAGE_END);
+		//addComponent(reviewOldGame, GridBagConstraints.LAST_LINE_END);
 		
         // Filler bottom component that will push the rest to the top
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -78,7 +80,7 @@ public class WelcomeScreen extends JLabel {
         
 	}
 	
-	private void addComponent(JComponent component, int gridBagConstraint)
+	private void addComponent(Component component, int gridBagConstraint)
 	{
 		switch(gridBagConstraint)
 		{
