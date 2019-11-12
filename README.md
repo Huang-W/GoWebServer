@@ -16,3 +16,6 @@ The Final Frontier
 
 * [Game Rules](https://senseis.xmp.net/?BasicRulesOfGo) 
 
+
+## User Story Advertisement
+
