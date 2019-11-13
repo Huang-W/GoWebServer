@@ -21,7 +21,10 @@ public class GoGameBoardImpl implements GoGameBoard, GoMoveObserver {
         this.size = size;
         board = IntStream.range(0, size)
                 .boxed()
-                .map(i -> new ArrayList<StoneColor>(i))
+                .map(i -> IntStream.range(0, size)
+                        .boxed()
+                        .map(j -> (StoneColor) null)
+                        .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
 

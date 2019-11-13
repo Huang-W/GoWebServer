@@ -12,9 +12,10 @@ public interface GoMoveController {
     /**
      * Make a move for the next player.
      * Notify observers of the results of the move.
-     * @param point the location the move was placed
+     * @param x the x location on the go board of the point the stone was added to
+     * @param y the y location on the go board of the point the stone was added to
      */
-    void makeNextPlayersMove(GoPoint point);
+    void makeNextPlayersMove(int x, int y);
 
     /**
      * Pass for the next player.

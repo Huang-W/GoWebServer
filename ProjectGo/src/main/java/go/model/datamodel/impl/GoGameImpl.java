@@ -30,17 +30,20 @@ public class GoGameImpl implements GoGameSubject, GoGame {
 
 
     public GoGameImpl() {
-        GoGameBoardImpl board = new GoGameBoardImpl(BOARD_SIZE);
-        this.board = board;
-        addMoveObserver(board);
+        // @todo determine which strategy we'll actually use - we needn't implement both.
+        this(new GoCaptureImpl(), new ChineseScoringStrategy());
+    }
 
+    public GoGameImpl(GoCapture capture, GoScoringStrategy strategy) {
         nextPlayer = StoneColor.BLACK;
         lastMovePassed = false;
         moveObservers = new LinkedList<>();
         gameObservers = new LinkedList<>();
-        capture = new GoCaptureImpl();
-        // @todo determine which strategy we'll actually use - we needn't implement both.
-        scoringStrategy = new ChineseScoringStrategy();
+        GoGameBoardImpl board = new GoGameBoardImpl(BOARD_SIZE);
+        this.board = board;
+        addMoveObserver(board);
+        this.capture = capture;
+        this.scoringStrategy = strategy;
     }
 
     @Override
