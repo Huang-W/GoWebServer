@@ -18,7 +18,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 import java.util.Arrays;
 
 public class GoMoveControllerImplTest {

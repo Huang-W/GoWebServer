@@ -1,1 +1,6 @@
 ProjectGo/.idea
+/target/
+pom.xml
+.classpath
+.project
+.settings
