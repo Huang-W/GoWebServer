@@ -29,6 +29,12 @@ public class GameScreen extends JPanel implements ActionListener {
 	private Container boardPanel;
 	private Container outputPanel;
 	private Container commandPanel;
+	public static int BORDER_SIZE = 70;
+	public static int TILE_SIZE = 70;
+	public static int SIZE = 9;
+
+
+
 	//private Container statusPanel;
 	
 	public GameScreen() {
