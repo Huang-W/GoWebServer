@@ -21,9 +21,10 @@ public class OutputPanel extends JScrollPane implements ActionListener {
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent e) {
-				textArea.append("MouseClick Event at X: " + ((MouseEvent) e).getX() + " Y: " +
-						((MouseEvent) e).getY() + " from " + e.getSource().getClass().toString() + "\n");
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("it's working");
+				textArea.append("MouseClick Event at X: " + e.getX() + " Y: " +
+						e.getY() + " from " + e.getSource().getClass().toString() + "\n");
 			}
 		});
 	}

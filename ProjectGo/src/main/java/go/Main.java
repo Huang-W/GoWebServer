@@ -1,6 +1,7 @@
 package go;
 
-import go.view.GoView;
+import go.controller.*;
+import go.controller.impl.*;
 
 /**
  * Builds UI and starts the game.
@@ -19,7 +20,8 @@ public class Main {
 
 	private static void init() {
 		
-		GoView goView = new GoView();
+		GoViewController goViewController = new GoViewControllerImpl();
+		GoMoveController goMoveController = new GoMoveControllerImpl();
 		
 	}
 }
