@@ -12,6 +12,10 @@ public class GoCaptureImpl implements GoCapture {
     @Override
     public List<GoPoint> capturePiecesForMove(GoGameBoard board, GoMove move) {
         // @TODO: implement me!
+
+
+
+        
         return Collections.emptyList();
     }
 }

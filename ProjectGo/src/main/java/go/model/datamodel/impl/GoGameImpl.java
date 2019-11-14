@@ -49,6 +49,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
     @Override
     public void makeMove(GoPoint point) {
         GoMove move = new GoMoveImpl(point, nextPlayer);
+        board.setStone(move);
         capture.capturePiecesForMove(board, move)
                 .forEach(this::notifyObserversOfPieceRemoval);
         this.notifyObserversOfPiecePlacement(move);
