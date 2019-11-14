@@ -51,48 +51,13 @@ public class GameScreen extends JPanel implements ActionListener {
 		this.add(eastPanel, BorderLayout.EAST);
 		//this.add(statusPanel, BorderLayout.NORTH);
 		
-		/*this.addMouseListener(new MouseAdapter() {
+		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//boardPanel.dispatchEvent(e);
 				outputPanel.dispatchEvent(e);
 			}
-		});*/
-		this.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			    // Converts to float for float division and then rounds to
-			    // provide nearest intersection.
-			    int row = Math.round((float) (e.getY() - BORDER_SIZE)
-				    / TILE_SIZE);
-			    int col = Math.round((float) (e.getX() - BORDER_SIZE)
-				    / TILE_SIZE);
-
-			    // DEBUG INFO
-			    // System.out.println(String.format("y: %d, x: %d", row, col));
-
-			    // Check wherever it's valid
-			    if (row >= SIZE || col >= SIZE || row < 0 || col < 0) {
-				return;
-			    }
-
-			    if (grid.isOccupied(row, col)) {
-				return;
-			    }
-
-			    grid.addStone(row, col, current_player);
-			    lastMove = new Point(col, row);
-
-			    // Switch current player
-			    if (current_player == State.BLACK) {
-				current_player = State.WHITE;
-			    } else {
-				current_player = State.BLACK;
-			    }
-			    repaint();
-			}
-		    });
+		});
 	}
 
 	@Override
