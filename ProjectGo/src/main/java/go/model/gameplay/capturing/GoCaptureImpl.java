@@ -20,7 +20,7 @@ public class GoCaptureImpl implements GoCapture {
     @Override
     public List<GoPoint> capturePiecesForMove(GoGameBoard board, GoMove move) {
         // @TODO: implement me!
-
+        List<GoPoint> capturedPoints = new ArrayList<GoPoint>();  
         int row = move.getPoint().getX();
         int col = move.getPoint().getY();
         // get neighbors
@@ -53,10 +53,25 @@ public class GoCaptureImpl implements GoCapture {
                 neighbors.add(new GoMoveImpl(location, stone.get()));    
             }             
         }
-        for (GoMoveImpl neighbor : neighbors) {
 
+        for (GoMoveImpl neighbor : neighbors) {
+            if (neighbor.getStoneColor() != move.getStoneColor()) {
+                checkforCapture(neighbor, capturedPoints);
+                continue;
+            }
         }
 
-        return Collections.emptyList();
+        return capturedPoints.size() == 0? Collections.emptyList() : capturedPoints;
     }
+
+/**
+ * Check for capturing Stone
+ * @param neighbor
+ * @param capturedPoints
+ */
+private void checkforCapture(GoMoveImpl neighbor, List<GoPoint> capturedPoints) {
+    //find chain of neighbour and get its liberties
+    //TO-DO
+}
+
 }
