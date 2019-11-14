@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class WelcomeScreen extends JLabel {
+public class WelcomeScreen extends JLabel implements ActionListener {
 	
 	private final int BUTTON_DIM_X = 150;
 	private final int BUTTON_DIM_Y = 100;
@@ -37,9 +38,6 @@ public class WelcomeScreen extends JLabel {
 	
 	private JButton configNewGame;
 	private JButton startNewGame;
-	private JButton createSgf;
-	private JButton editSgf;
-	private JButton reviewOldGame;
 	
 	public WelcomeScreen(ActionListener listener) {
 		this.setIcon(bgImg);
@@ -63,9 +61,6 @@ public class WelcomeScreen extends JLabel {
 		addComponent(startNewGame, GridBagConstraints.LINE_START);
 		addComponent(Box.createRigidArea(buttonDim), GridBagConstraints.CENTER);
 		addComponent(configNewGame, GridBagConstraints.LINE_END);
-		//addComponent(editSgf, GridBagConstraints.CENTER);
-		//addComponent(createSgf, GridBagConstraints.PAGE_END);
-		//addComponent(reviewOldGame, GridBagConstraints.LAST_LINE_END);
 		
         // Filler bottom component that will push the rest to the top
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -141,21 +136,12 @@ public class WelcomeScreen extends JLabel {
 	{
 		configNewGame = new JButton("Config Start");
 		startNewGame = new JButton("Quick Start");
-		createSgf = new JButton("Create SGF");
-		editSgf = new JButton("Edit SGF");
-		reviewOldGame = new JButton("Review Games");
 		
 		configNewGame.setActionCommand("configNewGame");
 		startNewGame.setActionCommand("startNewGame");
-		createSgf.setActionCommand("createSgf");
-		editSgf.setActionCommand("editSgf");
-		reviewOldGame.setActionCommand("reviewOldGame");
 		
 		buttons.add(configNewGame);
 		buttons.add(startNewGame);
-		buttons.add(createSgf);
-		buttons.add(editSgf);
-		buttons.add(reviewOldGame);
 	}
 	
     @Override
@@ -166,4 +152,10 @@ public class WelcomeScreen extends JLabel {
         size.height = Math.max(size.height, lmPrefSize.height);
         return size;
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

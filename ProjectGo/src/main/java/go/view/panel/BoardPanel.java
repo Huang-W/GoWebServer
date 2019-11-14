@@ -7,34 +7,49 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import go.view.GoView;
+import go.view.datamodel.impl.GoAppViewImpl;
 
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 
-	private int BOARD_SIZE = 13;
-	private int NUM_TILES = BOARD_SIZE - 1;
-	private int TILE_SIZE;
-	private int BORDER_SIZE;
+	private static final int BOARD_SIZE = 9;
+	public static final int NUM_TILES = BOARD_SIZE - 1;
+	public static final int TILE_SIZE = GoAppViewImpl.CENTER_DIM.width / (NUM_TILES + 2);
+	public static final int BORDER_SIZE = TILE_SIZE;
 	
 	Border border;
 	Insets insets;
 	
+	// initialize off-screen
+	private int xCoordLastMove = -100;
+	private int yCoordLastMove = -100;
+	
 	
 	public BoardPanel()
 	{
-		this.setPreferredSize(GoView.CENTER_DIM);
+		this.setPreferredSize(GoAppViewImpl.CENTER_DIM);
 		border = new EmptyBorder( BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE);
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.ORANGE);
 		this.setBorder(border);
 		insets = border.getBorderInsets(this);
-		
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				xCoordLastMove = e.getX();
+				yCoordLastMove = e .getY();
+				repaint(xCoordLastMove - TILE_SIZE/2, yCoordLastMove - TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
+				System.out.println("Point clicked at X: " + xCoordLastMove +
+						" Y: " + yCoordLastMove);
+			}
+		});
 	}
 	
 	@Override
@@ -77,19 +92,7 @@ public class BoardPanel extends JPanel {
 	    }
 	    
 	    drawStarPoints(g2, 5);
-	}
-	
-	@Override
-	public void setPreferredSize(Dimension dim)
-	{
-		super.setPreferredSize(dim);
-		if (dim.height != dim.width) {
-			System.err.println("Height and Width are not equal in " + getClass().toString());
-		} else {
-			TILE_SIZE = dim.width / (NUM_TILES + 2);
-			BORDER_SIZE = TILE_SIZE;
-		}
-		
+	    g2.fillOval(xCoordLastMove - TILE_SIZE/2, yCoordLastMove - TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
 	}
 	
 	// draws little points on the board, will do something about this later
