@@ -2,7 +2,7 @@ package go.view.screen;
 
 import javax.swing.JPanel;
 
-import go.view.AppView;
+import go.view.GoView;
 import go.view.panel.BoardPanel;
 import go.view.panel.CommandPanel;
 import go.view.panel.OutputPanel;
@@ -32,7 +32,7 @@ public class GameScreen extends JPanel implements ActionListener {
 		JPanel eastPanel = new JPanel();
 		//eastPanel.setPreferredSize(AppView.EAST_DIM);
 		// temporarily make eastPanel larger for debug purposes
-		eastPanel.setPreferredSize(AppView.CENTER_DIM);
+		eastPanel.setPreferredSize(GoView.CENTER_DIM);
 		eastPanel.setLayout(new BorderLayout());
 		eastPanel.add(commandPanel, BorderLayout.NORTH);
 		eastPanel.add(outputPanel, BorderLayout.SOUTH);

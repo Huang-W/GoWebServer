@@ -1,6 +1,6 @@
 package go;
 
-import go.view.AppView;
+import go.view.GoView;
 
 /**
  * Builds UI and starts the game.
@@ -19,8 +19,7 @@ public class Main {
 
 	private static void init() {
 		
-		AppView goApp = new AppView();
-		goApp.startup();
+		GoView goView = new GoView();
 		
 	}
 }

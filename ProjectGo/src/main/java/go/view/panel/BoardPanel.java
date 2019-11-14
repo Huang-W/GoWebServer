@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import go.view.AppView;
+import go.view.GoView;
 
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
@@ -28,7 +28,7 @@ public class BoardPanel extends JPanel {
 	
 	public BoardPanel()
 	{
-		this.setPreferredSize(AppView.CENTER_DIM);
+		this.setPreferredSize(GoView.CENTER_DIM);
 		border = new EmptyBorder( BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE);
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.ORANGE);

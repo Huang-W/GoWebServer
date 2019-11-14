@@ -1,13 +1,12 @@
 package go.controller;
 
-public interface ViewController {
+import java.awt.event.ActionListener;
+
+public interface ViewController extends ActionListener {
 
 	// run jar file and look at outputPanel
 	// mouse event occurs in AppView
-	void mouseEvent(int xCoord, int yCoord);
-	
-	// see CommandPanel "SetActionCommand()" line 29
-	void actionEvent(String actionCommand);
+	void fireMouseEvent(int xCoord, int yCoord);
 	
 	// Give me a String or 2d array or w/e to display
 	// Translate "getGameSubject" from "GoMoveController" for me please
