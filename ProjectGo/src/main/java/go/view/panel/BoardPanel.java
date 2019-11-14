@@ -17,7 +17,7 @@ import go.view.AppView;
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 
-	private int BOARD_SIZE = 9;
+	private int BOARD_SIZE = 13;
 	private int NUM_TILES = BOARD_SIZE - 1;
 	private int TILE_SIZE;
 	private int BORDER_SIZE;
