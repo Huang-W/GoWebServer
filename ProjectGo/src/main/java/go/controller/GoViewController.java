@@ -1,7 +1,6 @@
 package go.controller;
 
 import java.awt.Color;
-import java.awt.event.ActionListener;
 
 import go.view.observer.GoViewSubject;
 

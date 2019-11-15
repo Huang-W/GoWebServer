@@ -1,7 +1,8 @@
 package go.view.observer;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
+
+import go.view.datamodel.GoAction;
 
 /**
  * A subject that notifies its observers of when interesting events happen in the screen of
@@ -25,7 +26,7 @@ public interface GoViewSubject {
     
     /**
      * Notifies all view observers that a button was pressed in the UI.
-     * @param event the event that the button triggered
+     * @param action the action that the button triggered
      */
-    void notifyObserversOfButtonPress(ActionEvent event);
+    void notifyObserversOfButtonPress(GoAction action);
 }

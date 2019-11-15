@@ -3,6 +3,8 @@ package go.view.observer;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 
+import go.view.datamodel.GoAction;
+
 /**
  * An interface for objects that listen to Go UI events.
  * Implementations define what to do when they are notified of
@@ -21,8 +23,8 @@ public interface GoViewObserver {
     /**
      * Do something based on a button that was pressed in the UI
      * Implementations will be called when the board is updated - {@link GoViewSubject#handleButtonPressEvent(ActionEvent)}
-     * @param even the Event to handle
+     * @param action the Action to handle
      */
-    void handleButtonPressEvent(ActionEvent event);
+    void handleButtonPressEvent(GoAction action);
     
 }

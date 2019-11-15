@@ -1,13 +1,18 @@
 package go.view.datamodel.impl;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 import java.util.ArrayList;
 import java.util.List;
 import go.view.datamodel.GoMove;
+import go.view.datamodel.GoAction;
 import go.view.datamodel.GoAppView;
 import go.view.observer.GoViewObserver;
 import go.view.observer.GoViewSubject;
@@ -18,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,24 +33,25 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 @SuppressWarnings("serial")
-public class GoAppViewImpl extends JFrame implements GoAppView, GoViewSubject, ActionListener {
+public class GoAppViewImpl extends JFrame implements GoAppView, GoViewSubject {
 	
 	public static final Dimension NORTH_DIM = new Dimension( 800, 200);
 	public static final Dimension CENTER_DIM = new Dimension( 700, 700);
 	public static final Dimension EAST_DIM = new Dimension( 200, 600);
 	
-	//private JFrame appFrame;
-	private WelcomeScreen welcomeScreen;
 	private GameScreen gameScreen;
+	private WelcomeScreen welcomeScreen;
 	
-	private String[] options = {"Close App", "Restart", "Cancel"};
+	private final String[] options = {"Close App", "Restart", "Cancel"};
 	private final int CLOSE_APP = 0;
 	private final int RESTART_APP = 1;
+	private final int CANCEL = 2;
 	
     private List<GoViewObserver> viewObservers;
 	
 	public GoAppViewImpl() { 
-		welcomeScreen = new WelcomeScreen(this);
+		
+		welcomeScreen = new WelcomeScreen();
 		gameScreen = new GameScreen();
 		gameScreen.setVisible(false);
 		
@@ -57,27 +64,66 @@ public class GoAppViewImpl extends JFrame implements GoAppView, GoViewSubject, A
 	    GoAppViewImpl.this.pack();
 	    GoAppViewImpl.this.setVisible(true);
 	    
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new WindowAdapter() {
+	    GoAppViewImpl.this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		GoAppViewImpl.this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				int n = JOptionPane.showOptionDialog(GoAppViewImpl.this,
-						"Would you like to close the app or start a new game?",
-						"Confirm Close",
-						JOptionPane.YES_NO_CANCEL_OPTION,
-						JOptionPane.QUESTION_MESSAGE,
-						null,
-						options,
-						options[0]);
-				System.out.println("answer... " + n);
-				if (n == CLOSE_APP) {
-				    GoAppViewImpl.this.setVisible(false);
-				    GoAppViewImpl.this.dispose();
-				} else if (n == RESTART_APP) {
-					showWelcomeScreen();
+				if (gameScreen.isVisible()) {
+					int chosenOption = JOptionPane.showOptionDialog(GoAppViewImpl.this,
+							"Would you like to close the app or start a new game?",
+							"Confirm Close",
+							JOptionPane.YES_NO_CANCEL_OPTION,
+							JOptionPane.QUESTION_MESSAGE,
+							null,
+							options,
+							options[CLOSE_APP]);
+					if (chosenOption == RESTART_APP) {
+						showWelcomeScreen();
+						return;
+					}
+					else if (chosenOption == CANCEL) {
+						return;
+					}
 				}
+			    GoAppViewImpl.this.setVisible(false);
+			    GoAppViewImpl.this.dispose();
 			}
 	    });
+		gameScreen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Action... " + e.toString());
+				switch(e.getActionCommand())
+				{
+				case "passTurn":
+					notifyObserversOfButtonPress(GoAction.PASS);
+					break;
+				case "undoMove":
+					notifyObserversOfButtonPress(GoAction.UNDO);
+					break;
+				default:
+					System.out.println("Unhandled Action Event: " + e.getActionCommand());
+				}
+			}
+		});
+		welcomeScreen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Action... " + e.toString());
+				switch(e.getActionCommand())
+				{
+					case "startNewGame":
+						showGameScreen();
+						break;
+					case "configNewGame":
+						break;
+					default:
+						System.err.println("Action Command " + e.getActionCommand() + 
+								" in " + getClass().getName() );
+						return;
+				}
+			}
+		});
 	}
 	
 	private void showGameScreen() {
@@ -92,20 +138,6 @@ public class GoAppViewImpl extends JFrame implements GoAppView, GoViewSubject, A
 		welcomeScreen.setVisible(true);
 		validate();
 		pack();
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		System.out.println("ACtion... " + e.toString());
-		switch(e.getActionCommand())
-		{
-			case "startNewGame":
-				showGameScreen();
-			default:
-				System.err.println("Invalid Action Command " + e.getActionCommand() + 
-						" in " + getClass().getName() );
-				return;
-		}
 	}
 	
 	@Override
@@ -131,8 +163,8 @@ public class GoAppViewImpl extends JFrame implements GoAppView, GoViewSubject, A
 	}
 
 	@Override
-	public void notifyObserversOfButtonPress(ActionEvent event) {
-		viewObservers.forEach(observer -> observer.handleButtonPressEvent(event));
+	public void notifyObserversOfButtonPress(GoAction action) {
+		viewObservers.forEach(observer -> observer.handleButtonPressEvent(action));
 	}
 	
 }
