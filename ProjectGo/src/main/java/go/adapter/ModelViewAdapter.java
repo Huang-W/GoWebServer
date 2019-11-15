@@ -34,6 +34,7 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver, GoViewS
 
     @Override
     public void addViewObserver(GoViewObserver observer) {
+        goViewController.getViewSubject().addViewObserver(observer);
         // TODO Auto-generated method stub
 
     }
