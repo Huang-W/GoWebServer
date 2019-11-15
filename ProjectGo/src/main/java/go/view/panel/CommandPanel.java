@@ -15,19 +15,12 @@ public class CommandPanel extends JToolBar implements ActionListener {
 	private JButton undoButton;
 	private JButton passButton;
 	
-	public CommandPanel(ActionListener listener)
+	public CommandPanel()
 	{
 		
-		this.listener = listener;
 		this.setFloatable(false);
         this.setRollover(true);
         this.setLayout(new BorderLayout());
-        
-        undoButton = new JButton("Undo");
-		passButton = new JButton("Pass");
-		
-		undoButton.setActionCommand("Undo");
-		passButton.setActionCommand("Pass");
 		
 		this.add(undoButton, BorderLayout.NORTH);
 		this.add(passButton, BorderLayout.CENTER);

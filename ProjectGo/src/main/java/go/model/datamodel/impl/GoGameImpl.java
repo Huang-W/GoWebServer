@@ -31,7 +31,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
 
     public GoGameImpl() {
         // @todo determine which strategy we'll actually use - we needn't implement both.
-        this(new GoCaptureImpl(BOARD_SIZE), new ChineseScoringStrategy());
+        this(new GoCaptureImpl(), new ChineseScoringStrategy());
     }
 
     public GoGameImpl(GoCapture capture, GoScoringStrategy strategy) {
@@ -49,7 +49,6 @@ public class GoGameImpl implements GoGameSubject, GoGame {
     @Override
     public void makeMove(GoPoint point) {
         GoMove move = new GoMoveImpl(point, nextPlayer);
-        board.setStone(move);
         capture.capturePiecesForMove(board, move)
                 .forEach(this::notifyObserversOfPieceRemoval);
         this.notifyObserversOfPiecePlacement(move);

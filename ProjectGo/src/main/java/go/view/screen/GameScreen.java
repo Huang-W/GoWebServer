@@ -1,11 +1,9 @@
 package go.view.screen;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
+import javax.swing.JToolBar;
 
 import go.view.datamodel.impl.GoAppViewImpl;
 import go.view.panel.BoardPanel;
@@ -14,37 +12,41 @@ import go.view.panel.OutputPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 @SuppressWarnings("serial")
-public class GameScreen extends JPanel implements ActionListener {
+public class GameScreen extends AbstractButton {
 	
 	private Container boardPanel;
-	private Container outputPanel;
-	private Container commandPanel;
-	public static int BORDER_SIZE = 70;
-	public static int TILE_SIZE = 70;
-	public static int SIZE = 9;
-
-
-
-	//private Container statusPanel;
+	private OutputPanel outputPanel;
+	
+	private JToolBar commandPanel;
+	private JButton undoButton;
+	private JButton passButton;
 	
 	public GameScreen() {
 		
 		boardPanel = new BoardPanel();
 		outputPanel = new OutputPanel();
-		commandPanel = new CommandPanel(this);
+		
+		commandPanel = new JToolBar();
+		commandPanel.setFloatable(false);
+		commandPanel.setRollover(true);
+		commandPanel.setLayout(new BorderLayout());
+        undoButton = new JButton("Undo");
+		passButton = new JButton("Pass");
+		undoButton.setActionCommand("Undo");
+		passButton.setActionCommand("Pass");
+		undoButton.addActionListener(outputPanel);
+		passButton.addActionListener(outputPanel);
+		commandPanel.add(undoButton, BorderLayout.NORTH);
+		commandPanel.add(passButton, BorderLayout.CENTER);
 
 		JPanel eastPanel = new JPanel();
-		//eastPanel.setPreferredSize(AppView.EAST_DIM);
 		// temporarily make eastPanel larger for debug purposes
 		eastPanel.setPreferredSize(GoAppViewImpl.CENTER_DIM);
 		eastPanel.setLayout(new BorderLayout());
@@ -55,20 +57,13 @@ public class GameScreen extends JPanel implements ActionListener {
 		this.setLayout(new BorderLayout());
 		this.add(boardPanel, BorderLayout.CENTER);
 		this.add(eastPanel, BorderLayout.EAST);
-		//this.add(statusPanel, BorderLayout.NORTH);
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//boardPanel.dispatchEvent(e);
 				outputPanel.dispatchEvent(e);
 			}
 		});
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		((ActionListener) outputPanel).actionPerformed(e);
 	}
 	
 }

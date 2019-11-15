@@ -3,10 +3,10 @@ package go.model.gameplay.capturing;
 import go.model.datamodel.GoGameBoard;
 import go.model.datamodel.GoMove;
 import go.model.datamodel.GoPoint;
-import go.model.datamodel.StoneColor;
 import go.model.gameplay.GoCapture;
-import go.model.datamodel.impl.GoPointImpl;
 import go.model.datamodel.impl.GoMoveImpl;
+import go.model.datamodel.impl.GoPointImpl;
+import go.model.datamodel.StoneColor;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +19,7 @@ public class GoCaptureImpl implements GoCapture {
     public GoCaptureImpl(int size) {
         SIZE = size;
     }
+
     @Override
     public List<GoPoint> capturePiecesForMove(GoGameBoard board, GoMove move) {
         // @TODO: implement me!

@@ -19,7 +19,7 @@ public class GoViewControllerImpl implements GoViewController {
 
 	private GoAppView view;
 	private GoViewSubject subject;
-
+	
 	//private GoAppViewImpl goView1;
 	
 	// I think we put the adapter here?

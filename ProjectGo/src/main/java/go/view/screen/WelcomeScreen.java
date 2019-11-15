@@ -4,13 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -23,14 +26,15 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class WelcomeScreen extends JLabel implements ActionListener {
+public class WelcomeScreen extends AbstractButton {
 	
+	private final int NO_OPTIONS = 0;
 	private final int BUTTON_DIM_X = 150;
 	private final int BUTTON_DIM_Y = 100;
 	private final int PANEL_SIZE = 200;
 	private final int SCREEN_SIZE = 600;
 	private final Dimension buttonDim = new Dimension(BUTTON_DIM_X, BUTTON_DIM_Y);
-	private final ImageIcon bgImg = new ImageIcon("images/welcome.jpg");
+	private final Image bgImg = new ImageIcon("images/welcome.jpg").getImage();
 	private final Border buttonBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.DARK_GRAY, Color.LIGHT_GRAY);
 	
 	private JComponent[][] welcomePanels;
@@ -39,8 +43,7 @@ public class WelcomeScreen extends JLabel implements ActionListener {
 	private JButton configNewGame;
 	private JButton startNewGame;
 	
-	public WelcomeScreen(ActionListener listener) {
-		this.setIcon(bgImg);
+	public WelcomeScreen() {
 		this.setLayout( new GridBagLayout() );
 		this.setPreferredSize(new Dimension(SCREEN_SIZE, SCREEN_SIZE));
 		
@@ -48,14 +51,6 @@ public class WelcomeScreen extends JLabel implements ActionListener {
 		buttons = new ArrayList<JComponent>();
 		initPanels();
 		initButtons();
-		
-		for (JComponent button : buttons)
-		{
-			button.setPreferredSize(buttonDim);
-			button.setForeground(Color.RED);
-			button.setBackground(Color.BLACK);
-			button.setBorder(buttonBorder);
-		}
 		
 		// Fill in welcomeScreen panels
 		addComponent(startNewGame, GridBagConstraints.LINE_START);
@@ -70,9 +65,26 @@ public class WelcomeScreen extends JLabel implements ActionListener {
         gbc.weighty = 1.0;
         this.add(Box.createGlue(), gbc);
         
-		configNewGame.addActionListener(listener);
-		startNewGame.addActionListener(listener);
-        
+		configNewGame.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispatchEvent(e);
+			}
+		});
+		startNewGame.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("start a new game you fool" + e.toString());
+				ActionEvent newEvent = new ActionEvent(WelcomeScreen.this, 
+						ActionEvent.ACTION_PERFORMED, 
+						e.getActionCommand(),
+						System.currentTimeMillis(),
+						NO_OPTIONS
+				);
+				System.out.println("start a new game you fool" + newEvent.toString());
+				WelcomeScreen.this.dispatchEvent(newEvent);
+			}
+		});
 	}
 	
 	private void addComponent(Component component, int gridBagConstraint)
@@ -142,6 +154,14 @@ public class WelcomeScreen extends JLabel implements ActionListener {
 		
 		buttons.add(configNewGame);
 		buttons.add(startNewGame);
+		
+		for (JComponent button : buttons)
+		{
+			button.setPreferredSize(buttonDim);
+			button.setForeground(Color.RED);
+			button.setBackground(Color.BLACK);
+			button.setBorder(buttonBorder);
+		}
 	}
 	
     @Override
@@ -152,10 +172,10 @@ public class WelcomeScreen extends JLabel implements ActionListener {
         size.height = Math.max(size.height, lmPrefSize.height);
         return size;
     }
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    
+    @Override
+    public void paintComponent(Graphics g) {
+    	super.paintComponent(g);
+        g.drawImage(bgImg, 0, 0, null);
+      }
 }
