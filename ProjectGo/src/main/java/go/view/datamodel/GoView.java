@@ -7,7 +7,7 @@ import java.awt.Point;
  * What you see in a game of Go
  * Records the board state and handles moves.
  */
-public interface GoAppView {
+public interface GoView {
 
     /**
      * Place a stone of a color at a location.

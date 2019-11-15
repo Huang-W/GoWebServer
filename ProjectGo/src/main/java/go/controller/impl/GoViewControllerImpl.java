@@ -10,35 +10,22 @@ import javax.swing.JFrame;
 
 import go.controller.GoViewController;
 import go.view.datamodel.GoMove;
-import go.view.datamodel.GoAppView;
+import go.view.datamodel.GoView;
 import go.view.datamodel.impl.GoMoveImpl;
-import go.view.datamodel.impl.GoAppViewImpl;
+import go.view.datamodel.impl.GoViewImpl;
 import go.view.observer.GoViewSubject;
 
 public class GoViewControllerImpl implements GoViewController {
 
-	private GoAppView view;
+	private GoView view;
 	private GoViewSubject subject;
 	
-	//private GoAppViewImpl goView1;
-	
-	// I think we put the adapter here?
-	// private Adapter adapter;
-	
     public GoViewControllerImpl() {
-        this(new GoAppViewImpl());
+        this(new GoViewImpl());
     }
-    public GoViewControllerImpl(GoAppViewImpl goView) {
+    public GoViewControllerImpl(GoViewImpl goView) {
         this.view = goView;
         this.subject = goView;
-		//goView1 = new GoAppViewImpl();
-        goView.addMouseListener(new MouseAdapter() {
-        	@Override
-			public void mouseClicked(MouseEvent e) {
-				goView.getContentPane().dispatchEvent(e);
-        		System.err.println("Event from... ");
-			}
-        });
     }
 
 	@Override

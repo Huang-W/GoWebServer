@@ -1,13 +1,13 @@
 package go.view.screen;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
-import go.view.datamodel.impl.GoAppViewImpl;
+import go.view.datamodel.impl.GoViewImpl;
+import go.view.observer.*;
 import go.view.panel.BoardPanel;
-import go.view.panel.CommandPanel;
 import go.view.panel.OutputPanel;
 
 import java.awt.BorderLayout;
@@ -17,9 +17,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Consumer;
 
 @SuppressWarnings("serial")
-public class GameScreen extends AbstractButton {
+public class GameScreen extends JComponent implements GoScreenSubject {
+	
+	private List<GoScreenObserver> observers;
 	
 	private Container boardPanel;
 	private OutputPanel outputPanel;
@@ -29,7 +36,7 @@ public class GameScreen extends AbstractButton {
 	private JButton passButton;
 	
 	public GameScreen() {
-		
+		observers = new LinkedList<GoScreenObserver>();
 		boardPanel = new BoardPanel();
 		outputPanel = new OutputPanel();
 		
@@ -48,7 +55,7 @@ public class GameScreen extends AbstractButton {
 
 		JPanel eastPanel = new JPanel();
 		// temporarily make eastPanel larger for debug purposes
-		eastPanel.setPreferredSize(GoAppViewImpl.CENTER_DIM);
+		eastPanel.setPreferredSize(GoViewImpl.CENTER_DIM);
 		eastPanel.setLayout(new BorderLayout());
 		eastPanel.add(commandPanel, BorderLayout.NORTH);
 		eastPanel.add(outputPanel, BorderLayout.SOUTH);
@@ -61,9 +68,24 @@ public class GameScreen extends AbstractButton {
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				outputPanel.dispatchEvent(e);
+				notifyObserversOfMouseEvent(e);
 			}
 		});
+	}
+
+	@Override
+	public void notifyObserversOfActionEvent(ActionEvent event) {
+		observers.forEach(observer -> observer.handleActionEvent(event));
+	}
+
+	@Override
+	public void notifyObserversOfMouseEvent(MouseEvent event) {
+		observers.forEach(observer -> observer.handleMouseEvent(event));
+	}
+
+	@Override
+	public void registerGoScreenObserver(GoScreenObserver observer) {
+		this.observers.add(observer);
 	}
 	
 }

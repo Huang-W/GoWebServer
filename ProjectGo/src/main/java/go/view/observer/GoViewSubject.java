@@ -1,8 +1,7 @@
 package go.view.observer;
 
 import java.awt.Point;
-
-import go.view.datamodel.GoAction;
+import java.awt.event.ActionEvent;
 
 /**
  * A subject that notifies its observers of when interesting events happen in the screen of
@@ -10,6 +9,7 @@ import go.view.datamodel.GoAction;
  * a button is clicked.
  */
 public interface GoViewSubject {
+	
     /**
      * Adds a screen observer implementation to this subject's list of observers.
      * Observers that register themselves with this method will be notified when a mouse
@@ -25,8 +25,17 @@ public interface GoViewSubject {
     void notifyObserversOfMouseClick(Point point);
     
     /**
-     * Notifies all view observers that a button was pressed in the UI.
-     * @param action the action that the button triggered
+     * Notifies all view observers that a PASS was requested in the GameScreen UI.
      */
-    void notifyObserversOfButtonPress(GoAction action);
+    void notifyObserversOfPassTurnRequest();
+    
+    /**
+     * Notifies all view observers that an UNDO was requested in the GameScreen UI.
+     */
+    void notifyObserversOfUndoMoveRequest();
+    
+    /**
+     * Notifies all view observers when the USER closes the GameScreen window
+     */
+    void notifyObserversOfWindowClose();
 }

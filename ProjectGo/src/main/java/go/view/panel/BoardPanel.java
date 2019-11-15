@@ -14,14 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import go.view.datamodel.impl.GoAppViewImpl;
+import go.view.datamodel.impl.GoViewImpl;
 
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 
 	private static final int BOARD_SIZE = 9;
 	public static final int NUM_TILES = BOARD_SIZE - 1;
-	public static final int TILE_SIZE = GoAppViewImpl.CENTER_DIM.width / (NUM_TILES + 2);
+	public static final int TILE_SIZE = GoViewImpl.CENTER_DIM.width / (NUM_TILES + 2);
 	public static final int BORDER_SIZE = TILE_SIZE;
 	
 	Border border;
@@ -34,7 +34,7 @@ public class BoardPanel extends JPanel {
 	
 	public BoardPanel()
 	{
-		this.setPreferredSize(GoAppViewImpl.CENTER_DIM);
+		this.setPreferredSize(GoViewImpl.CENTER_DIM);
 		border = new EmptyBorder( BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE);
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.ORANGE);

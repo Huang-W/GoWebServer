@@ -5,7 +5,7 @@ import java.awt.Color;
 import go.view.observer.GoViewSubject;
 
 public interface GoViewController {
-
+	
     /**
      * Draw a stone on the board
      * @param x xCoord of stone to draw (in pixels)

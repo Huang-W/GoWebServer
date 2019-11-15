@@ -10,25 +10,29 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import go.view.observer.GoScreenObserver;
+import go.view.observer.GoScreenSubject;
+
 @SuppressWarnings("serial")
-public class WelcomeScreen extends AbstractButton {
+public class WelcomeScreen extends JComponent implements GoScreenSubject {
 	
-	private final int NO_OPTIONS = 0;
+	private List<GoScreenObserver> observers;
+	
 	private final int BUTTON_DIM_X = 150;
 	private final int BUTTON_DIM_Y = 100;
 	private final int PANEL_SIZE = 200;
@@ -44,6 +48,7 @@ public class WelcomeScreen extends AbstractButton {
 	private JButton startNewGame;
 	
 	public WelcomeScreen() {
+		observers = new LinkedList<GoScreenObserver>();
 		this.setLayout( new GridBagLayout() );
 		this.setPreferredSize(new Dimension(SCREEN_SIZE, SCREEN_SIZE));
 		
@@ -64,27 +69,6 @@ public class WelcomeScreen extends AbstractButton {
 		gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         this.add(Box.createGlue(), gbc);
-        
-		configNewGame.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispatchEvent(e);
-			}
-		});
-		startNewGame.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("start a new game you fool" + e.toString());
-				ActionEvent newEvent = new ActionEvent(WelcomeScreen.this, 
-						ActionEvent.ACTION_PERFORMED, 
-						e.getActionCommand(),
-						System.currentTimeMillis(),
-						NO_OPTIONS
-				);
-				System.out.println("start a new game you fool" + newEvent.toString());
-				WelcomeScreen.this.dispatchEvent(newEvent);
-			}
-		});
 	}
 	
 	private void addComponent(Component component, int gridBagConstraint)
@@ -149,8 +133,8 @@ public class WelcomeScreen extends AbstractButton {
 		configNewGame = new JButton("Config Start");
 		startNewGame = new JButton("Quick Start");
 		
-		configNewGame.setActionCommand("configNewGame");
-		startNewGame.setActionCommand("startNewGame");
+		configNewGame.setActionCommand("CONFIG_START");
+		startNewGame.setActionCommand("QUICK_START");
 		
 		buttons.add(configNewGame);
 		buttons.add(startNewGame);
@@ -162,6 +146,19 @@ public class WelcomeScreen extends AbstractButton {
 			button.setBackground(Color.BLACK);
 			button.setBorder(buttonBorder);
 		}
+		
+		configNewGame.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				notifyObserversOfActionEvent(e);
+			}
+		});
+		startNewGame.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				notifyObserversOfActionEvent(e);
+			}
+		});
 	}
 	
     @Override
@@ -178,4 +175,19 @@ public class WelcomeScreen extends AbstractButton {
     	super.paintComponent(g);
         g.drawImage(bgImg, 0, 0, null);
       }
+
+	@Override
+	public void notifyObserversOfActionEvent(ActionEvent event) {
+		observers.forEach(observer -> observer.handleActionEvent(event));
+	}
+
+	@Override
+	public void notifyObserversOfMouseEvent(MouseEvent event) {
+		observers.forEach(observer -> observer.handleMouseEvent(event));
+	}
+
+	@Override
+	public void registerGoScreenObserver(GoScreenObserver observer) {
+		this.observers.add(observer);
+	}
 }

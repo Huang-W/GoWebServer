@@ -3,8 +3,6 @@ package go.view.observer;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 
-import go.view.datamodel.GoAction;
-
 /**
  * An interface for objects that listen to Go UI events.
  * Implementations define what to do when they are notified of
@@ -12,19 +10,25 @@ import go.view.datamodel.GoAction;
  * Implementations can register themselves to be notified at {@link GoViewSubject}
  */
 public interface GoViewObserver {
-
-    /**
-     * Do something based on a point that was clicked on the board.
-     * Implementations will be called when the board is updated - {@link GoViewSubject#handleMouseClieckEvent(Point)}
-     * @param point the point to handle
-     */
-    void handleMouseClickEvent(Point point);
+	
+	/**
+	 * Do something when the user clicks the board
+	 * @param point the Point the user clicked
+	 */
+	void handleMouseClickEvent(Point point);
+	
+	/**
+	 * Do something when the user passes a turn
+	 */
+	void handlePassTurnRequest();
+	
+	/**
+	 * Do something when the user requests an undo
+	 */
+	void handleUndoMoveRequest();
     
-    /**
-     * Do something based on a button that was pressed in the UI
-     * Implementations will be called when the board is updated - {@link GoViewSubject#handleButtonPressEvent(ActionEvent)}
-     * @param action the Action to handle
-     */
-    void handleButtonPressEvent(GoAction action);
-    
+	/**
+	 * Do something when the user closes the GameScreen window
+	 */
+	void handleWindowClose();
 }
