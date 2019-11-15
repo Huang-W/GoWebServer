@@ -1,5 +1,7 @@
 package go;
 
+import go.adapter.ModelViewAdapter;
+import go.adapter.ViewModelAdapter;
 import go.controller.*;
 import go.controller.impl.*;
 
@@ -19,15 +21,12 @@ public class Main {
     }
 
 	private static void init() {
-
-	    ModelViewAdapter modelViewAdapter = new ModelViewAdapter();
-	    ViewModelAdapter viewModelAdapter = new ViewModelAdapter();
-	    modelViewAdapter.addViewObserver(viewModelAdapter);
-	    viewModelAdapter.addGameObserver(modelViewAdapter);
-	    viewModelAdapter.addMoveObserver(modelViewAdapter);
-	    //ignore below
 		GoViewController goViewController = new GoViewControllerImpl();
 		GoMoveController goMoveController = new GoMoveControllerImpl();
-		
+		ModelViewAdapter modelViewAdapter = new ModelViewAdapter();//new GoViewControllerImpl());
+		ViewModelAdapter viewModelAdapter = new ViewModelAdapter();//new GoMoveControllerImpl());
+		goViewController.getViewSubject().addViewObserver(viewModelAdapter);
+		goMoveController.getGameSubject().addGameObserver(modelViewAdapter);
+		goMoveController.getGameSubject().addMoveObserver(modelViewAdapter);
 	}
 }
