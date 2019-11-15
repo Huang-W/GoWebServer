@@ -13,6 +13,10 @@ import go.view.observer.GoViewSubject;
 public class ModelViewAdapter implements GoGameObserver, GoMoveObserver, GoViewSubject {
 
     private GoViewController goViewController;
+    private static final int BOARD_SIZE = 9;
+    public static final int NUM_TILES = BOARD_SIZE - 1;
+    public static final int TILE_SIZE = GoViewImpl.CENTER_DIM.width / (NUM_TILES + 2);
+    public static final int BORDER_SIZE = TILE_SIZE;
 
     @Override
     public void handleGameEnd(StoneColor winner) {
@@ -36,6 +40,7 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver, GoViewS
     public void addViewObserver(GoViewObserver observer) {
         goViewController.getViewSubject().addViewObserver(observer);
         // TODO Auto-generated method stub
+        goViewController.getViewSubject().addViewObserver(observer);
 
     }
 
