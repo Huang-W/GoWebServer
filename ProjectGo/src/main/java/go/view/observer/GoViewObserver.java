@@ -1,7 +1,6 @@
 package go.view.observer;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
 
 /**
  * An interface for objects that listen to Go UI events.

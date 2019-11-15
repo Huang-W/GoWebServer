@@ -14,14 +14,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 
 @SuppressWarnings("serial")
 public class GameScreen extends JComponent implements GoScreenSubject {
@@ -39,7 +35,7 @@ public class GameScreen extends JComponent implements GoScreenSubject {
 		observers = new LinkedList<GoScreenObserver>();
 		boardPanel = new BoardPanel();
 		outputPanel = new OutputPanel();
-		
+
 		commandPanel = new JToolBar();
 		commandPanel.setFloatable(false);
 		commandPanel.setRollover(true);

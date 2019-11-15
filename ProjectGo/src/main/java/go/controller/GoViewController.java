@@ -12,14 +12,14 @@ public interface GoViewController {
      * @param y yCoord of stone to draw (in pixels)
      * @param color Color of Stone to draw 
      */
-    void setStone(int x, int y, Color color);
+    void drawStone(int x, int y, Color color);
     
     /**
      * Draw an empty space on the board
      * @param x xCoord of stone to remove (in pixels)
      * @param y yCoord of stone to remove (in pixels)
      */
-    void removeStone(int x, int y);
+    void drawEmptySpace(int x, int y);
 
     /**
      * Get a game subject for observation by a view.

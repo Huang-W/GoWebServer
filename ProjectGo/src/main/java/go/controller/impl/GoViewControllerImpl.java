@@ -2,11 +2,6 @@ package go.controller.impl;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JFrame;
 
 import go.controller.GoViewController;
 import go.view.datamodel.GoMove;
@@ -29,13 +24,15 @@ public class GoViewControllerImpl implements GoViewController {
     }
 
 	@Override
-	public void setStone(int x, int y, Color color) {
-		view.setStone(new Point(x, y), color);
+	public void drawStone(int x, int y, Color color) {
+		Point point = new Point(x, y);
+		GoMove goMove = new GoMoveImpl(point, color);
+		view.drawStone(goMove);
 	}
 	
 	@Override
-	public void removeStone(int x, int y) {
-		view.removeStone(new Point(x, y));
+	public void drawEmptySpace(int x, int y) {
+		view.drawEmptySpace(new Point(x, y));
 	}
 	
 	@Override

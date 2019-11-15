@@ -33,13 +33,12 @@ public class WelcomeScreen extends JComponent implements GoScreenSubject {
 	
 	private List<GoScreenObserver> observers;
 	
-	private final int BUTTON_DIM_X = 150;
-	private final int BUTTON_DIM_Y = 100;
 	private final int PANEL_SIZE = 200;
 	private final int SCREEN_SIZE = 600;
-	private final Dimension buttonDim = new Dimension(BUTTON_DIM_X, BUTTON_DIM_Y);
+	private final Dimension buttonDim = new Dimension(150, 100);
 	private final Image bgImg = new ImageIcon("images/welcome.jpg").getImage();
-	private final Border buttonBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.DARK_GRAY, Color.LIGHT_GRAY);
+	private final Border buttonBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED, 
+			Color.DARK_GRAY, Color.LIGHT_GRAY);
 	
 	private JComponent[][] welcomePanels;
 	private List<JComponent> buttons;
@@ -111,10 +110,10 @@ public class WelcomeScreen extends JComponent implements GoScreenSubject {
 	private void initPanels()
 	{
 		GridBagConstraints c = new GridBagConstraints();
-		EmptyBorder buttonBorder = new EmptyBorder((PANEL_SIZE - BUTTON_DIM_Y) / 2,
-				(PANEL_SIZE - BUTTON_DIM_X) / 2,
-				(PANEL_SIZE - BUTTON_DIM_Y) / 2,
-				(PANEL_SIZE - BUTTON_DIM_X) / 2);
+		EmptyBorder buttonBorder = new EmptyBorder((PANEL_SIZE - buttonDim.height) / 2,
+				(PANEL_SIZE - buttonDim.width) / 2,
+				(PANEL_SIZE - buttonDim.height) / 2,
+				(PANEL_SIZE - buttonDim.width) / 2);
 		
 		for (int x = 0; x < 3; x ++)
 			for (int y = 0; y < 3; y++) {

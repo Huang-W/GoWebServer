@@ -2,7 +2,6 @@ package go.view.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -40,16 +39,20 @@ public class BoardPanel extends JPanel {
 		this.setBackground(Color.ORANGE);
 		this.setBorder(border);
 		insets = border.getBorderInsets(this);
+		/*
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				xCoordLastMove = e.getX();
 				yCoordLastMove = e .getY();
-				repaint(xCoordLastMove - TILE_SIZE/2, yCoordLastMove - TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
+				BoardPanel.this.getGraphics().fillOval(xCoordLastMove - TILE_SIZE/2, 
+						yCoordLastMove - TILE_SIZE/2, 
+						TILE_SIZE, TILE_SIZE);
 				System.out.println("Point clicked at X: " + xCoordLastMove +
 						" Y: " + yCoordLastMove);
 			}
 		});
+		*/
 	}
 	
 	@Override
@@ -92,7 +95,7 @@ public class BoardPanel extends JPanel {
 	    }
 	    
 	    drawStarPoints(g2, 5);
-	    g2.fillOval(xCoordLastMove - TILE_SIZE/2, yCoordLastMove - TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
+	    //g2.fillOval(xCoordLastMove - TILE_SIZE/2, yCoordLastMove - TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
 	}
 	
 	// draws little points on the board, will do something about this later

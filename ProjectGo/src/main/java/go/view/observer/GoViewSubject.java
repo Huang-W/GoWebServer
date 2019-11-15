@@ -1,7 +1,6 @@
 package go.view.observer;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
 
 /**
  * A subject that notifies its observers of when interesting events happen in the screen of
@@ -20,7 +19,7 @@ public interface GoViewSubject {
     
     /**
      * Notifies all view observers that a point was clicked on the board.
-     * @param point the location in pixels that a point was click
+     * @param point the location in pixels that a point was clicked
      */
     void notifyObserversOfMouseClick(Point point);
     

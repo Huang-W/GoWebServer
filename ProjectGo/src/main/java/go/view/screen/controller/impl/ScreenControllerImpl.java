@@ -16,12 +16,12 @@ public class ScreenControllerImpl implements ScreenController {
 	}
 	
 	@Override
-	public void displaySelectedComponent() {
+	public void showScreen() {
 		appScreen.setVisible(true);
 	}
 	
 	@Override
-	public void hideSelectedComponent() {
+	public void hideScreen() {
 		appScreen.setVisible(false);
 	}
 	

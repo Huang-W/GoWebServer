@@ -1,6 +1,5 @@
 package go.view.datamodel;
 
-import java.awt.Color;
 import java.awt.Point;
 
 /**
@@ -10,15 +9,14 @@ import java.awt.Point;
 public interface GoView {
 
     /**
-     * Place a stone of a color at a location.
-     * @param location the Point to place.
-     * @param color the Color of the stone
+     * Draw a colored stone at a location.
+     * @param move the Move to draw
      */
-    void setStone(Point location, Color color);
+    void drawStone(GoMove move);
 
     /**
-     * Remove a stone from a location.
+     * Remove a stone from a location by drawing an empty space.
      * @param location the location to remove the stone from.
      */
-    void removeStone(Point location);
+    void drawEmptySpace(Point location);
 }
