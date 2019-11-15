@@ -19,7 +19,13 @@ public class Main {
     }
 
 	private static void init() {
-		
+
+	    ModelViewAdapter modelViewAdapter = new ModelViewAdapter();
+	    ViewModelAdapter viewModelAdapter = new ViewModelAdapter();
+	    modelViewAdapter.addViewObserver(viewModelAdapter);
+	    viewModelAdapter.addGameObserver(modelViewAdapter);
+	    viewModelAdapter.addMoveObserver(modelViewAdapter);
+	    //ignore below
 		GoViewController goViewController = new GoViewControllerImpl();
 		GoMoveController goMoveController = new GoMoveControllerImpl();
 		
