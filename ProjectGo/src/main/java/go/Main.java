@@ -23,8 +23,8 @@ public class Main {
 	private static void init() {
 		GoViewController goViewController = new GoViewControllerImpl();
 		GoMoveController goMoveController = new GoMoveControllerImpl();
-		ModelViewAdapter modelViewAdapter = new ModelViewAdapter();//new GoViewControllerImpl());
-		ViewModelAdapter viewModelAdapter = new ViewModelAdapter();//new GoMoveControllerImpl());
+		ModelViewAdapter modelViewAdapter = new ModelViewAdapter(goViewController);
+		ViewModelAdapter viewModelAdapter = new ViewModelAdapter(goMoveController);
 		goViewController.getViewSubject().addViewObserver(viewModelAdapter);
 		goMoveController.getGameSubject().addGameObserver(modelViewAdapter);
 		goMoveController.getGameSubject().addMoveObserver(modelViewAdapter);

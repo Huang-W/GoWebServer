@@ -15,6 +15,11 @@ public class ViewModelAdapter implements GoViewObserver {
 
     private GoMoveController goMoveController;
 
+    public ViewModelAdapter(GoMoveController goMoveController) {
+        this.goMoveController = goMoveController;
+    }
+
+
     @Override
     public void handleMouseClickEvent(Point point) {
         // TODO Auto-generated method stub
