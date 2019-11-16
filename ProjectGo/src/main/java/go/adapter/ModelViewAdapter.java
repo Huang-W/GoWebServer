@@ -1,6 +1,7 @@
 package go.adapter;
 
 import java.awt.Point;
+import go.view.datamodel.impl.GoViewImpl;
 
 import go.controller.GoViewController;
 import go.model.datamodel.GoMove;
