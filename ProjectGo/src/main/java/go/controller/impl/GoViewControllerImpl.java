@@ -39,5 +39,11 @@ public class GoViewControllerImpl implements GoViewController {
 	public GoViewSubject getViewSubject() {
 		return subject;
 	}
+	
+	@Override
+	public void announceGameWinner(Color color) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

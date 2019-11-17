@@ -20,6 +20,12 @@ public interface GoViewController {
      * @param y yCoord of stone to remove (in pixels)
      */
     void drawEmptySpace(int x, int y);
+    
+    /**
+     * Announce the winner of this game
+     * @param color The color of the winner
+     */
+    void announceGameWinner(Color color);
 
     /**
      * Get a game subject for observation by a view.
