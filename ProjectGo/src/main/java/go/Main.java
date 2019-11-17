@@ -23,13 +23,13 @@ public class Main {
 	private static void init() {
 		GoViewController goViewController = new GoViewControllerImpl();
 		GoMoveController goMoveController = new GoMoveControllerImpl();
-<<<<<<< HEAD
-		ModelViewAdapter modelViewAdapter = new ModelViewAdapter();//new GoViewControllerImpl());
-		ViewModelAdapter viewModelAdapter = new ViewModelAdapter();//new GoMoveControllerImpl());
-=======
+
+		//ModelViewAdapter modelViewAdapter = new ModelViewAdapter();//new GoViewControllerImpl());
+		//ViewModelAdapter viewModelAdapter = new ViewModelAdapter();//new GoMoveControllerImpl());
+
 		ModelViewAdapter modelViewAdapter = new ModelViewAdapter(goViewController);
 		ViewModelAdapter viewModelAdapter = new ViewModelAdapter(goMoveController);
->>>>>>> 82c29f7754d7f6918e782afffddc977214761807
+
 		goViewController.getViewSubject().addViewObserver(viewModelAdapter);
 		goMoveController.getGameSubject().addGameObserver(modelViewAdapter);
 		goMoveController.getGameSubject().addMoveObserver(modelViewAdapter);
