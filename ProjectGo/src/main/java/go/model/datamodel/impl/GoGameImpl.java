@@ -48,6 +48,8 @@ public class GoGameImpl implements GoGameSubject, GoGame {
 
     @Override
     public void makeMove(GoPoint point) {
+    	if (board.getStone(point).isPresent())
+    		return;
         GoMove move = new GoMoveImpl(point, nextPlayer);
         capture.capturePiecesForMove(board, move)
                 .forEach(this::notifyObserversOfPieceRemoval);
