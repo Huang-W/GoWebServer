@@ -20,3 +20,4 @@ The Final Frontier
 ## User Story Advertisement
 
 Advertisement link for our Go application: 
+https://www.youtube.com/watch?v=v47HjLz63co&feature=youtu.be
