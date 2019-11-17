@@ -1,4 +1,3 @@
-
 package go.adapter;
 
 import java.awt.Point;
@@ -12,7 +11,7 @@ import go.model.observer.GoGameSubject;
 import go.model.observer.GoMoveObserver;
 import go.view.observer.GoViewObserver;
 
-public class ViewModelAdapter implements GoViewObserver, GoGameSubject {
+public class ViewModelAdapter implements GoViewObserver {
 
     private GoMoveController goMoveController;
 
@@ -36,36 +35,6 @@ public class ViewModelAdapter implements GoViewObserver, GoGameSubject {
 
     @Override
     public void handleWindowClose() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void addMoveObserver(GoMoveObserver observer) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void addGameObserver(GoGameObserver observer) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void notifyObserversOfPiecePlacement(GoMove move) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void notifyObserversOfPieceRemoval(GoPoint point) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void notifyObserversOfGameEnd(StoneColor winner) {
         // TODO Auto-generated method stub
 
     }
