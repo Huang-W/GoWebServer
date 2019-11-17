@@ -19,5 +19,5 @@ The Final Frontier
 
 ## User Story Advertisement
 
-Advertisement link for our Go application: 
+Advertisement link for our Go application: <br> 
 https://www.youtube.com/watch?v=v47HjLz63co&feature=youtu.be
