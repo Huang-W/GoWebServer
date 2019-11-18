@@ -15,9 +15,9 @@ public class ViewModelAdapter implements GoViewObserver {
 
     private GoMoveController goMoveController;
 
-    public ViewModelAdapter(GoMoveController goMoveController) {
-        this.goMoveController = goMoveController;
-    }
+    //public ViewModelAdapter(GoMoveController goMoveController) {
+        //this.goMoveController = goMoveController;
+    //}
 
 
     @Override
