@@ -16,6 +16,9 @@ The Final Frontier
 
 * [Game Rules](https://senseis.xmp.net/?BasicRulesOfGo) 
 
+## Project Repository
+
+* [Project_Repo](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
 
 ## User Story Advertisement
 
