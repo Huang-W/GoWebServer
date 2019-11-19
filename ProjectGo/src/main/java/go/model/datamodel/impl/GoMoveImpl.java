@@ -21,9 +21,7 @@ public class GoMoveImpl implements GoMove {
     }
 
     @Override
-    public StoneColor getStoneColor() {
-        return color;
-    }
+    public StoneColor getStoneColor() { return color; }
 
     @Override
     public boolean equals(Object o) {
