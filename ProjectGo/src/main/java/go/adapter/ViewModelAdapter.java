@@ -23,8 +23,10 @@ public class ViewModelAdapter implements GoViewObserver {
     @Override
     public void handleMouseClickEvent(Point point) {
         // TODO Auto-generated method stub
-        int x = (int) point.getX();
-        int y = (int) point.getY();
+        int x = (int) (point.getX()/70);
+        int y = (int) (point.getY()/70);
+        System.out.println(x);
+        System.out.println(y);
         goMoveController.makeNextPlayersMove(x,y);
     }
 
