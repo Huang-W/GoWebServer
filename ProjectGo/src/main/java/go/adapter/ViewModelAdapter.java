@@ -23,7 +23,9 @@ public class ViewModelAdapter implements GoViewObserver {
     @Override
     public void handleMouseClickEvent(Point point) {
         // TODO Auto-generated method stub
-
+        int x = (int) point.getX();
+        int y = (int) point.getY();
+        goMoveController.makeNextPlayersMove(x,y);
     }
 
     @Override
