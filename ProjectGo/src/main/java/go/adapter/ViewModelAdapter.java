@@ -25,11 +25,9 @@ public class ViewModelAdapter implements GoViewObserver {
         // TODO Auto-generated method stub
         int x = (int) (point.getX()/70);
         int y = (int) (point.getY()/70);
-<<<<<<< HEAD
         System.out.println(x);
         System.out.println(y);
-=======
->>>>>>> c0976f28f228f609f4cf0baf37b446ade06c2ee1
+
         goMoveController.makeNextPlayersMove(x,y);
     }
 

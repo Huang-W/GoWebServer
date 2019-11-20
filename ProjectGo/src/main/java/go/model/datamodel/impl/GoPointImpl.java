@@ -17,12 +17,12 @@ public class GoPointImpl implements GoPoint {
 
     @Override
     public int getX() {
-        return 0;
+        return x;
     }
 
     @Override
     public int getY() {
-        return 0;
+        return y;
     }
 
     @Override
