@@ -1,5 +1,6 @@
 package go.view.datamodel;
 
+import java.awt.Color;
 import java.awt.Point;
 
 /**
@@ -19,4 +20,11 @@ public interface GoView {
      * @param location the location to remove the stone from.
      */
     void drawEmptySpace(Point location);
+    
+    /**
+     * Announce the Game Winner!
+     * @param color the Color of the winner
+     * @param points the amount of points the winner won by
+     */
+    void announceGameWinner(Color color, double points);
 }

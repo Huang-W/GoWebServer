@@ -28,6 +28,7 @@ public class WelcomeScreen extends GoScreenImpl {
 	
 	private final int PANEL_SIZE = 200;
 	private final int SCREEN_SIZE = 600;
+	private final int PANELS_PER_ROW = 3;
 	private final Dimension buttonDim = new Dimension(150, 100);
 	private final Image bgImg = new ImageIcon("images/welcome.jpg").getImage();
 	private final Border buttonBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED, 
@@ -44,15 +45,15 @@ public class WelcomeScreen extends GoScreenImpl {
 		this.setLayout( new GridBagLayout() );
 		this.setPreferredSize(new Dimension(SCREEN_SIZE, SCREEN_SIZE));
 		
-		welcomePanels = new JPanel[3][3];
+		welcomePanels = new JPanel[PANELS_PER_ROW][PANELS_PER_ROW];
 		buttons = new ArrayList<JComponent>();
 		initPanels();
 		initButtons();
 		
 		// Fill in welcomeScreen panels
-		addComponent(startNewGame, GridBagConstraints.LINE_START);
-		addComponent(Box.createRigidArea(buttonDim), GridBagConstraints.CENTER);
-		addComponent(configNewGame, GridBagConstraints.LINE_END);
+		welcomePanels[0][1].add(startNewGame);
+		welcomePanels[1][1].add(Box.createRigidArea(buttonDim));
+		welcomePanels[2][1].add(configNewGame);
 		
         // Filler bottom component that will push the rest to the top
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -61,43 +62,6 @@ public class WelcomeScreen extends GoScreenImpl {
 		gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         this.add(Box.createGlue(), gbc);
-	}
-	
-	private void addComponent(Component component, int gridBagConstraint)
-	{
-		switch(gridBagConstraint)
-		{
-		case GridBagConstraints.FIRST_LINE_START:
-			welcomePanels[0][0].add(component);
-			break;
-		case GridBagConstraints.PAGE_START:
-			welcomePanels[1][0].add(component);
-			break;
-		case GridBagConstraints.FIRST_LINE_END:
-			welcomePanels[2][0].add(component);
-			break;
-		case GridBagConstraints.LINE_START:
-			welcomePanels[0][1].add(component);
-			break;
-		case GridBagConstraints.CENTER:
-			welcomePanels[1][1].add(component);
-			break;
-		case GridBagConstraints.LINE_END:
-			welcomePanels[2][1].add(component);
-			break;
-		case GridBagConstraints.LAST_LINE_START:
-			welcomePanels[0][2].add(component);
-			break;
-		case GridBagConstraints.PAGE_END:
-			welcomePanels[1][2].add(component);
-			break;
-		case GridBagConstraints.LAST_LINE_END:
-			welcomePanels[2][2].add(component);
-			break;
-		default:
-			System.err.println("Invalid WelcomeScreen Constraint in " + this.getClass().getName() +
-					" with GridBagConstraint of " + gridBagConstraint);
-		}
 	}
 	
 	private void initPanels()

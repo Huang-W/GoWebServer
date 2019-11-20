@@ -158,18 +158,6 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 		Point point = new Point(event.getX(), event.getY());
 		notifyObserversOfMouseClick(point);
 		System.out.println("xCoord: " + event.getX() + " yCoord: " + event.getY());
-		
-		// temp code to test drawing
-		// remove later
-		Graphics g = ((Component) gameScreenController.getGoScreenSubject()).getGraphics();
-		g.setColor(BoardPanel.BG_COLOR);
-		g.fillRect(event.getX() - BoardPanel.TILE_SIZE/2, 
-				event.getY() - BoardPanel.TILE_SIZE/2, 
-				BoardPanel.TILE_SIZE, BoardPanel.TILE_SIZE);
-		g.setColor(Color.BLACK);
-		g.fillOval(event.getX() - BoardPanel.TILE_SIZE/2, 
-				event.getY() - BoardPanel.TILE_SIZE/2, 
-				BoardPanel.TILE_SIZE, BoardPanel.TILE_SIZE);
 	}
 	
 	private void showGameScreen() {
@@ -213,6 +201,31 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	@Override
 	public void addViewObserver(GoViewObserver observer) {
 		viewObservers.add(observer);
+	}
+
+	@Override
+	public void announceGameWinner(Color color, double points) {
+		if (gameScreen.equals(currentScreen)) {
+			int chosenOption = JOptionPane.showOptionDialog(GoViewImpl.this,
+					color.toString() + " wins by " + points + " points.\n" + 
+					"Would you like to close the app or start a new game?",
+					color.toString() + " Wins!",
+					JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					options,
+					options[CLOSE_APP]);
+			if (chosenOption == RESTART_APP) {
+				GoViewImpl.this.notifyObserversOfWindowClose();
+				showWelcomeScreen();
+				return;
+			}
+			else if (chosenOption == CANCEL) {
+				return;
+			}
+		}
+	    GoViewImpl.this.setVisible(false);
+	    GoViewImpl.this.dispose();
 	}
 
 }
