@@ -50,16 +50,69 @@ public class GoCaptureImplTest {
     }
     @Test
     public void testCapturePiecesForMove_AdjacentStonesProtectNeighbors() {
+        // setup
+        GoGameBoard goGameBoard = new GoGameBoardImpl(TEST_SIZE);
+        // set up the board - white has two adjacent pieces.
+        // black is near surrounding it but two moves away. It must also have stones on 1, 2 and 2, 2 to capture the white stones.
+        goGameBoard.setStone(getMove(1, 1, StoneColor.WHITE));
+        goGameBoard.setStone(getMove(2, 1, StoneColor.WHITE));
+        goGameBoard.setStone(getMove(1, 0, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(2, 0, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(0, 1, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(3, 1, StoneColor.BLACK));
+        GoMove notCapturingMove = getMove(1, 2, StoneColor.BLACK);
 
+        // run
+        List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, notCapturingMove);
+
+        // verify
+        // no pieces were captured
+        assertEquals(0, capturedStoneLocations.size());
     }
     @Test
     public void testCapturePiecesForMove_CapturesEdgeAndCornerStones() {
+        // setup
+        GoGameBoard goGameBoard = new GoGameBoardImpl(TEST_SIZE);
+        // set up the board - black has a corner piece, so white only needs two stones to capture it
+        goGameBoard.setStone(getMove(0, 0, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(1, 0, StoneColor.WHITE));
+        GoMove capturingMove = getMove(0, 1, StoneColor.WHITE);
 
+        // run
+        List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
+
+        // verify
+        // one piece was captured
+        assertEquals(1, capturedStoneLocations.size());
+        // the captured piece was black's corner piece
+        assertEquals(GoPointImpl.of(0, 0), capturedStoneLocations.get(0));
     }
 
     @Test
     public void testCapturePiecesForMove_CapturesMultipleStoneGroup() {
+        // setup
+        GoGameBoard goGameBoard = new GoGameBoardImpl(TEST_SIZE);
+        // set up the board - white has two adjacent pieces.
+        // black is near surrounding the group - black must also have a stone on 1, 2 to capture the white stones.
+        goGameBoard.setStone(getMove(1, 1, StoneColor.WHITE));
+        goGameBoard.setStone(getMove(2, 1, StoneColor.WHITE));
+        goGameBoard.setStone(getMove(1, 0, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(2, 0, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(0, 1, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(3, 1, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(2, 2, StoneColor.BLACK));
 
+        GoMove capturingMove = getMove(1, 2, StoneColor.BLACK);
+
+        // run
+        List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
+
+        // verify
+        // two pieces were captured
+        assertEquals(2, capturedStoneLocations.size());
+        // white's group was captured
+        assertTrue(capturedStoneLocations.contains(GoPointImpl.of(1, 1)));
+        assertTrue(capturedStoneLocations.contains(GoPointImpl.of(2, 1)));
     }
 
 
