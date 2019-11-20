@@ -51,9 +51,9 @@ public class GoGameImpl implements GoGameSubject, GoGame {
     	if (board.getStone(point).isPresent())
     		return;
         GoMove move = new GoMoveImpl(point, nextPlayer);
+        this.notifyObserversOfPiecePlacement(move);
         capture.capturePiecesForMove(board, move)
                 .forEach(this::notifyObserversOfPieceRemoval);
-        this.notifyObserversOfPiecePlacement(move);
         rotateNextPlayer();
         lastMovePassed = false;
     }

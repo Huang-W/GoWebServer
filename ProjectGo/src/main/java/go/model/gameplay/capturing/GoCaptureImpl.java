@@ -101,7 +101,7 @@ private  List<GoMoveImpl> getNeighbours(int row, int col, GoGameBoard board) {
             neighbors.add(new GoMoveImpl(location, stone.get()));    
         } 
     }
-    if (col > 1) {
+    if (col > 0) {
         GoPoint location = new GoPointImpl(row, col - 1);
         Optional<StoneColor> stone = board.getStone(location);
         if(stone.isPresent()){

@@ -38,6 +38,7 @@ public class GoCaptureImplTest {
         goGameBoard.setStone(getMove(1, 0, StoneColor.BLACK));
         goGameBoard.setStone(getMove(2, 1, StoneColor.BLACK));
         GoMove capturingMove = getMove(1, 2, StoneColor.BLACK);
+        goGameBoard.setStone(capturingMove);
 
         // run
         List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
@@ -61,6 +62,7 @@ public class GoCaptureImplTest {
         goGameBoard.setStone(getMove(0, 1, StoneColor.BLACK));
         goGameBoard.setStone(getMove(3, 1, StoneColor.BLACK));
         GoMove notCapturingMove = getMove(1, 2, StoneColor.BLACK);
+        goGameBoard.setStone(notCapturingMove);
 
         // run
         List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, notCapturingMove);
@@ -77,6 +79,7 @@ public class GoCaptureImplTest {
         goGameBoard.setStone(getMove(0, 0, StoneColor.BLACK));
         goGameBoard.setStone(getMove(1, 0, StoneColor.WHITE));
         GoMove capturingMove = getMove(0, 1, StoneColor.WHITE);
+        goGameBoard.setStone(capturingMove);
 
         // run
         List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
@@ -87,6 +90,7 @@ public class GoCaptureImplTest {
         // the captured piece was black's corner piece
         assertEquals(GoPointImpl.of(0, 0), capturedStoneLocations.get(0));
     }
+
 
     @Test
     public void testCapturePiecesForMove_CapturesMultipleStoneGroup() {
@@ -101,8 +105,8 @@ public class GoCaptureImplTest {
         goGameBoard.setStone(getMove(0, 1, StoneColor.BLACK));
         goGameBoard.setStone(getMove(3, 1, StoneColor.BLACK));
         goGameBoard.setStone(getMove(2, 2, StoneColor.BLACK));
-
         GoMove capturingMove = getMove(1, 2, StoneColor.BLACK);
+        goGameBoard.setStone(capturingMove);
 
         // run
         List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
@@ -114,7 +118,31 @@ public class GoCaptureImplTest {
         assertTrue(capturedStoneLocations.contains(GoPointImpl.of(1, 1)));
         assertTrue(capturedStoneLocations.contains(GoPointImpl.of(2, 1)));
     }
+    @Test
+    public void testCapturePiecesForMove_CapturesMultipleGroupsOfStones() {
+        // setup
+        GoGameBoard goGameBoard = new GoGameBoardImpl(TEST_SIZE);
+        // set up the board - black has two separate isolated pieces
+        // white will surround both of the pieces in one move
+        goGameBoard.setStone(getMove(1, 1, StoneColor.WHITE));
+        goGameBoard.setStone(getMove(3, 1, StoneColor.WHITE));
+        goGameBoard.setStone(getMove(1, 0, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(3, 0, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(0, 1, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(4, 1, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(1, 2, StoneColor.BLACK));
+        goGameBoard.setStone(getMove(3, 2, StoneColor.BLACK));
+        GoMove capturingMove = getMove(1, 2, StoneColor.BLACK);
+        goGameBoard.setStone(capturingMove);
 
+        // run
+        List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
 
-
+        // verify
+        // two pieces were captured
+        assertEquals(2, capturedStoneLocations.size());
+        // white's group was captured
+        assertTrue(capturedStoneLocations.contains(GoPointImpl.of(1, 1)));
+        assertTrue(capturedStoneLocations.contains(GoPointImpl.of(3, 1)));
+    }
 }
