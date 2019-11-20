@@ -120,11 +120,12 @@ private  List<GoMoveImpl> getNeighbours(int row, int col, GoGameBoard board) {
 
 private  List<GoMoveImpl> getSameColorNeighbours(int row, int col, GoGameBoard board, StoneColor color) {
     List<GoMoveImpl> neighbors = getNeighbours(row, col, board);
+    List<GoMoveImpl> sameColorNeighbors = new ArrayList<>();
     for (GoMoveImpl neighbor : neighbors) {
-        if (neighbor.getStoneColor() != color) {
-            neighbors.remove(neighbor);          
+        if (neighbor.getStoneColor() == color) {
+            sameColorNeighbors.add(neighbor);
         }
     }
-    return neighbors;
+    return sameColorNeighbors;
 }
 }
