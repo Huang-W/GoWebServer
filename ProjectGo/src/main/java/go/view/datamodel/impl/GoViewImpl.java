@@ -13,10 +13,11 @@ import go.view.observer.GoScreenObserver;
 import go.view.observer.GoViewObserver;
 import go.view.observer.GoViewSubject;
 import go.view.panel.BoardPanel;
-import go.view.screen.GameScreen;
-import go.view.screen.WelcomeScreen;
 import go.view.screen.controller.ScreenController;
 import go.view.screen.controller.impl.ScreenControllerImpl;
+import go.view.screen.impl.GameScreen;
+import go.view.screen.impl.GoScreenImpl;
+import go.view.screen.impl.WelcomeScreen;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -36,9 +37,11 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	public static final Dimension CENTER_DIM = new Dimension( 700, 700);
 	public static final Dimension EAST_DIM = new Dimension( 200, 600);
 	
+	private GoScreenImpl currentScreen;
+	private GoScreenImpl gameScreen;
+	private GoScreenImpl welcomeScreen;
 	private ScreenController gameScreenController;
 	private ScreenController welcomeScreenController;
-	private Component currentScreen;
 	
 	private final String[] options = {"Close App", "Restart", "Cancel"};
 	private final int CLOSE_APP = 0;
@@ -54,26 +57,28 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	
 	public GoViewImpl() { 
 		viewObservers = new LinkedList<GoViewObserver>();
-		gameScreenController = new ScreenControllerImpl(new GameScreen());
+		gameScreen = new GameScreen();
+		welcomeScreen = new WelcomeScreen();
+		gameScreenController = new ScreenControllerImpl(gameScreen);
 		gameScreenController.getGoScreenSubject().registerGoScreenObserver(this);
-		welcomeScreenController = new ScreenControllerImpl(new WelcomeScreen());
+		welcomeScreenController = new ScreenControllerImpl(welcomeScreen);
 		welcomeScreenController.getGoScreenSubject().registerGoScreenObserver(this);
-		currentScreen = (Component) welcomeScreenController.getGoScreenSubject();
+		currentScreen = welcomeScreen;
 		
 		GoViewImpl.this.setBackground(Color.GRAY);
 	    GoViewImpl.this.setLayout(new BorderLayout());
-	    GoViewImpl.this.add((Component) gameScreenController.getGoScreenSubject(), BorderLayout.NORTH);
-	    GoViewImpl.this.add((Component) welcomeScreenController.getGoScreenSubject(), BorderLayout.SOUTH);
+	    GoViewImpl.this.add(gameScreen, BorderLayout.NORTH);
+	    GoViewImpl.this.add(welcomeScreen, BorderLayout.SOUTH);
 	    GoViewImpl.this.setResizable(false);
 	    GoViewImpl.this.setLocationByPlatform(true);
+	    
 		showWelcomeScreen();
-	    GoViewImpl.this.setVisible(true);
 	    
 	    GoViewImpl.this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		GoViewImpl.this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				if (currentScreen.isVisible()) {
+				if (gameScreen.equals(currentScreen)) {
 					int chosenOption = JOptionPane.showOptionDialog(GoViewImpl.this,
 							"Would you like to close the app or start a new game?",
 							"Confirm Close",
@@ -83,6 +88,7 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 							options,
 							options[CLOSE_APP]);
 					if (chosenOption == RESTART_APP) {
+						GoViewImpl.this.notifyObserversOfWindowClose();
 						showWelcomeScreen();
 						return;
 					}
@@ -99,6 +105,10 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	@Override
 	public void drawStone(GoMove move) {
 		Graphics g = ((Component) gameScreenController.getGoScreenSubject()).getGraphics();
+		g.setColor(BoardPanel.BG_COLOR);
+		g.fillRect(move.getPoint().x - BoardPanel.TILE_SIZE/2, 
+				move.getPoint().y - BoardPanel.TILE_SIZE/2, 
+				BoardPanel.TILE_SIZE, BoardPanel.TILE_SIZE);
 		g.setColor(move.getStoneColor());
 		g.fillOval(move.getPoint().x - BoardPanel.TILE_SIZE/2, 
 				move.getPoint().y - BoardPanel.TILE_SIZE/2, 
@@ -108,10 +118,15 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	@Override
 	public void drawEmptySpace(Point location) {
 		Graphics g = ((Component) gameScreenController.getGoScreenSubject()).getGraphics();
-		g.setColor(Color.BLACK);
-		g.drawLine(location.x - BoardPanel.TILE_SIZE/2,
-				location.y - BoardPanel.TILE_SIZE/2,
+		g.setColor(BoardPanel.BG_COLOR);
+		g.fillRect(location.x - BoardPanel.TILE_SIZE/2, 
+				location.y - BoardPanel.TILE_SIZE/2, 
 				BoardPanel.TILE_SIZE, BoardPanel.TILE_SIZE);
+		g.setColor(Color.BLACK);
+		g.drawLine(location.x - BoardPanel.TILE_SIZE/2, location.y,
+				location.x + BoardPanel.TILE_SIZE, location.y);
+		g.drawLine(location.x, location.y - BoardPanel.TILE_SIZE/2,
+				location.x, location.y + BoardPanel.TILE_SIZE);
 	}
 	
 	@Override
@@ -121,6 +136,17 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 		case QUICK_START:
 			showGameScreen();
 			break;
+		case PASS:
+			notifyObserversOfPassTurnRequest();
+			break;
+		case UNDO:
+			notifyObserversOfUndoMoveRequest();
+			break;
+		case CONFIG_START:
+			System.out.println("Should we implement this or not?");
+			break;
+		default:
+			System.out.println("I don't know how to throw exceptions");
 		}
 	}
 
@@ -130,24 +156,34 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 		notifyObserversOfMouseClick(point);
 		
 		// temp code to test drawing
+		// remove later
 		Graphics g = ((Component) gameScreenController.getGoScreenSubject()).getGraphics();
+		g.setColor(BoardPanel.BG_COLOR);
+		g.fillRect(event.getX() - BoardPanel.TILE_SIZE/2, 
+				event.getY() - BoardPanel.TILE_SIZE/2, 
+				BoardPanel.TILE_SIZE, BoardPanel.TILE_SIZE);
+		g.setColor(Color.BLACK);
 		g.fillOval(event.getX() - BoardPanel.TILE_SIZE/2, 
 				event.getY() - BoardPanel.TILE_SIZE/2, 
 				BoardPanel.TILE_SIZE, BoardPanel.TILE_SIZE);
 	}
 	
 	private void showGameScreen() {
+		currentScreen = gameScreen;
 		gameScreenController.showScreen();
 		welcomeScreenController.hideScreen();
 		validate();
 		pack();
+	    GoViewImpl.this.setVisible(true);
 	}
-	
+
 	private void showWelcomeScreen() {
+		currentScreen = welcomeScreen;
 		gameScreenController.hideScreen();
 		welcomeScreenController.showScreen();
 		validate();
 		pack();
+	    GoViewImpl.this.setVisible(true);
 	}
 
 	@Override
@@ -169,10 +205,10 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	public void notifyObserversOfWindowClose() {
 		viewObservers.forEach(observer -> observer.handleWindowClose());
 	}
-	
+
 	@Override
 	public void addViewObserver(GoViewObserver observer) {
 		viewObservers.add(observer);
 	}
-	
+
 }

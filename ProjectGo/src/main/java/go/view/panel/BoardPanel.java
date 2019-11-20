@@ -6,8 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -22,37 +20,19 @@ public class BoardPanel extends JPanel {
 	public static final int NUM_TILES = BOARD_SIZE - 1;
 	public static final int TILE_SIZE = GoViewImpl.CENTER_DIM.width / (NUM_TILES + 2);
 	public static final int BORDER_SIZE = TILE_SIZE;
+	public static final Color BG_COLOR = Color.ORANGE;
 	
 	Border border;
 	Insets insets;
-	
-	// initialize off-screen
-	private int xCoordLastMove = -100;
-	private int yCoordLastMove = -100;
-	
 	
 	public BoardPanel()
 	{
 		this.setPreferredSize(GoViewImpl.CENTER_DIM);
 		border = new EmptyBorder( BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE);
 		this.setLayout(new BorderLayout());
-		this.setBackground(Color.ORANGE);
+		this.setBackground(BG_COLOR);
 		this.setBorder(border);
 		insets = border.getBorderInsets(this);
-		/*
-		this.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				xCoordLastMove = e.getX();
-				yCoordLastMove = e .getY();
-				BoardPanel.this.getGraphics().fillOval(xCoordLastMove - TILE_SIZE/2, 
-						yCoordLastMove - TILE_SIZE/2, 
-						TILE_SIZE, TILE_SIZE);
-				System.out.println("Point clicked at X: " + xCoordLastMove +
-						" Y: " + yCoordLastMove);
-			}
-		});
-		*/
 	}
 	
 	@Override
@@ -84,18 +64,16 @@ public class BoardPanel extends JPanel {
 	    	xCoord = String.valueOf((char) (chVal + 1));
 	    }
 	    // Draw yCoord System
-	    String yCoord = "1";
+	    String yCoord = "";
 	    for (int i = BOARD_SIZE; i > 0; i--) {
-	    	int chVal = yCoord.charAt(0);
+	    	yCoord = "" + i;
 	    	g2.drawString(yCoord, 
 	    			BORDER_SIZE / 2, (i - 1) * TILE_SIZE + BORDER_SIZE);
 	    	g2.drawString(yCoord, 
 	    			3 * BORDER_SIZE / 2 + TILE_SIZE * NUM_TILES, (i - 1) * TILE_SIZE + BORDER_SIZE);
-	    	yCoord = String.valueOf((char) (chVal + 1));
 	    }
 	    
 	    drawStarPoints(g2, 5);
-	    //g2.fillOval(xCoordLastMove - TILE_SIZE/2, yCoordLastMove - TILE_SIZE/2, TILE_SIZE, TILE_SIZE);
 	}
 	
 	// draws little points on the board, will do something about this later
