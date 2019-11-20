@@ -57,13 +57,16 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	
 	public GoViewImpl() { 
 		viewObservers = new LinkedList<GoViewObserver>();
+		
 		gameScreen = new GameScreen();
 		welcomeScreen = new WelcomeScreen();
-		gameScreenController = new ScreenControllerImpl(gameScreen);
-		gameScreenController.getGoScreenSubject().registerGoScreenObserver(this);
-		welcomeScreenController = new ScreenControllerImpl(welcomeScreen);
-		welcomeScreenController.getGoScreenSubject().registerGoScreenObserver(this);
 		currentScreen = welcomeScreen;
+		
+		gameScreenController = new ScreenControllerImpl(gameScreen);
+		welcomeScreenController = new ScreenControllerImpl(welcomeScreen);
+		
+		gameScreenController.getGoScreenSubject().registerGoScreenObserver(this);
+		welcomeScreenController.getGoScreenSubject().registerGoScreenObserver(this);
 		
 		GoViewImpl.this.setBackground(Color.GRAY);
 	    GoViewImpl.this.setLayout(new BorderLayout());
@@ -154,6 +157,7 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	public void handleMouseEvent(MouseEvent event) {
 		Point point = new Point(event.getX(), event.getY());
 		notifyObserversOfMouseClick(point);
+		System.out.println("xCoord: " + event.getX() + " yCoord: " + event.getY());
 		
 		// temp code to test drawing
 		// remove later
