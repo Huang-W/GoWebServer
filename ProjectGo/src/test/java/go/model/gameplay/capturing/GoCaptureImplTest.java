@@ -24,20 +24,16 @@ public class GoCaptureImplTest {
         goCapture = new GoCaptureImpl(TEST_SIZE);
     }
 
-    private GoMove getMove(int x, int y, StoneColor color) {
-        return new GoMoveImpl(GoPointImpl.of(x, y), color);
-    }
-
     @Test
     public void testCapturePiecesForMove_CapturesSimpleSurroundedStone() {
         // setup
         GoGameBoard goGameBoard = new GoGameBoardImpl(TEST_SIZE);
         // set up the board so white is almost surrounded
-        goGameBoard.setStone(getMove(1, 1, StoneColor.WHITE));
-        goGameBoard.setStone(getMove(0, 1, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(1, 0, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(2, 1, StoneColor.BLACK));
-        GoMove capturingMove = getMove(1, 2, StoneColor.BLACK);
+        goGameBoard.setStone(GoMove.of(1, 1, StoneColor.WHITE));
+        goGameBoard.setStone(GoMove.of(0, 1, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(1, 0, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(2, 1, StoneColor.BLACK));
+        GoMove capturingMove = GoMove.of(1, 2, StoneColor.BLACK);
         goGameBoard.setStone(capturingMove);
 
         // run
@@ -55,13 +51,13 @@ public class GoCaptureImplTest {
         GoGameBoard goGameBoard = new GoGameBoardImpl(TEST_SIZE);
         // set up the board - white has two adjacent pieces.
         // black is near surrounding it but two moves away. It must also have stones on 1, 2 and 2, 2 to capture the white stones.
-        goGameBoard.setStone(getMove(1, 1, StoneColor.WHITE));
-        goGameBoard.setStone(getMove(2, 1, StoneColor.WHITE));
-        goGameBoard.setStone(getMove(1, 0, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(2, 0, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(0, 1, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(3, 1, StoneColor.BLACK));
-        GoMove notCapturingMove = getMove(1, 2, StoneColor.BLACK);
+        goGameBoard.setStone(GoMove.of(1, 1, StoneColor.WHITE));
+        goGameBoard.setStone(GoMove.of(2, 1, StoneColor.WHITE));
+        goGameBoard.setStone(GoMove.of(1, 0, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(2, 0, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(0, 1, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(3, 1, StoneColor.BLACK));
+        GoMove notCapturingMove = GoMove.of(1, 2, StoneColor.BLACK);
         goGameBoard.setStone(notCapturingMove);
 
         // run
@@ -76,9 +72,9 @@ public class GoCaptureImplTest {
         // setup
         GoGameBoard goGameBoard = new GoGameBoardImpl(TEST_SIZE);
         // set up the board - black has a corner piece, so white only needs two stones to capture it
-        goGameBoard.setStone(getMove(0, 0, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(1, 0, StoneColor.WHITE));
-        GoMove capturingMove = getMove(0, 1, StoneColor.WHITE);
+        goGameBoard.setStone(GoMove.of(0, 0, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(1, 0, StoneColor.WHITE));
+        GoMove capturingMove = GoMove.of(0, 1, StoneColor.WHITE);
         goGameBoard.setStone(capturingMove);
 
         // run
@@ -98,14 +94,14 @@ public class GoCaptureImplTest {
         GoGameBoard goGameBoard = new GoGameBoardImpl(TEST_SIZE);
         // set up the board - white has two adjacent pieces.
         // black is near surrounding the group - black must also have a stone on 1, 2 to capture the white stones.
-        goGameBoard.setStone(getMove(1, 1, StoneColor.WHITE));
-        goGameBoard.setStone(getMove(2, 1, StoneColor.WHITE));
-        goGameBoard.setStone(getMove(1, 0, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(2, 0, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(0, 1, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(3, 1, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(2, 2, StoneColor.BLACK));
-        GoMove capturingMove = getMove(1, 2, StoneColor.BLACK);
+        goGameBoard.setStone(GoMove.of(1, 1, StoneColor.WHITE));
+        goGameBoard.setStone(GoMove.of(2, 1, StoneColor.WHITE));
+        goGameBoard.setStone(GoMove.of(1, 0, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(2, 0, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(0, 1, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(3, 1, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(2, 2, StoneColor.BLACK));
+        GoMove capturingMove = GoMove.of(1, 2, StoneColor.BLACK);
         goGameBoard.setStone(capturingMove);
 
         // run
@@ -124,15 +120,15 @@ public class GoCaptureImplTest {
         GoGameBoard goGameBoard = new GoGameBoardImpl(TEST_SIZE);
         // set up the board - black has two separate isolated pieces
         // white will surround both of the pieces in one move
-        goGameBoard.setStone(getMove(1, 1, StoneColor.WHITE));
-        goGameBoard.setStone(getMove(3, 1, StoneColor.WHITE));
-        goGameBoard.setStone(getMove(1, 0, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(3, 0, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(0, 1, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(4, 1, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(1, 2, StoneColor.BLACK));
-        goGameBoard.setStone(getMove(3, 2, StoneColor.BLACK));
-        GoMove capturingMove = getMove(1, 2, StoneColor.BLACK);
+        goGameBoard.setStone(GoMove.of(1, 1, StoneColor.WHITE));
+        goGameBoard.setStone(GoMove.of(3, 1, StoneColor.WHITE));
+        goGameBoard.setStone(GoMove.of(1, 0, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(3, 0, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(0, 1, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(4, 1, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(1, 2, StoneColor.BLACK));
+        goGameBoard.setStone(GoMove.of(3, 2, StoneColor.BLACK));
+        GoMove capturingMove = GoMove.of(1, 2, StoneColor.BLACK);
         goGameBoard.setStone(capturingMove);
 
         // run

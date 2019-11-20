@@ -4,10 +4,8 @@ import go.model.datamodel.GoGameBoard;
 import go.model.datamodel.GoMove;
 import go.model.datamodel.GoPoint;
 import go.model.datamodel.StoneColor;
-import go.model.observer.GoGameObserver;
 import go.model.observer.GoMoveObserver;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,6 +40,11 @@ public class GoGameBoardImpl implements GoGameBoard, GoMoveObserver {
     @Override
     public void removeStone(GoPoint location) {
         board.get(location.getX()).set(location.getY(), null);
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     @Override

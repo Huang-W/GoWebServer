@@ -9,6 +9,7 @@ import go.model.gameplay.GoCapture;
 import go.model.gameplay.GoScoringStrategy;
 import go.model.gameplay.capturing.GoCaptureImpl;
 import go.model.gameplay.scoring.ChineseScoringStrategy;
+import go.model.gameplay.scoring.SimpleScoringStrategy;
 import go.model.observer.GoGameObserver;
 import go.model.observer.GoGameSubject;
 import go.model.observer.GoMoveObserver;
@@ -31,7 +32,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
 
     public GoGameImpl() {
         // @todo determine which strategy we'll actually use - we needn't implement both.
-        this(new GoCaptureImpl(BOARD_SIZE), new ChineseScoringStrategy());
+        this(new GoCaptureImpl(BOARD_SIZE), new SimpleScoringStrategy());
     }
 
     public GoGameImpl(GoCapture capture, GoScoringStrategy strategy) {

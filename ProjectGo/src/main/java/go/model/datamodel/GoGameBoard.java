@@ -24,4 +24,10 @@ public interface GoGameBoard {
      * @param location the location to remove the stone from.
      */
     void removeStone(GoPoint location);
+
+    /**
+     * Return the size of a side of this go board.
+     * @return This go board's size.
+     */
+    int size();
 }
