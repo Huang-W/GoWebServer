@@ -28,9 +28,12 @@ public class GoCaptureImpl implements GoCapture {
         int col = move.getPoint().getY();
         // get neighbors
         List<GoMoveImpl> neighbors = getNeighbours(row, col, board);
+        System.out.println("neighbors "+neighbors);
         for (GoMoveImpl neighbor : neighbors) {
+            System.out.println("neighbor "+neighbor);
             if (neighbor.getStoneColor() != move.getStoneColor()) {
                 //todo  
+                System.out.println("neighbor getStoneColor diff "+neighbor.getStoneColor());
                 chainLiberties(neighbor, board, capturedPoints);                              
             }
         }
@@ -38,14 +41,42 @@ public class GoCaptureImpl implements GoCapture {
     }
 
 private void chainLiberties(GoMoveImpl stone, GoGameBoard board, List<GoPoint> capturedPoints) {
-    boolean chainHasNoliberties = true;
+    
     //when chain has no liberties, return true
     Set<GoMoveImpl> chain = findChain( stone, board);
+    Set<Boolean> chainElemntHasLibertieSet = new HashSet<Boolean>();  
+    System.out.println("chain "+chain);
     for (GoMoveImpl e : chain) {
-        if(getNeighbours(e.getPoint().getX(), e.getPoint().getY(), board).size() != 4)
-        chainHasNoliberties = false;
+        boolean chainHasNoliberties = false;
+        System.out.println("e in chain "+e);
+        int x = e.getPoint().getX();
+        int y = e.getPoint().getY();
+        int size = getNeighbours(x, y, board).size();
+
+        if(x == 0 || y == 0 || x == SIZE-1 || y == SIZE-1){
+            if(x==0 && y ==0 && size ==2)
+                chainHasNoliberties = true;
+            else if ((x==0 || y==0) && size ==3)
+                chainHasNoliberties = true;
+            if(x==SIZE-1 && y ==SIZE-1 && size ==2)
+                chainHasNoliberties = true;
+            else if ((x==SIZE-1 || y==SIZE-1) && size ==3)
+                chainHasNoliberties = true;
+        }
+        else{
+            if(size == 4)
+            chainHasNoliberties = true;
+        }      
+        chainElemntHasLibertieSet.add(chainHasNoliberties);
     }
-    if(chainHasNoliberties){
+    boolean allTrue = true;
+    for (boolean e : chainElemntHasLibertieSet) {
+        if(!e)
+            allTrue = false;
+    }
+    System.out.println("allTrue "+allTrue);
+    if(allTrue){
+        System.out.println("allTrue "+allTrue);
         for (GoMoveImpl e : chain) {
             capturedPoints.add(e.getPoint());
         }
@@ -115,6 +146,7 @@ private  List<GoMoveImpl> getNeighbours(int row, int col, GoGameBoard board) {
             neighbors.add(new GoMoveImpl(location, stone.get()));    
         }             
     }
+    System.out.println("getNeighbours neighbors "+neighbors);
     return neighbors;
 }
 
