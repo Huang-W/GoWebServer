@@ -31,23 +31,13 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
 
     @Override
     public void handlePieceAdditionEvent(GoMove move) {
-        int x = move.getPoint().getX();
-        int y = move.getPoint().getY();
-        Color color;
-        StoneColor stonecolor = move.getStoneColor();
-        if(stonecolor.equals(stonecolor.BLACK))
-        {
-            color = new Color(0, 0, 0);
-        }
-        else
-        {
-            color = new Color(255, 255,  255);
-        }
-        int col = Math.round((float) (x - BORDER_SIZE) / TILE_SIZE);
-        int row = Math.round((float) (y - BORDER_SIZE) / TILE_SIZE);
-        goViewController.drawStone(col, row, color);
-
+        int x = move.getPoint().getX() * TILE_SIZE + BORDER_SIZE;
+        int y = move.getPoint().getY() * TILE_SIZE + BORDER_SIZE;
+        Color color = move.getStoneColor().equals(StoneColor.BLACK) ? Color.BLACK : Color.WHITE;
+        goViewController.drawStone(x, y, color);
+        System.out.println("col: " + x + " row: " + y);
     }
+
     @Override
     public void handlePieceRemovalEvent(GoPoint point) {
         int x = point.getX();
@@ -70,4 +60,5 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
     }
 
 }
+
 
