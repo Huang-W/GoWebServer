@@ -8,7 +8,6 @@ import go.model.datamodel.StoneColor;
 import go.model.gameplay.GoCapture;
 import go.model.gameplay.GoScoringStrategy;
 import go.model.gameplay.capturing.GoCaptureImpl;
-import go.model.gameplay.scoring.ChineseScoringStrategy;
 import go.model.gameplay.scoring.SimpleScoringStrategy;
 import go.model.observer.GoGameObserver;
 import go.model.observer.GoGameSubject;
@@ -49,12 +48,12 @@ public class GoGameImpl implements GoGameSubject, GoGame {
 
     @Override
     public void makeMove(GoPoint point) {
+    	// Point is already occupied
     	if (board.getStone(point).isPresent())
     		return;
         GoMove move = new GoMoveImpl(point, nextPlayer);
         this.notifyObserversOfPiecePlacement(move);
-        capture.capturePiecesForMove(board, move)
-                .forEach(this::notifyObserversOfPieceRemoval);
+        capture.capturePiecesForMove(board, move).forEach(this::notifyObserversOfPieceRemoval);
         rotateNextPlayer();
         lastMovePassed = false;
     }
