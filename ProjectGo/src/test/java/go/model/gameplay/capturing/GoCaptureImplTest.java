@@ -37,8 +37,7 @@ public class GoCaptureImplTest {
         goGameBoard.setStone(capturingMove);
 
         // run
-        List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
-        System.out.println("testCapturePiecesForMove_CapturesSimpleSurroundedStone "+capturedStoneLocations);
+        List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);        
         // verify
         // one piece was captured
         assertEquals(1, capturedStoneLocations.size());
@@ -60,7 +59,7 @@ public class GoCaptureImplTest {
 
         // run
         List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
-        System.out.println("testCapturePiecesForMove_CapturesSimpleSurroundedStoneAtEnd "+capturedStoneLocations);
+        
         // verify
         // one piece was captured
         assertEquals(1, capturedStoneLocations.size());
@@ -100,7 +99,7 @@ public class GoCaptureImplTest {
 
         // run        
         List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);      
-        System.out.println("testCapturePiecesForMove_CapturesEdgeAndCornerStones "+capturedStoneLocations);
+        
         // verify
         // one piece was captured
         assertEquals(1, capturedStoneLocations.size());
@@ -127,7 +126,7 @@ public class GoCaptureImplTest {
 
         // run
         List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
-        System.out.println("testCapturePiecesForMove_CapturesMultipleStoneGroup "+capturedStoneLocations);
+        
         // verify
         // two pieces were captured
         assertEquals(2, capturedStoneLocations.size());
@@ -152,11 +151,9 @@ public class GoCaptureImplTest {
         GoMove capturingMove = GoMove.of(2, 1, StoneColor.BLACK);
         goGameBoard.setStone(capturingMove);
 
-        // run
-        System.out.println("===============");
-        List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);
-        System.out.println("testCapturePiecesForMove_CapturesMultipleGroupsOfStones "+capturedStoneLocations);
-        System.out.println("===============");
+        // run        
+        List<GoPoint> capturedStoneLocations = goCapture.capturePiecesForMove(goGameBoard, capturingMove);        
+        
         // verify
         // two pieces were captured
         assertEquals(2, capturedStoneLocations.size());
