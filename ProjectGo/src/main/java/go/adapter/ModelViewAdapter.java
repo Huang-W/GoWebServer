@@ -38,12 +38,14 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
         System.out.println("col: " + x + " row: " + y);
     }
 
-    @Override
+     @Override
     public void handlePieceRemovalEvent(GoPoint point) {
-        int x = point.getX();
-        int y = point.getY();
+        int x = point.getX() * TILE_SIZE + BORDER_SIZE;
+        int y = point.getY() * TILE_SIZE + BORDER_SIZE;
         goViewController.drawEmptySpace(x, y);
+        System.out.println("col: " + x + " row: " + y);
     }
+
 
     @Override
     public void handleGameEnd(StoneColor winner) {
