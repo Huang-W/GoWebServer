@@ -19,6 +19,7 @@ import go.view.screen.impl.GameScreen;
 import go.view.screen.impl.GoScreenImpl;
 import go.view.screen.impl.WelcomeScreen;
 
+import java.awt.GridBagConstraints;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -52,6 +53,9 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	public static final String UNDO = "UNDO";
 	public static final String QUICK_START = "QUICK_START";
 	public static final String CONFIG_START = "CONFIG_START";
+	
+	private final int FULL_TILE_LENGTH = BoardPanel.TILE_SIZE;
+	private final int HALF_TILE_LENGTH = BoardPanel.TILE_SIZE/2;
 	
     private List<GoViewObserver> viewObservers;
 	
@@ -104,34 +108,178 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 			}
 	    });
 	}
-	
+
 	@Override
 	public void drawStone(GoMove move) {
 		Graphics g = ((Component) gameScreenController.getGoScreenSubject()).getGraphics();
 		g.setColor(BoardPanel.BG_COLOR);
-		g.fillRect(move.getPoint().x - BoardPanel.TILE_SIZE/2, 
-				move.getPoint().y - BoardPanel.TILE_SIZE/2, 
-				BoardPanel.TILE_SIZE, BoardPanel.TILE_SIZE);
+		g.fillRect(move.getPoint().x - HALF_TILE_LENGTH, 
+				move.getPoint().y - HALF_TILE_LENGTH, 
+				FULL_TILE_LENGTH, FULL_TILE_LENGTH);
 		g.setColor(move.getStoneColor());
-		g.fillOval(move.getPoint().x - BoardPanel.TILE_SIZE/2, 
-				move.getPoint().y - BoardPanel.TILE_SIZE/2, 
-				BoardPanel.TILE_SIZE, BoardPanel.TILE_SIZE);
+		g.fillOval(move.getPoint().x - HALF_TILE_LENGTH, 
+				move.getPoint().y - HALF_TILE_LENGTH, 
+				FULL_TILE_LENGTH, FULL_TILE_LENGTH);
 	}
-	
+
 	@Override
 	public void drawEmptySpace(Point location) {
+		System.out.println("Drawing empty space " + location.toString());
 		Graphics g = ((Component) gameScreenController.getGoScreenSubject()).getGraphics();
 		g.setColor(BoardPanel.BG_COLOR);
-		g.fillRect(location.x - BoardPanel.TILE_SIZE/2, 
-				location.y - BoardPanel.TILE_SIZE/2, 
-				BoardPanel.TILE_SIZE, BoardPanel.TILE_SIZE);
+		g.fillRect(location.x - HALF_TILE_LENGTH, 
+				location.y - HALF_TILE_LENGTH, 
+				FULL_TILE_LENGTH, FULL_TILE_LENGTH);
 		g.setColor(Color.BLACK);
-		g.drawLine(location.x - BoardPanel.TILE_SIZE/2, location.y,
-				location.x + BoardPanel.TILE_SIZE, location.y);
-		g.drawLine(location.x, location.y - BoardPanel.TILE_SIZE/2,
-				location.x, location.y + BoardPanel.TILE_SIZE);
+		if (isCornerLocated(location))
+			drawEmptyCornerSpace(g, location, getCardinalCorner(location));
+		else if (isEdgeLocated(location))
+			drawEmptyEdgeSpace(g, location, getCardinalEdge(location));
+		else
+			drawEmptyInnerSpace(g, location);
 	}
-	
+
+	private void drawEmptyCornerSpace(Graphics g, Point location, int cardinalDirection) {
+		System.out.println("Drawing empty corner space");
+		switch(cardinalDirection)
+		{
+		case GridBagConstraints.NORTHWEST:
+			//left to right
+			g.drawLine(location.x, location.y, 
+					location.x + HALF_TILE_LENGTH, location.y);
+			//top to bottom
+			g.drawLine(location.x, location.y, 
+					location.x, location.y + HALF_TILE_LENGTH);
+			break;
+		case GridBagConstraints.NORTHEAST:
+			//left to right
+			g.drawLine(location.x - HALF_TILE_LENGTH, location.y, 
+					location.x, location.y);
+			//top to bottom
+			g.drawLine(location.x, location.y, 
+					location.x, location.y + HALF_TILE_LENGTH);
+			break;
+		case GridBagConstraints.SOUTHWEST:
+			//top to bottom
+			g.drawLine(location.x, location.y - HALF_TILE_LENGTH, 
+					location.x, location.y);
+			//left to right
+			g.drawLine(location.x, location.y, 
+					location.x + HALF_TILE_LENGTH, location.y);
+			break;
+		case GridBagConstraints.SOUTHEAST:
+			//left to right
+			g.drawLine(location.x - HALF_TILE_LENGTH, location.y, 
+					location.x, location.y);
+			//top to bottom
+			g.drawLine(location.x, location.y - HALF_TILE_LENGTH, 
+					location.x, location.y);
+			break;
+		default:
+			System.err.println("CardinalDirection not supported in drawEmptyCornerSpace");
+		}
+	}
+
+	private void drawEmptyEdgeSpace(Graphics g, Point location, int cardinalDirection) {
+		System.out.println("Drawing Edge Space X: " + location.x + " Y: " + location.y + " Dir: " + cardinalDirection);
+		switch(cardinalDirection)
+		{
+		case GridBagConstraints.WEST:
+			//top to bottom
+			g.drawLine(location.x, location.y - HALF_TILE_LENGTH, 
+					location.x, location.y + HALF_TILE_LENGTH);
+			//left to right
+			g.drawLine(location.x, location.y, 
+					location.x + HALF_TILE_LENGTH, location.y);
+			break;
+		case GridBagConstraints.EAST:
+			//top to bottom
+			g.drawLine(location.x, location.y - HALF_TILE_LENGTH, 
+					location.x, location.y + HALF_TILE_LENGTH);
+			//left to right
+			g.drawLine(location.x - HALF_TILE_LENGTH, location.y, 
+					location.x, location.y);
+			break;
+		case GridBagConstraints.NORTH:
+			//left to right
+			g.drawLine(location.x - HALF_TILE_LENGTH, location.y, 
+					location.x + HALF_TILE_LENGTH, location.y);
+			//top to bottom
+			g.drawLine(location.x, location.y, 
+					location.x, location.y + HALF_TILE_LENGTH);
+			break;
+		case GridBagConstraints.SOUTH:
+			//left to right
+			g.drawLine(location.x - HALF_TILE_LENGTH, location.y, 
+					location.x + HALF_TILE_LENGTH, location.y);
+			//top to bottom
+			g.drawLine(location.x, location.y - HALF_TILE_LENGTH, 
+					location.x, location.y);
+			break;
+		default:
+			System.err.println("CardinalDirection not supported in drawEmptyEdgeSpace");
+		}
+	}
+
+	private void drawEmptyInnerSpace(Graphics g, Point location) {
+		g.drawLine(location.x - HALF_TILE_LENGTH, location.y,
+				location.x + HALF_TILE_LENGTH, location.y);
+		g.drawLine(location.x, location.y - HALF_TILE_LENGTH,
+				location.x, location.y + HALF_TILE_LENGTH);
+	}
+
+	private boolean isCornerLocated(Point location) {
+		int xCoord = location.x / FULL_TILE_LENGTH;
+		int yCoord = location.y / FULL_TILE_LENGTH;
+		if (xCoord == 1 && yCoord == 1)
+			return true;
+		if (xCoord == 1 && yCoord == BoardPanel.BOARD_SIZE)
+			return true;
+		if (xCoord == BoardPanel.BOARD_SIZE && yCoord == 1)
+			return true;
+		if (xCoord == BoardPanel.BOARD_SIZE && yCoord == BoardPanel.BOARD_SIZE)
+			return true;
+		return false;
+	}
+
+	private boolean isEdgeLocated(Point location) {
+		System.out.println("Is Edge Located");
+		int xCoord = location.x / FULL_TILE_LENGTH;
+		int yCoord = location.y / FULL_TILE_LENGTH;
+		if (xCoord == 1 || xCoord == BoardPanel.BOARD_SIZE ||
+				yCoord == 1 || yCoord == BoardPanel.BOARD_SIZE)
+			return true;
+		return false;
+	}
+
+	private int getCardinalCorner(Point location) {
+		int xCoord = location.x / FULL_TILE_LENGTH;
+		int yCoord = location.y / FULL_TILE_LENGTH;
+		if (xCoord == 1 && yCoord == 1)
+			return GridBagConstraints.NORTHWEST;
+		if (xCoord == 1 && yCoord == BoardPanel.BOARD_SIZE)
+			return GridBagConstraints.SOUTHWEST;
+		if (xCoord == BoardPanel.BOARD_SIZE && yCoord == 1)
+			return GridBagConstraints.NORTHEAST;
+		if (xCoord == BoardPanel.BOARD_SIZE && yCoord == BoardPanel.BOARD_SIZE)
+			return GridBagConstraints.SOUTHEAST;
+		return -1;
+	}
+
+	private int getCardinalEdge(Point location) {
+		int xCoord = location.x / FULL_TILE_LENGTH;
+		int yCoord = location.y / FULL_TILE_LENGTH;
+		if (xCoord == 1)
+			return GridBagConstraints.WEST;
+		if (xCoord == BoardPanel.BOARD_SIZE)
+			return GridBagConstraints.EAST;
+		if (yCoord == 1)
+			return GridBagConstraints.NORTH;
+		if (yCoord == BoardPanel.BOARD_SIZE)
+			return GridBagConstraints.SOUTH;
+		return -1;
+	}
+
 	@Override
 	public void handleActionEvent(ActionEvent event) {
 		switch(event.getActionCommand())

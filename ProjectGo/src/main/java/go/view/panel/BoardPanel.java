@@ -16,7 +16,7 @@ import go.view.datamodel.impl.GoViewImpl;
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 
-	private static final int BOARD_SIZE = 9;
+	public static final int BOARD_SIZE = 9;
 	public static final int NUM_TILES = BOARD_SIZE - 1;
 	public static final int TILE_SIZE = GoViewImpl.CENTER_DIM.width / (NUM_TILES + 2);
 	public static final int BORDER_SIZE = TILE_SIZE;
@@ -59,8 +59,10 @@ public class BoardPanel extends JPanel {
 	    String xCoord = "A";
 	    for (int i = 0; i < BOARD_SIZE; i++) {
 	    	int chVal = xCoord.charAt(0);
-	    	g2.drawString(xCoord, i * TILE_SIZE + BORDER_SIZE, BORDER_SIZE / 2);
-	    	g2.drawString(xCoord, i * TILE_SIZE + BORDER_SIZE, 3 * BORDER_SIZE / 2 + TILE_SIZE * NUM_TILES);
+	    	g2.drawString(xCoord, 
+	    			i * TILE_SIZE + BORDER_SIZE, BORDER_SIZE / 4);
+	    	g2.drawString(xCoord, 
+	    			i * TILE_SIZE + BORDER_SIZE, 7 * BORDER_SIZE / 4 + TILE_SIZE * NUM_TILES);
 	    	xCoord = String.valueOf((char) (chVal + 1));
 	    }
 	    // Draw yCoord System
@@ -68,9 +70,9 @@ public class BoardPanel extends JPanel {
 	    for (int i = BOARD_SIZE; i > 0; i--) {
 	    	yCoord = "" + i;
 	    	g2.drawString(yCoord, 
-	    			BORDER_SIZE / 2, (i - 1) * TILE_SIZE + BORDER_SIZE);
+	    			BORDER_SIZE / 4, (i - 1) * TILE_SIZE + BORDER_SIZE);
 	    	g2.drawString(yCoord, 
-	    			3 * BORDER_SIZE / 2 + TILE_SIZE * NUM_TILES, (i - 1) * TILE_SIZE + BORDER_SIZE);
+	    			7 * BORDER_SIZE / 4 + TILE_SIZE * NUM_TILES, (i - 1) * TILE_SIZE + BORDER_SIZE);
 	    }
 	    
 	    drawStarPoints(g2, 5);
