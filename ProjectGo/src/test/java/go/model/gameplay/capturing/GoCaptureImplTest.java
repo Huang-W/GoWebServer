@@ -128,7 +128,7 @@ public class GoCaptureImplTest {
         goGameBoard.setStone(GoMove.of(4, 1, StoneColor.BLACK));
         goGameBoard.setStone(GoMove.of(1, 2, StoneColor.BLACK));
         goGameBoard.setStone(GoMove.of(3, 2, StoneColor.BLACK));
-        GoMove capturingMove = GoMove.of(1, 2, StoneColor.BLACK);
+        GoMove capturingMove = GoMove.of(2, 1, StoneColor.BLACK);
         goGameBoard.setStone(capturingMove);
 
         // run
