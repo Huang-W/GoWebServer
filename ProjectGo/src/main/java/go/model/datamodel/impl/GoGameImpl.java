@@ -53,7 +53,13 @@ public class GoGameImpl implements GoGameSubject, GoGame {
     		return;
         GoMove move = new GoMoveImpl(point, nextPlayer);
         this.notifyObserversOfPiecePlacement(move);
-        capture.capturePiecesForMove(board, move).forEach(this::notifyObserversOfPieceRemoval);
+        List<GoPoint> potentiallyCapturedPieces = capture.capturePiecesForMove(board, move);
+        if (potentiallyCapturedPieces.contains(point)) {
+        	this.notifyObserversOfPieceRemoval(point);
+        	return;
+        }
+        else
+        	potentiallyCapturedPieces.forEach(this::notifyObserversOfPieceRemoval);
         rotateNextPlayer();
         lastMovePassed = false;
     }
