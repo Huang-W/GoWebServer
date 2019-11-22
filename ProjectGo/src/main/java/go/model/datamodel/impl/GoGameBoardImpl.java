@@ -26,6 +26,9 @@ public class GoGameBoardImpl implements GoGameBoard, GoMoveObserver {
                 .collect(Collectors.toList());                
     }
 
+    /**
+     * reset the board
+     */
     @Override
     public void reset(){
         board = IntStream.range(0, size)
