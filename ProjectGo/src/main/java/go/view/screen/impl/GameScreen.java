@@ -11,6 +11,8 @@ import go.view.panel.OutputPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -35,10 +37,22 @@ public class GameScreen extends GoScreenImpl {
 		commandPanel.setLayout(new BorderLayout());
         undoButton = new JButton("Undo");
 		passButton = new JButton("Pass");
-		undoButton.setActionCommand("Undo");
-		passButton.setActionCommand("Pass");
+		undoButton.setActionCommand("UNDO");
+		passButton.setActionCommand("PASS");
 		undoButton.addActionListener(outputPanel);
 		passButton.addActionListener(outputPanel);
+		undoButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GameScreen.this.notifyObserversOfActionEvent(e);
+			}
+		});
+		passButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GameScreen.this.notifyObserversOfActionEvent(e);
+			}
+		});
 		commandPanel.add(undoButton, BorderLayout.NORTH);
 		commandPanel.add(passButton, BorderLayout.CENTER);
 

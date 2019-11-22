@@ -42,8 +42,7 @@ public class GoViewControllerImpl implements GoViewController {
 	
 	@Override
 	public void announceGameWinner(Color color) {
-		// TODO Auto-generated method stub
-		
+		view.announceGameWinner(color, 0);
 	}
 
 }

@@ -1,20 +1,13 @@
 package go.adapter;
-import javax.swing.JLabel;
-import javax.swing.JFrame;
+
 import java.awt.Color;
-import java.awt.Point;
-import go.controller.GoMoveController;
+
 import go.controller.GoViewController;
 import go.model.datamodel.GoMove;
 import go.model.datamodel.GoPoint;
 import go.model.datamodel.StoneColor;
-import go.model.observer.*;
-import go.view.datamodel.impl.GoViewImpl;
-import go.view.observer.GoViewObserver;
-import go.view.observer.GoViewSubject;
 import go.model.observer.GoGameObserver;
 import go.model.observer.GoMoveObserver;
-import go.view.datamodel.impl.GoViewImpl;
 
 public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
 
@@ -22,10 +15,10 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
         this.goViewController = goViewController;
     }
 
-    private static final int BOARD_SIZE = 9;
-    public static final int NUM_TILES = BOARD_SIZE - 1;
-    public static final int TILE_SIZE = GoViewImpl.CENTER_DIM.width / (NUM_TILES + 2);
-    public static final int BORDER_SIZE = TILE_SIZE;
+    private int BOARD_SIZE = 9;
+    private int NUM_TILES = BOARD_SIZE - 1;
+    private int TILE_SIZE = 700 / (NUM_TILES + 2);
+    private int BORDER_SIZE = TILE_SIZE = 70;
 
     private GoViewController goViewController;
 
@@ -37,30 +30,26 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
         goViewController.drawStone(x, y, color);
         System.out.println("col: " + x + " row: " + y);
     }
-
-     @Override
+    @Override
     public void handlePieceRemovalEvent(GoPoint point) {
         int x = point.getX() * TILE_SIZE + BORDER_SIZE;
         int y = point.getY() * TILE_SIZE + BORDER_SIZE;
+    	System.out.println("Removing a piece in adapter X: " + x + " Y: " + y);
         goViewController.drawEmptySpace(x, y);
-        System.out.println("col: " + x + " row: " + y);
     }
-
 
     @Override
     public void handleGameEnd(StoneColor winner) {
-        // TODO Auto-generated method stub
-        if(winner.equals(winner.BLACK))
-        {
+    	Color winnerColor = StoneColor.BLACK.equals(winner) ? 
+    			Color.BLACK : Color.WHITE;
+    	
+    	goViewController.announceGameWinner(winnerColor);
+    	
+        if(winnerColor.equals(Color.BLACK))
             System.out.println("Black is the winner!");
-        }
         else
-        {
             System.out.println("White is the winner!");
-        }
-
     }
 
 }
-
 
