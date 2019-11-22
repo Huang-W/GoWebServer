@@ -47,6 +47,11 @@ public class GoGameImpl implements GoGameSubject, GoGame {
     }
 
     @Override
+    public void reset(){
+        board.reset();
+    }
+
+    @Override
     public void makeMove(GoPoint point) {
     	// Point is already occupied
     	if (board.getStone(point).isPresent())

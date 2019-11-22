@@ -27,6 +27,11 @@ public class GoGameBoardImpl implements GoGameBoard, GoMoveObserver {
     }
 
     @Override
+    public void reset(){
+        
+    }
+
+    @Override
     public Optional<StoneColor> getStone(GoPoint location) {
         return Optional.ofNullable(board.get(location.getX()).get(location.getY()));
     }

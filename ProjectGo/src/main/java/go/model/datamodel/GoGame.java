@@ -17,4 +17,9 @@ public interface GoGame {
      * {@link go.model.observer.GoGameObserver}s will be notified of the winner.
      */
     void pass();
+
+    /**
+     * reset the board
+     */
+    void reset();
 }

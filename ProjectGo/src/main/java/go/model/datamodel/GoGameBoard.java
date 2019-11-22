@@ -30,4 +30,9 @@ public interface GoGameBoard {
      * @return This go board's size.
      */
     int size();
+
+    /**
+     * reset the board
+     */
+    void reset();
 }
