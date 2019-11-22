@@ -26,6 +26,11 @@ public class GameScreen extends GoScreenImpl {
 	private JButton undoButton;
 	private JButton passButton;
 	
+	/**
+	 * Constructor
+	 * Displays the GoBoard to play on and notifies GoView
+	 * of any user input events from the User
+	 */
 	public GameScreen() {
 		super();
 		boardPanel = new BoardPanel();
@@ -72,6 +77,7 @@ public class GameScreen extends GoScreenImpl {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				notifyObserversOfMouseEvent(e);
+				GameScreen.this.outputPanel.dispatchEvent(e);
 			}
 		});
 	}

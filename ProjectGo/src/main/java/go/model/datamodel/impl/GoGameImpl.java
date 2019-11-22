@@ -60,6 +60,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
         this.notifyObserversOfPiecePlacement(move);
         List<GoPoint> potentiallyCapturedPieces = capture.capturePiecesForMove(board, move);
         if (potentiallyCapturedPieces.contains(point)) {
+        	//the last move was an illegal suicide, this turn is invalid
         	this.notifyObserversOfPieceRemoval(point);
         	return;
         }

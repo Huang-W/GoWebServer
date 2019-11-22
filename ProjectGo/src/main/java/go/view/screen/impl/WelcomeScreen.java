@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class WelcomeScreen extends GoScreenImpl {
 	
+	// Hardcoded variables for a 600x600 screen resolution
 	private final int PANEL_SIZE = 200;
 	private final int SCREEN_SIZE = 600;
 	private final int PANELS_PER_ROW = 3;
@@ -33,12 +34,19 @@ public class WelcomeScreen extends GoScreenImpl {
 	private final Border buttonBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED, 
 			Color.DARK_GRAY, Color.LIGHT_GRAY);
 	
+	// The WelcomeScreen is sectioned into a 3x3 grid of panels
 	private JComponent[][] welcomePanels;
 	private List<JComponent> buttons;
 	
 	private JButton configNewGame;
 	private JButton startNewGame;
 	
+	/**
+	 * Constructor
+	 * Initialize buttons and the panels they reside in.
+	 * Prettify display and setup Observer pattern to notify
+	 * GoView of any user input
+	 */
 	public WelcomeScreen() {
 		super();
 		this.setLayout( new GridBagLayout() );
@@ -46,6 +54,7 @@ public class WelcomeScreen extends GoScreenImpl {
 		
 		welcomePanels = new JPanel[PANELS_PER_ROW][PANELS_PER_ROW];
 		buttons = new ArrayList<JComponent>();
+		
 		initPanels();
 		initButtons();
 		
@@ -63,6 +72,9 @@ public class WelcomeScreen extends GoScreenImpl {
         this.add(Box.createGlue(), gbc);
 	}
 	
+	/**
+	 * Set up the 3x3 grid of panels for the welcomeScreen buttons
+	 */
 	private void initPanels()
 	{
 		GridBagConstraints c = new GridBagConstraints();
@@ -83,6 +95,10 @@ public class WelcomeScreen extends GoScreenImpl {
 			}
 	}
 	
+	/*
+	 * Initialize welcomeScreen buttons to notify GoView
+	 * and update the model on user input
+	 */
 	private void initButtons()
 	{
 		configNewGame = new JButton("Config Start");

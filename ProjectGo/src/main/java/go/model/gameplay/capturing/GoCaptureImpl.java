@@ -67,6 +67,7 @@ public class GoCaptureImpl implements GoCapture {
     		neighborsInChain.forEach(goPoint->capturedPoints.add(goPoint));
 		neighborsInChain.clear();
 		
+		// if no stones are captured, check if the capturePoint initiated a suicide
 		if (capturedPoints.size() == 0) {
 			checkForSuicideChain(capturePoint, move.getStoneColor());
 			if (chainContainsStonesWithLiberties() == false)
@@ -144,9 +145,9 @@ public class GoCaptureImpl implements GoCapture {
     }
     
     /**
-     * 
-     * @param point
-     * @param color
+     * Add all Stones of same color as the CapturePoint and add them to the NeighborsInChain
+     * @param capturePoint the point to start recursing from
+     * @param color the color to match against
      */
     private void checkForSuicideChain(GoPoint capturePoint, StoneColor color) {
     	

@@ -12,7 +12,7 @@ public class ScreenControllerImpl implements ScreenController {
     
 	public ScreenControllerImpl(GoScreenImpl goScreen) {
 		this.goScreen = goScreen;
-		this.subject = (GoScreenSubject) goScreen;
+		this.subject = goScreen;
 	}
 	
 	@Override

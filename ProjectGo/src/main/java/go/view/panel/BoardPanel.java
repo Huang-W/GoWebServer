@@ -36,6 +36,11 @@ public class BoardPanel extends JPanel {
 	}
 	
 	@Override
+	/**
+	 * Initialize the Board with Tiles and a Coordinate System
+	 * Defaulted with Top-Left of (1,1)
+	 * Bottom-Right of (9,9)
+	 */
 	protected void paintComponent(Graphics g) {
 		
 	    super.paintComponent(g);
@@ -56,14 +61,13 @@ public class BoardPanel extends JPanel {
 	                + BORDER_SIZE, TILE_SIZE * NUM_TILES + BORDER_SIZE);
 	    }
 	    // Draw xCoord System
-	    String xCoord = "A";
+	    String xCoord = "";
 	    for (int i = 0; i < BOARD_SIZE; i++) {
-	    	int chVal = xCoord.charAt(0);
+	    	xCoord = "" + (i + 1);
 	    	g2.drawString(xCoord, 
 	    			i * TILE_SIZE + BORDER_SIZE, BORDER_SIZE / 4);
 	    	g2.drawString(xCoord, 
 	    			i * TILE_SIZE + BORDER_SIZE, 7 * BORDER_SIZE / 4 + TILE_SIZE * NUM_TILES);
-	    	xCoord = String.valueOf((char) (chVal + 1));
 	    }
 	    // Draw yCoord System
 	    String yCoord = "";
@@ -74,46 +78,5 @@ public class BoardPanel extends JPanel {
 	    	g2.drawString(yCoord, 
 	    			7 * BORDER_SIZE / 4 + TILE_SIZE * NUM_TILES, (i - 1) * TILE_SIZE + BORDER_SIZE);
 	    }
-	    
-	    drawStarPoints(g2, 5);
 	}
-	
-	// draws little points on the board, will do something about this later
-	private void drawStarPoints(Graphics2D g2, int pointSize)
-	{
-		int p2 = 2 * TILE_SIZE + BORDER_SIZE - Math.floorDiv(pointSize, 2);
-		int p3 = 3 * TILE_SIZE + BORDER_SIZE - Math.floorDiv(pointSize, 2);
-		int p4 = 4 * TILE_SIZE + BORDER_SIZE - Math.floorDiv(pointSize, 2);
-		int p6 = 6 * TILE_SIZE + BORDER_SIZE - Math.floorDiv(pointSize, 2);
-		int p9 = 9 * TILE_SIZE + BORDER_SIZE - Math.floorDiv(pointSize, 2);
-		int p15 = 15 * TILE_SIZE + BORDER_SIZE - Math.floorDiv(pointSize, 2);
-		switch (BOARD_SIZE)
-		{
-		case 9:
-			g2.fillOval( p2, p2, pointSize, pointSize);
-			g2.fillOval( p2, p6, pointSize, pointSize);
-			g2.fillOval( p6, p2, pointSize, pointSize);
-			g2.fillOval( p6, p6, pointSize, pointSize);
-			g2.fillOval( p4, p4, pointSize, pointSize);
-			break;
-		case 13:
-			g2.fillOval( p3, p3, pointSize, pointSize);
-			g2.fillOval( p3, p9, pointSize, pointSize);
-			g2.fillOval( p9, p3, pointSize, pointSize);
-			g2.fillOval( p9, p9, pointSize, pointSize);
-			g2.fillOval( p6, p6, pointSize, pointSize);
-			break;
-		case 19:
-			g2.fillOval( p3, p3, pointSize, pointSize);
-			g2.fillOval( p3, p9, pointSize, pointSize);
-			g2.fillOval( p3, p15, pointSize, pointSize);
-			g2.fillOval( p9, p3, pointSize, pointSize);
-			g2.fillOval( p9, p9, pointSize, pointSize);
-			g2.fillOval( p9, p15, pointSize, pointSize);
-			g2.fillOval( p15, p3, pointSize, pointSize);
-			g2.fillOval( p15, p9, pointSize, pointSize);
-			g2.fillOval( p15, p15, pointSize, pointSize);
-		}
-	}
-
 }
