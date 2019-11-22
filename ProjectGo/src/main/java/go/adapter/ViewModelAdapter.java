@@ -16,7 +16,7 @@ public class ViewModelAdapter implements GoViewObserver {
     
     /**
     * Constructor
-    * @param as a GoMoveController reference
+    * @param goMoveController as a GoMoveController reference
     */
     public ViewModelAdapter(GoMoveController goMoveController) {
         this.goMoveController = goMoveController;
@@ -24,7 +24,7 @@ public class ViewModelAdapter implements GoViewObserver {
 
     /**
     * Constructor
-    * @param as a Point reference to get coordinates of click
+    * @param point as a Point reference to get coordinates of click
     */
     @Override
     public void handleMouseClickEvent(Point point) {
@@ -56,7 +56,7 @@ public class ViewModelAdapter implements GoViewObserver {
     
     /**
     * Constructor
-    * @param as an integer for the pixel coordinate.  This formula calculates the pixels and translates it to game coordinates
+    * @param pixelCoord as an integer for the pixel coordinate.  This formula calculates the pixels and translates it to game coordinates
     */
     private int translateCoordinate( int pixelCoord ) {
     	int tail = 0;
