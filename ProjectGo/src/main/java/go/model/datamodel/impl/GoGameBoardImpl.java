@@ -28,7 +28,11 @@ public class GoGameBoardImpl implements GoGameBoard, GoMoveObserver {
 
     @Override
     public void reset(){
-        
+        for (List<StoneColor> row : board) {
+			for (StoneColor element : row) {
+                element = null;
+            }
+		}
     }
 
     @Override
