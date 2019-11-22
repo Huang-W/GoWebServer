@@ -5,7 +5,6 @@ import go.model.datamodel.GoMove;
 import go.model.datamodel.GoPoint;
 import go.model.datamodel.StoneColor;
 import go.model.datamodel.impl.GoGameBoardImpl;
-import go.model.datamodel.impl.GoMoveImpl;
 import go.model.datamodel.impl.GoPointImpl;
 import go.model.gameplay.GoCapture;
 import org.junit.Before;

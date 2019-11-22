@@ -3,28 +3,38 @@ package go.adapter;
 import java.awt.Point;
 
 import go.controller.GoMoveController;
+import go.view.observer.GoViewConfigObserver;
 import go.view.observer.GoViewObserver;
+import go.view.screen.impl.ConfigScreen;
 
-public class ViewModelAdapter implements GoViewObserver {
-
-    private int BOARD_SIZE = 9;
-    private int NUM_TILES = BOARD_SIZE - 1;
-    private int TILE_SIZE = 700 / (NUM_TILES + 2);
-    private int BORDER_SIZE = TILE_SIZE = 70;
+/**
+ * This class translates mouse clicks sent from the GoView screens
+ * into game coordinates that can be used by the game model
+ * This class forwards pass and undo requests to the game model
+ * This class forwards game configuration requests to the game model
+ */
+public class ViewModelAdapter implements GoViewObserver, GoViewConfigObserver {
     
+	private final int boardScreenSize = ConfigScreen.CenterDim().height;
+	
+	private int boardSize = 9;
+	private int numTiles = boardSize - 1;
+	private int borderSize = boardScreenSize / (numTiles + 2);
+	private int tileSize = borderSize;
+	
     private GoMoveController goMoveController;
     
     /**
     * Constructor
-    * @param goMoveController as a GoMoveController reference
+    * @param goMoveController The controller to forward translated messages to
     */
     public ViewModelAdapter(GoMoveController goMoveController) {
         this.goMoveController = goMoveController;
     }
 
     /**
-    * Constructor
-    * @param point as a Point reference to get coordinates of click
+    * This notifies the game model of translated screen coordinates
+    * @param point The point where the mouse was clicked
     */
     @Override
     public void handleMouseClickEvent(Point point) {
@@ -50,21 +60,29 @@ public class ViewModelAdapter implements GoViewObserver {
 
     @Override
     public void handleWindowClose() {
-        // TODO Auto-generated method stub
         goMoveController.resetGameBoard();
     }
     
+	@Override
+	public void handleBoardSizeConfigure(int boardSize) {
+		this.boardSize = boardSize;
+		this.numTiles = boardSize - 1;
+		this.borderSize = boardScreenSize / (numTiles + 2);
+		this.tileSize = borderSize;
+		goMoveController.configureBoardSize(boardSize);
+	}
+	
     /**
-    * Constructor
-    * @param pixelCoord as an integer for the pixel coordinate.  This formula calculates the pixels and translates it to game coordinates
+    * This formula calculates the pixels and translates it to game coordinates
+    * @param as an integer for the pixel coordinate.  
     */
     private int translateCoordinate( int pixelCoord ) {
     	int tail = 0;
-    	while (tail * TILE_SIZE < pixelCoord) {
+    	while (tail * tileSize < pixelCoord) {
     		tail += 1;
     	}
     	int head = tail - 1;
-    	if (tail * TILE_SIZE - pixelCoord > pixelCoord - head * TILE_SIZE)
+    	if (tail * tileSize - pixelCoord > pixelCoord - head * tileSize)
     		return head - 1;
     	return tail - 1;
     }

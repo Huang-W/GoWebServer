@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -146,4 +147,16 @@ public class WelcomeScreen extends GoScreenImpl {
     	super.paintComponent(g);
         g.drawImage(bgImg, 0, 0, null);
       }
+
+    /**
+     * Not Used
+     */
+	@Override
+	public void paintOval(Point location, Color color) {}
+
+	/**
+	 * Not Used
+	 */
+	@Override
+	public void paintGrid(Point location) {}
 }

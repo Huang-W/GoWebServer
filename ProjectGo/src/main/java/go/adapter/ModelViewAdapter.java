@@ -6,54 +6,61 @@ import go.controller.GoViewController;
 import go.model.datamodel.GoMove;
 import go.model.datamodel.GoPoint;
 import go.model.datamodel.StoneColor;
+import go.model.observer.GoModelConfigObserver;
 import go.model.observer.GoGameObserver;
 import go.model.observer.GoMoveObserver;
+import go.view.screen.impl.ConfigScreen;
 
-public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
+/**
+ * This class translates game coordinates from the game model into pixel coordinates for the game view
+ */
+public class ModelViewAdapter implements GoGameObserver, GoMoveObserver, GoModelConfigObserver {
 
-   /**
-    * Constructor
-    * @param goViewController as a GoViewController reference
-    */
-    public ModelViewAdapter(GoViewController goViewController) {
-        this.goViewController = goViewController;
-    }
-
-    private int BOARD_SIZE = 9;
-    private int NUM_TILES = BOARD_SIZE - 1;
-    private int TILE_SIZE = 700 / (NUM_TILES + 2);
-    private int BORDER_SIZE = TILE_SIZE = 70;
-
+	private final int boardScreenSize = ConfigScreen.CenterDim().height;
+	
+	private int boardSize = 9;
+	private int numTiles = boardSize - 1;
+	private int borderSize = boardScreenSize / (numTiles + 2);
+	private int tileSize = borderSize;
+	
     private GoViewController goViewController;
 
     /**
-    * For adding pieces onto the board
-    * @param move as a GoMove reference to get X and Y coordinates of the click
+     * Constructor
+     * @param goViewController Where the game model state updates are forwarded to
+     */
+     public ModelViewAdapter(GoViewController goViewController) {
+         this.goViewController = goViewController;
+     }
+
+    /**
+    * Lets the game view know where to place a new stone
+    * @param move A GoMove that contains both the coordinates and the color of the new stone
     */
     @Override
     public void handlePieceAdditionEvent(GoMove move) {
-        int x = move.getPoint().getX() * TILE_SIZE + BORDER_SIZE;
-        int y = move.getPoint().getY() * TILE_SIZE + BORDER_SIZE;
+        int x = move.getPoint().getX() * tileSize + borderSize;
+        int y = move.getPoint().getY() * tileSize + borderSize;
         Color color = move.getStoneColor().equals(StoneColor.BLACK) ? Color.BLACK : Color.WHITE;
         goViewController.drawStone(x, y, color);
-        System.out.println("col: " + x + " row: " + y);
+        System.out.println("Placing a stone in adapter X: " + x + " Y: " + y);
     }
     
     /**
-    * For removing pieces on the board
-    * @param point as a GoPoint reference to see where the user clicked
+    * Lets the game view know where to remove a stone
+    * @param point A point that contains the coordinates of which stone to remove
     */
     @Override
     public void handlePieceRemovalEvent(GoPoint point) {
-        int x = point.getX() * TILE_SIZE + BORDER_SIZE;
-        int y = point.getY() * TILE_SIZE + BORDER_SIZE;
+        int x = point.getX() * tileSize + borderSize;
+        int y = point.getY() * tileSize + borderSize;
     	System.out.println("Removing a piece in adapter X: " + x + " Y: " + y);
         goViewController.drawEmptySpace(x, y);
     }
 
     /**
-    * Constructor
-    * @param winner as a StoneColor reference to see who is the winner, and act accordingly
+    * Lets the view know that the game has ended
+    * @param winner The color of the winning player
     */
     @Override
     public void handleGameEnd(StoneColor winner) {
@@ -67,6 +74,15 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
         else
             System.out.println("White is the winner!");
     }
+
+	@Override
+	public void handleBoardSizeChange(int boardSize) {
+		this.boardSize = boardSize;
+		this.numTiles = boardSize - 1;
+		this.borderSize = boardScreenSize / (numTiles + 2);
+		this.tileSize = borderSize;
+		goViewController.updateBoardSize(boardSize);
+	}
 
 }
 

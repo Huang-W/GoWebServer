@@ -1,6 +1,5 @@
 package go.controller;
 
-import go.model.datamodel.GoPoint;
 import go.model.observer.GoGameSubject;
 
 /**
@@ -24,13 +23,20 @@ public interface GoMoveController {
     void pass();
 
     /**
+     * Empty the GameBoard
+     */
+    void resetGameBoard();
+
+    /**
+     * Reconfigure the BoardSize
+     * @param boardSize The given board dimensions to set
+     */
+    void configureBoardSize(int boardSize);
+    
+    /**
      * Get a game subject for observation by a view.
      * @return the game to observe for results of moves passed to the controller
      */
     GoGameSubject getGameSubject();
 
-     /**
-     * reset the board
-     */
-    void resetGameBoard();
 }

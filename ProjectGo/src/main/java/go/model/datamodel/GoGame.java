@@ -19,7 +19,13 @@ public interface GoGame {
     void pass();
 
     /**
-     * reset the board
+     * Empty the board of stones
      */
     void reset();
+    
+    /**
+     * Set the dimensions of the new board
+     * @param size The size to set the dimensions to
+     */
+    void configureBoardSize(int size);
 }

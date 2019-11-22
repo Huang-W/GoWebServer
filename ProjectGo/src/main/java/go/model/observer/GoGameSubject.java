@@ -24,6 +24,13 @@ public interface GoGameSubject {
      * @param observer the observer to register, not null
      */
     void addGameObserver(GoGameObserver observer);
+    
+    /**
+     * Adds a game observer implementation to this subject's list of observers.
+     * Observers that register themselves with this method will be notified when game settings change.
+     * @param observer the observer to register, not null
+     */
+    void addModelConfigObserver(GoModelConfigObserver observer);
 
     /**
      * Notifies all of the move observers that a stone was added to the board.
@@ -42,4 +49,10 @@ public interface GoGameSubject {
      * @param winner which color won
      */
     void notifyObserversOfGameEnd(StoneColor winner);
+    
+    /**
+     * Notifies all of the game observers that the board size has changed
+     * @param boardSize
+     */
+    void notifyObserversOfBoardSizeChange(int boardSize);
 }

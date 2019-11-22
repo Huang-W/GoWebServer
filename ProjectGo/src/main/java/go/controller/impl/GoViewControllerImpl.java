@@ -8,12 +8,14 @@ import go.view.datamodel.GoMove;
 import go.view.datamodel.GoView;
 import go.view.datamodel.impl.GoMoveImpl;
 import go.view.datamodel.impl.GoViewImpl;
+import go.view.observer.GoViewConfigSubject;
 import go.view.observer.GoViewSubject;
 
 public class GoViewControllerImpl implements GoViewController {
 
 	private GoView view;
 	private GoViewSubject subject;
+	private GoViewConfigSubject configSubject;
 	
     public GoViewControllerImpl() {
         this(new GoViewImpl());
@@ -21,6 +23,7 @@ public class GoViewControllerImpl implements GoViewController {
     public GoViewControllerImpl(GoViewImpl goView) {
         this.view = goView;
         this.subject = goView;
+        this.configSubject = goView;
     }
 
 	@Override
@@ -36,13 +39,23 @@ public class GoViewControllerImpl implements GoViewController {
 	}
 	
 	@Override
+	public void announceGameWinner(Color color) {
+		view.announceGameWinner(color, 0);
+	}
+	
+	@Override
+	public void updateBoardSize(int boardSize) {
+		view.configureBoardSize(boardSize);
+	}
+	
+	@Override
 	public GoViewSubject getViewSubject() {
 		return subject;
 	}
 	
 	@Override
-	public void announceGameWinner(Color color) {
-		view.announceGameWinner(color, 0);
+	public GoViewConfigSubject getViewConfigSubject() {
+		return configSubject;
 	}
 
 }

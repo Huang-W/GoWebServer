@@ -2,6 +2,7 @@ package go.controller;
 
 import java.awt.Color;
 
+import go.view.observer.GoViewConfigSubject;
 import go.view.observer.GoViewSubject;
 
 public interface GoViewController {
@@ -28,9 +29,21 @@ public interface GoViewController {
     void announceGameWinner(Color color);
 
     /**
-     * Get a game subject for observation by a view.
-     * @return the game to observe for results of moves passed to the controller
+     * Update the Go View's definition of the current BoardSize
+     * @param boardSize the size of the new board
+     */
+    void updateBoardSize(int boardSize);
+    
+    /**
+     * Get a view subject for observation by the model.
+     * @return the view to observe for user input passed to the controller
      */
     GoViewSubject getViewSubject();
+    
+    /**
+     * Get a configuration subject for observation by the model
+     * @return the configuration that will be observed for changes to the Game
+     */
+    GoViewConfigSubject getViewConfigSubject();
     
 }

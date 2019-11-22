@@ -17,7 +17,7 @@ public abstract class GoScreenImpl extends JComponent implements GoScreen, GoScr
 	private List<GoScreenObserver> observers;
 	
 	public GoScreenImpl() {
-		observers = new LinkedList<GoScreenObserver>();
+		observers = new LinkedList<>();
 	}
 	
 	@Override

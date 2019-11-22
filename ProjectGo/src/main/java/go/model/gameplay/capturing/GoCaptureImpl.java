@@ -20,13 +20,13 @@ public class GoCaptureImpl implements GoCapture {
     
     public GoCaptureImpl(int size) {
     	BOARD_SIZE = size;
-        neighborsInChain = new LinkedList<GoPoint>();
-        capturedPoints = new LinkedList<GoPoint>();
+        neighborsInChain = new LinkedList<>();
+        capturedPoints = new LinkedList<>();
     }
 
     @Override
     public List<GoPoint> capturePiecesForMove(GoGameBoard board, GoMove move) {
-    	
+    	System.out.println("Checking for capture BOARD_SIZE of: " + BOARD_SIZE);
     	this.neighborsInChain.clear();
     	this.capturedPoints.clear();
     	theBoard = board;

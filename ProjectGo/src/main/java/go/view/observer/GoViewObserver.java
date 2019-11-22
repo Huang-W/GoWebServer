@@ -30,4 +30,5 @@ public interface GoViewObserver {
 	 * Do something when the user closes the GameScreen window
 	 */
 	void handleWindowClose();
+	
 }

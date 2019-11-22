@@ -3,9 +3,8 @@ package go.view.observer;
 import java.awt.Point;
 
 /**
- * A subject that notifies its observers of when interesting events happen in the screen of
- * a game of Go. A subject notifies a set of observers when the screen is clicked or when
- * a button is clicked.
+ * A subject that notifies its observers of user inputs in a game of Go. 
+ * A subject notifies a set of observers when the screen is clicked or when a button is clicked.
  */
 public interface GoViewSubject {
 	
@@ -36,5 +35,6 @@ public interface GoViewSubject {
     /**
      * Notifies all view observers when the USER closes the GameScreen window
      */
-    void notifyObserversOfWindowClose();
+    void notifyObserversOfWindowCloseEvent();
+    
 }
