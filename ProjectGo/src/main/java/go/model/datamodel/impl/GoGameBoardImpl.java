@@ -23,16 +23,18 @@ public class GoGameBoardImpl implements GoGameBoard, GoMoveObserver {
                         .boxed()
                         .map(j -> (StoneColor) null)
                         .collect(Collectors.toList()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());                
     }
 
     @Override
     public void reset(){
-        for (List<StoneColor> row : board) {
-			for (StoneColor element : row) {
-                element = null;
-            }
-		}
+        board = IntStream.range(0, size)
+                .boxed()
+                .map(i -> IntStream.range(0, size)
+                        .boxed()
+                        .map(j -> (StoneColor) null)
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());        
     }
 
     @Override
