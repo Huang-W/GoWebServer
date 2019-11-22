@@ -28,4 +28,9 @@ public interface GoMoveController {
      * @return the game to observe for results of moves passed to the controller
      */
     GoGameSubject getGameSubject();
+
+     /**
+     * reset the board
+     */
+    void resetGameBoard();
 }

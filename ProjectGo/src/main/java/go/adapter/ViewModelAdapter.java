@@ -51,7 +51,7 @@ public class ViewModelAdapter implements GoViewObserver {
     @Override
     public void handleWindowClose() {
         // TODO Auto-generated method stub
-
+        goMoveController.resetGameBoard();
     }
     
     /**

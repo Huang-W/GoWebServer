@@ -25,6 +25,11 @@ public class GoMoveControllerImpl implements GoMoveController {
     }
 
     @Override
+    public void resetGameBoard(){
+        game.reset();
+    }
+
+    @Override
     public void makeNextPlayersMove(int x, int y) {
         game.makeMove(GoPointImpl.of(x, y));
     }
