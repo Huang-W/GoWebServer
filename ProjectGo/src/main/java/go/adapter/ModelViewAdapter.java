@@ -13,7 +13,7 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
 
    /**
     * Constructor
-    * @param as a GoViewController reference
+    * @param goViewController as a GoViewController reference
     */
     public ModelViewAdapter(GoViewController goViewController) {
         this.goViewController = goViewController;
@@ -28,7 +28,7 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
 
     /**
     * For adding pieces onto the board
-    * @param as a GoMove reference to get X and Y coordinates of the click
+    * @param move as a GoMove reference to get X and Y coordinates of the click
     */
     @Override
     public void handlePieceAdditionEvent(GoMove move) {
@@ -41,7 +41,7 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
     
     /**
     * For removing pieces on the board
-    * @param as a GoPoint reference to see where the user clicked
+    * @param point as a GoPoint reference to see where the user clicked
     */
     @Override
     public void handlePieceRemovalEvent(GoPoint point) {
@@ -53,7 +53,7 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
 
     /**
     * Constructor
-    * @param as a StoneColor reference to see who is the winner, and act accordingly
+    * @param winner as a StoneColor reference to see who is the winner, and act accordingly
     */
     @Override
     public void handleGameEnd(StoneColor winner) {
