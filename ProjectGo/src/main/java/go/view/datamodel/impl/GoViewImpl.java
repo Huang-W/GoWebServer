@@ -116,6 +116,8 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 		switch(event.getActionCommand())
 		{
 		case QUICK_START:
+			if (ConfigScreen.BOARD_SIZE() != 9)
+				notifyObserversOfScreenSizeConfigEvent(9);
 			showGameScreen();
 			break;
 		case PASS:
