@@ -11,6 +11,10 @@ import go.model.observer.GoMoveObserver;
 
 public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
 
+   /**
+    * Constructor
+    * @param as a GoViewController reference
+    */
     public ModelViewAdapter(GoViewController goViewController) {
         this.goViewController = goViewController;
     }
@@ -22,6 +26,10 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
 
     private GoViewController goViewController;
 
+    /**
+    * For adding pieces onto the board
+    * @param as a GoMove reference to get X and Y coordinates of the click
+    */
     @Override
     public void handlePieceAdditionEvent(GoMove move) {
         int x = move.getPoint().getX() * TILE_SIZE + BORDER_SIZE;
@@ -30,6 +38,11 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
         goViewController.drawStone(x, y, color);
         System.out.println("col: " + x + " row: " + y);
     }
+    
+    /**
+    * For removing pieces on the board
+    * @param as a GoPoint reference to see where the user clicked
+    */
     @Override
     public void handlePieceRemovalEvent(GoPoint point) {
         int x = point.getX() * TILE_SIZE + BORDER_SIZE;
@@ -38,6 +51,10 @@ public class ModelViewAdapter implements GoGameObserver, GoMoveObserver {
         goViewController.drawEmptySpace(x, y);
     }
 
+    /**
+    * Constructor
+    * @param as a StoneColor reference to see who is the winner, and act accordingly
+    */
     @Override
     public void handleGameEnd(StoneColor winner) {
     	Color winnerColor = StoneColor.BLACK.equals(winner) ? 
