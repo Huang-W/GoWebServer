@@ -51,7 +51,9 @@ public class GoGameImpl implements GoGameSubject, GoGame {
      */
     @Override
     public void reset(){
+        //reset the board
         board.reset();
+        //set next player as black
         nextPlayer = StoneColor.BLACK;
     }
 
