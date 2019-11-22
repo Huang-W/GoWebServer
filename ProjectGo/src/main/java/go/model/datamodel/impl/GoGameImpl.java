@@ -46,6 +46,9 @@ public class GoGameImpl implements GoGameSubject, GoGame {
         this.scoringStrategy = strategy;
     }
 
+    /**
+     * reset the board
+     */
     @Override
     public void reset(){
         board.reset();
