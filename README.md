@@ -12,16 +12,17 @@ The Final Frontier
 5. [Yash Sahani](https://github.com/ysahani)
 
 
+## User Story Advertisement
+
+[Advertisement link for our Go application](https://www.youtube.com/watch?v=v47HjLz63co&feature=youtu.be)
+
 ## Project Description
 
 * [Game Rules](https://senseis.xmp.net/?BasicRulesOfGo) 
 
 * [Project Repository](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
 
-## User Story Advertisement
-
-[Advertisement link for our Go application](https://www.youtube.com/watch?v=v47HjLz63co&feature=youtu.be)
-
+![](ConfigStart.gif)
 
 ## Design
 
