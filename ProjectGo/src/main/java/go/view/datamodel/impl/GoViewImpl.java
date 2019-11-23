@@ -1,12 +1,8 @@
 package go.view.datamodel.impl;
 
-import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
@@ -36,7 +32,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScreenObserver, GoViewConfigSubject {
@@ -167,18 +162,7 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	@Override
 	public void drawStone(GoMove move) {
 		currentScreen.paintOval(move.getPoint(), move.getStoneColor());
-		try {
-			Clip audioClip = AudioSystem.getClip();
-			AudioInputStream ais = AudioSystem.getAudioInputStream(audioFile);
-	        audioClip.open(ais);
-	        audioClip.start();
-	        audioClip.wait(150);
-	        audioClip.stop();
-	        audioClip.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		playAudioClip();
 	}
 
 	@Override
@@ -246,6 +230,21 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 		validate();
 		pack();
 	    GoViewImpl.this.setVisible(true);
+	}
+	
+	private void playAudioClip() {
+		try {
+			Clip audioClip = AudioSystem.getClip();
+			AudioInputStream ais = AudioSystem.getAudioInputStream(audioFile);
+	        audioClip.open(ais);
+	        audioClip.start();
+	        audioClip.wait(150);
+	        audioClip.stop();
+	        audioClip.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
