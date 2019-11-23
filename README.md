@@ -2,7 +2,6 @@
 
 The Final Frontier
 
-
 ## Team
 
 1. [Gabriel Hartman](https://github.com/ghartman1620)
@@ -22,13 +21,15 @@ The Final Frontier
 
 * [Project Repository](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
 
+![WelcomeScreen](/readme/WelcomeScreen.png)
+=======
 * [Web App](http://underwater-softball-go.com/) - [Mirror 1](http://go-underwater-softball.net/) - [Mirror 2](http://gabrielhart.webfactional.com/)
 
 ![WelcomeScreen](WelcomeScreen.png)
 
-![](ConfigStart-min.gif)
+![](/readme/ConfigStart-min.gif)
 
-![](GoGame-min.gif)
+![](/readme/GoGame-min.gif)
 
 ## Design
 
@@ -108,4 +109,4 @@ We use these states to neatly implement multiplayer - by associating two state m
 
 ## Individual Contributions
 
-![Sprint Sheet](sprint_sheet.png)
+![Sprint Sheet](/readme/sprint_sheet.png)
