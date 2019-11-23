@@ -79,3 +79,7 @@ We Implemented Observer Design Pattern in the Model as well as View package of t
 * GoViewConfigSubject is a subject that notifies its observers when the GoGame is being configured and when the BoardSize has   changed
 
 * GoViewSubject is a subject that notifies its observers of user inputs in a game of Go and about the event when the screen is   clicked or when a button is clicked.
+
+## Individual Contributions
+
+![Sprint Sheet](sprint_sheet.png)
