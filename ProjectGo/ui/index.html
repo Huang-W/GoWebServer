@@ -15,22 +15,26 @@
     <body>
         <div class="centered">
             <h3> Go: a Game by Underwater Softball</h3>
-            <p> There are <span id="liveUsers"></span> users online.</p>
+            <p class=""> There are <span id="liveUsers"></span> users online.</p>
             <p> There are <span id="multiplayerUsers"></span> users playing or seeking multiplayer games right now.</p>
         </div>
-        <form class="centered">
-            <input type="number" id="x"/>
-            <input type="number" id="y"/>
-            <input type="submit" value="make move" onclick="return submitMoveForm();" />
+        <form class="move-form centered">
+            <input class="form-control-inline move-input" min="0" max="8" placeholder="x (0-8)"type="number" id="x"/>
+            <input class="form-control-inline move-input" min="0" max="8" placeholder="y (0-8)" type="number" id="y"/>
+            <button class="make-move-btn btn btn-primary" onclick="return submitMoveForm();">Make Move</button>
         </form>
+        <br>
         <div class="centered">
             <button class="menu-btn btn btn-secondary" value="pass" onclick="return submitPassForm();">Pass</button>
             <button class="menu-btn btn btn-danger" value="undo" onclick="return submitUndoForm();">Undo</button>
         </div>
         <br>
         <div class="centered">
-            <input type="submit" value="Start New Single-Player Game" onclick="return submitNewSinglePlayerGame();" />
-            <input type="submit" value="Join Multi-Player Game" onclick="return submitNewMultiPlayerGame();" />
+            <button class="menu-btn btn btn-primary"  onclick="return submitNewSinglePlayerGame();">Start New Single Player Game</button>
+            <button class="menu-btn btn btn-primary"  onclick="return submitNewMultiPlayerGame();">Start New Two Player Game</button>
+        </div>
+        <br>
+        <div class="centered" id="sketch-holder">
         </div>
     </body>
 </html>

@@ -66,16 +66,17 @@ let goBoard = new GoBoard(GAME_SIZE);
 let length;
 
 function setup () {
-    length = 640;
+    length = windowHeight/2;
     let cnv = createCanvas(length, length);
-    let x = (windowWidth - width) / 2;
-    let y = (windowHeight - height) / 2;
-    let extraBufferY = 200;
-    cnv.position(x, extraBufferY + y);
-    
+    cnv.parent('sketch-holder');
 }
 
 function draw() {
     background(255);
     goBoard.draw(length);
+}
+
+function windowResized() {
+    length = windowHeight/2;
+    resizeCanvas(length, length);
 }

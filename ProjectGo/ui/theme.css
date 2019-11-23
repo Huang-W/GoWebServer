@@ -6,16 +6,17 @@
     width: 40%;
     display: block;
 }
-.p5Canvas {
-    margin: 0;
-    display: flex;
-    /* This centers our sketch horizontally. */
-    justify-content: center;
-
-    /* This centers our sketch vertically. */
-    align-items: center;
+.make-move-btn {
+    width: 19.5%;
 }
 .header {
     margin: auto;
     width: 40%;
+}
+body {
+    line-height: 2;   
+}
+.move-input {
+    width: 30%;
+    height: 35px;
 }

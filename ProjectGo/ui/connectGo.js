@@ -14,11 +14,6 @@ function loadFile(filePath) {
 // References: https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
 const socket = new WebSocket('ws://' + loadFile('serverAddress'));
 
-socket.addEventListener('open', (event) => {
-    console.log('socket opened');
-    console.log(event);
-});
-
 socket.addEventListener('message', (event) => {
     let data = JSON.parse(event.data);
     switch (data.event_type) {
@@ -51,6 +46,7 @@ let submitMoveForm = (event) => {
     document.getElementById('x').value = null;
     document.getElementById('y').value = null;    
     makeMove(x, y);
+    document.getElementById('x').focus();
     return false;
 };
 let submitNewSinglePlayerGame = (event) => {
