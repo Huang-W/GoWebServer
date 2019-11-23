@@ -40,6 +40,7 @@ socket.addEventListener('message', (event) => {
     }
 });
 
+// ref - https://getbootstrap.com/docs/4.3/components/alerts/#dismissing
 let myalert = (message) => {
     document.getElementById('alert').innerHTML = 
     `<div class="my-alert alert alert-warning alert-dismissible fade show" role="alert">${message}` + 
