@@ -17,6 +17,9 @@ The Final Frontier
 
 ## Project Description
 
+We built an application to play the game Go. Go is a highly complex game with deceptively simple rules. We chose to implement the Go game as a desktop app in Swing. Users of our application can play the game on their own or with somebody else on their computer. Our game includes features in addition to the base Go rules including undoing moves, and resizing the board.
+We built our model and controller layers to be extensible, so we were able to slot other views in to work with it to suit other platforms and uses. We demonstrated this by also building a web application using Java-WebSocket and P5JS. In this web application, users can not only play on their own as they can in the desktop app, but they can also play against other players across the internet. This web app features real-time updates of other player's moves, usage statistics, and alerts of the game's state.
+
 * [Game Rules](https://senseis.xmp.net/?BasicRulesOfGo) 
 
 * [Project Repository](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
