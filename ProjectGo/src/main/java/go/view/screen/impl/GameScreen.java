@@ -39,6 +39,8 @@ public class GameScreen extends GoScreenImpl {
 		boardPanel = new BoardPanel();
 		outputPanel = new OutputPanel();
 		textArea = new JTextArea(5, 3);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
 		textArea.append("\n\n\n\n\nInstructions To Play:\n\n\n"
 				+"1. The main object of the game is to use your stones to form territories by surrounding vacant areas of the board. \n"
 				+"2. It is also possible to capture your opponent's stones by completely surrounding them.\n"
@@ -81,7 +83,7 @@ public class GameScreen extends GoScreenImpl {
 
 		JPanel eastPanel = new JPanel();
 		// temporarily make eastPanel larger for debug purposes
-		eastPanel.setPreferredSize(ConfigScreen.CenterDim());
+		eastPanel.setPreferredSize(ConfigScreen.EastDim());
 		eastPanel.setLayout(new BorderLayout());
 		eastPanel.add(commandPanel, BorderLayout.NORTH);
 		eastPanel.add(outputPanel, BorderLayout.SOUTH);

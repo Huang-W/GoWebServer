@@ -35,7 +35,7 @@ public class ConfigScreen extends GoScreenImpl {
 	// Screen-Specific View Values
 	private static final Dimension NORTH_DIM = new Dimension( 840, 200);
 	private static final Dimension CENTER_DIM = new Dimension( 840, 840);
-	private static final Dimension EAST_DIM = new Dimension( 200, 840);
+	private static final Dimension EAST_DIM = new Dimension( 420, 840);
 	
 	/**
 	 * Constructor

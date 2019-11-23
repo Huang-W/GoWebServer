@@ -24,9 +24,8 @@ public interface GoView {
     /**
      * Announce the Game Winner!
      * @param color the Color of the winner
-     * @param points the amount of points the winner won by
      */
-    void announceGameWinner(Color color, double points);
+    void announceGameWinner(Color color);
     
     /**
      * Change the current board's size

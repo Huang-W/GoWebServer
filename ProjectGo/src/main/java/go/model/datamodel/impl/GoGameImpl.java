@@ -15,7 +15,6 @@ import go.model.observer.GoGameObserver;
 import go.model.observer.GoGameSubject;
 import go.model.observer.GoMoveObserver;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;

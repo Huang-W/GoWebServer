@@ -163,13 +163,13 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 	}
 
 	@Override
-	public void announceGameWinner(Color color, double points) {
+	public void announceGameWinner(Color color) {
 		String winner = color.equals(Color.BLACK) ? "BLACK" : "WHITE";
 		if (gameScreen.equals(currentScreen)) {
 			int chosenOption = JOptionPane.showOptionDialog(GoViewImpl.this,
-					winner + " wins by " + points + " points.\n" + 
+					winner + " Wins!\n" + 
 					"Would you like to close the app or start a new game?",
-					color.toString() + " Wins!",
+					winner + " Wins!",
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE,
 					null,

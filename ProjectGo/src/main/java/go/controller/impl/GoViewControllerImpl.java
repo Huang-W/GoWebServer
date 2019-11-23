@@ -40,7 +40,7 @@ public class GoViewControllerImpl implements GoViewController {
 	
 	@Override
 	public void announceGameWinner(Color color) {
-		view.announceGameWinner(color, 0);
+		view.announceGameWinner(color);
 	}
 	
 	@Override
