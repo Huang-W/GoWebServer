@@ -22,6 +22,11 @@ public interface GoGame {
      * Empty the board of stones
      */
     void reset();
+
+    /**
+     * Undo the last move made.
+     */
+    void undo();
     
     /**
      * Set the dimensions of the new board

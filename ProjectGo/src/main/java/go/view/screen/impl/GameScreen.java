@@ -27,7 +27,8 @@ public class GameScreen extends GoScreenImpl {
 	private OutputPanel outputPanel;
 	private JToolBar commandPanel;
 	private JButton passButton;
-	private JTextArea textArea;
+    private JButton undoButon;
+    private JTextArea textArea;
 	/**
 	 * Constructor
 	 * Displays the GoBoard to play on and notifies GoView
@@ -63,8 +64,20 @@ public class GameScreen extends GoScreenImpl {
 		commandPanel.add(passButton, BorderLayout.NORTH);
 		passButton.setPreferredSize(new Dimension(50, 50));
 		passButton.setFont(new Font("Arial", Font.PLAIN, 40));
+        undoButon = new JButton("Undo");
+        undoButon.setActionCommand("UNDO");
+        undoButon.addActionListener(outputPanel);
+        undoButon.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameScreen.this.notifyObserversOfActionEvent(e);
+            }
+        });
+        commandPanel.add(undoButon, BorderLayout.CENTER);
+        undoButon.setPreferredSize(new Dimension(50, 50));
+        undoButon.setFont(new Font("Arial", Font.PLAIN, 40));
 
-		commandPanel.add(textArea);
+		commandPanel.add(textArea, BorderLayout.SOUTH);
 
 		JPanel eastPanel = new JPanel();
 		// temporarily make eastPanel larger for debug purposes

@@ -3,6 +3,7 @@ package go.model.datamodel.impl;
 import go.model.datamodel.GoGame;
 import go.model.datamodel.GoGameBoard;
 import go.model.datamodel.GoMove;
+import go.model.datamodel.GoMoveMemento;
 import go.model.datamodel.GoPoint;
 import go.model.datamodel.StoneColor;
 import go.model.gameplay.GoCapture;
@@ -14,8 +15,12 @@ import go.model.observer.GoGameObserver;
 import go.model.observer.GoGameSubject;
 import go.model.observer.GoMoveObserver;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 
 public class GoGameImpl implements GoGameSubject, GoGame {
@@ -25,6 +30,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
     private List<GoMoveObserver> moveObservers;
     private List<GoGameObserver> gameObservers;
     private List<GoModelConfigObserver> configObservers;
+    private Stack<GoMoveMemento> moveHistory;
     private GoCapture capture;
     private GoScoringStrategy scoringStrategy;
 
@@ -32,7 +38,6 @@ public class GoGameImpl implements GoGameSubject, GoGame {
 
 
     public GoGameImpl() {
-        // @todo determine which strategy we'll actually use - we needn't implement both.
         this(new GoCaptureImpl(), new SimpleScoringStrategy());
     }
     public GoGameImpl(GoCapture capture, GoScoringStrategy strategy) {
@@ -47,6 +52,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
         addModelConfigObserver(board);
         this.capture = capture;
         this.scoringStrategy = strategy;
+        this.moveHistory = new Stack<>();
     }
 
     @Override
@@ -65,10 +71,32 @@ public class GoGameImpl implements GoGameSubject, GoGame {
         	this.notifyObserversOfPieceRemoval(point);
         	return;
         }
-        else
+        else {
+            recordMove(move, potentiallyCapturedPieces);
         	potentiallyCapturedPieces.forEach(this::notifyObserversOfPieceRemoval);
+        }
         rotateNextPlayer();
         lastMovePassed = false;
+    }
+
+    private void recordMove(GoMove moveMade, List<GoPoint> capturedPieceLocations) {
+        List<GoMove> removedPieceMoves = capturedPieceLocations.stream()
+                .map(point -> new GoMoveImpl(point, board.getStone(point).get()))
+                .collect(Collectors.toList());
+        moveHistory.push(new GoMoveMementoImpl(Collections.singletonList(moveMade), removedPieceMoves));
+    }
+
+    @Override
+    public void undo() {
+        if (moveHistory.isEmpty()) {
+            return;
+        }
+        GoMoveMemento lastMove = moveHistory.pop();
+        lastMove.getRemovedPieces().forEach(this::notifyObserversOfPiecePlacement);
+        lastMove.getAddedPieces().stream()
+                .map(GoMove::getPoint)
+                .forEach(this::notifyObserversOfPieceRemoval);
+        rotateNextPlayer();
     }
 
     @Override

@@ -38,8 +38,13 @@ public class GoMoveControllerImpl implements GoMoveController {
     public void pass() {
         game.pass();
     }
-    
-	@Override
+
+    @Override
+    public void undo() {
+        game.undo();
+    }
+
+    @Override
 	public void configureBoardSize(int boardSize) {
 		game.configureBoardSize(boardSize);
 	}

@@ -23,6 +23,11 @@ public interface GoMoveController {
     void pass();
 
     /**
+     * Undoes the previous player's move.
+     */
+    void undo();
+
+    /**
      * Empty the GameBoard
      */
     void resetGameBoard();

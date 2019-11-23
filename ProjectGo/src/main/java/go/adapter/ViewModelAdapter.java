@@ -54,8 +54,7 @@ public class ViewModelAdapter implements GoViewObserver, GoViewConfigObserver {
 
     @Override
     public void handleUndoMoveRequest() {
-        // TODO Auto-generated method stub
-
+        goMoveController.undo();
     }
 
     @Override
