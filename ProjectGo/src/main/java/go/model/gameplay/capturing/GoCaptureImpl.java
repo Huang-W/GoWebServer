@@ -18,14 +18,15 @@ public class GoCaptureImpl implements GoCapture {
     private List<GoPoint> capturedPoints;
     private GoGameBoard theBoard;
     
-    public GoCaptureImpl(int size) {
-    	BOARD_SIZE = size;
+    public GoCaptureImpl() {
+    	BOARD_SIZE = 9;
         neighborsInChain = new LinkedList<>();
         capturedPoints = new LinkedList<>();
     }
 
     @Override
     public List<GoPoint> capturePiecesForMove(GoGameBoard board, GoMove move) {
+    	BOARD_SIZE = board.size();
     	System.out.println("Checking for capture BOARD_SIZE of: " + BOARD_SIZE);
     	this.neighborsInChain.clear();
     	this.capturedPoints.clear();
@@ -145,7 +146,7 @@ public class GoCaptureImpl implements GoCapture {
     }
     
     /**
-     * Add all Stones of same color as the CapturePoint and add them to the NeighborsInChain
+     * Find all same-colored stones of color CapturePoint and add them to the NeighborsInChain
      * @param capturePoint the point to start recursing from
      * @param color the color to match against
      */

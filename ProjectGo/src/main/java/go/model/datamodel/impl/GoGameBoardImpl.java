@@ -4,6 +4,7 @@ import go.model.datamodel.GoGameBoard;
 import go.model.datamodel.GoMove;
 import go.model.datamodel.GoPoint;
 import go.model.datamodel.StoneColor;
+import go.model.observer.GoModelConfigObserver;
 import go.model.observer.GoMoveObserver;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class GoGameBoardImpl implements GoGameBoard, GoMoveObserver {
+public class GoGameBoardImpl implements GoGameBoard, GoMoveObserver, GoModelConfigObserver {
     private int size;
     private List<List<StoneColor>> board;
 
@@ -70,4 +71,10 @@ public class GoGameBoardImpl implements GoGameBoard, GoMoveObserver {
     public void handlePieceRemovalEvent(GoPoint point) {
         removeStone(point);
     }
+
+	@Override
+	public void handleBoardSizeChange(int boardSize) {
+		this.size = boardSize;
+		this.reset();
+	}
 }

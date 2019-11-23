@@ -33,12 +33,8 @@ public class GoGameImpl implements GoGameSubject, GoGame {
 
     public GoGameImpl() {
         // @todo determine which strategy we'll actually use - we needn't implement both.
-        this(new GoCaptureImpl(BOARD_SIZE), new SimpleScoringStrategy());
+        this(new GoCaptureImpl(), new SimpleScoringStrategy());
     }
-    public GoGameImpl(int boardSize) {
-    	this(new GoCaptureImpl(boardSize), new SimpleScoringStrategy());
-    }
-    
     public GoGameImpl(GoCapture capture, GoScoringStrategy strategy) {
         nextPlayer = StoneColor.BLACK;
         lastMovePassed = false;
@@ -48,6 +44,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
         GoGameBoardImpl board = new GoGameBoardImpl(BOARD_SIZE);
         this.board = board;
         addMoveObserver(board);
+        addModelConfigObserver(board);
         this.capture = capture;
         this.scoringStrategy = strategy;
     }
@@ -95,14 +92,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
     
 	@Override
 	public void configureBoardSize(int size) {
-		GoGameImpl.BOARD_SIZE = size;
-		GoCaptureImpl newCapture = new GoCaptureImpl(size);
-		GoGameBoardImpl newBoard = new GoGameBoardImpl(size);
-		
-		moveObservers.remove((GoMoveObserver) this.board);
-		addMoveObserver(newBoard);
-		this.capture = newCapture;
-		this.board = newBoard;
+		BOARD_SIZE = size;
 		this.notifyObserversOfBoardSizeChange(size);
 	}
 

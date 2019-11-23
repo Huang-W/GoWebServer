@@ -140,7 +140,6 @@ public class GoViewImpl extends JFrame implements GoView, GoViewSubject, GoScree
 		case SET_BOARD_SIZE_NINETEEN:
 			notifyObserversOfScreenSizeConfigEvent(19);
 			showGameScreen();
-			break;
 		default:
 			System.out.println("I dont how know to throw the exceptions");
 		}

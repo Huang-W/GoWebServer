@@ -20,7 +20,7 @@ public class GoCaptureImplTest {
 
     @Before
     public void setUp() throws Exception {
-        goCapture = new GoCaptureImpl(TEST_SIZE);
+        goCapture = new GoCaptureImpl();
     }
 
     @Test
