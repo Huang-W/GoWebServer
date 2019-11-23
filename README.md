@@ -98,10 +98,10 @@ We used a variant of Memento to implement undo functionality. In Memento, undo o
 ### Strategy
 In Go, there are varying rulesets that describe how game boards are to be counted. We used a Strategy to encapsulate the part of this logic - the scoring alogithm - that varies. This lets us be resilient to future opportunities for change, and we could easily add in other scoring rulesets.
 
-### Model and Controller extensibility and their application in the webapp vs the desktop app
+## Model and Controller extensibility and their application in the webapp vs the desktop app
 One of the goals of our design was that that the model and controller layer would be able to be reused by multiple different view layers. We demonstrated this ability to change by creating two views for our project: one a desktop app in Swing and the other a webapp using P5JS and websockets. The webapp and desktop app are able to leverage the parts of the model functionality that are the same--the gameplay logic and scoring--while encapsualting the parts that vary. 
 
-### Webapp View Layer
+## Webapp View Layer
 The neat and exciting bit of design going on in the webapp view layer is our use of the State pattern. In the webpage, there are 5 actions that result in different output and model changes based on the state of a given client. We maintain a map of websockets to state machines. With this map, we can access the state of each client when we receive a message from that client and decide what action to take from their input based on the state. GoWebSocketState describes the interface the client interacts with and its implementations describe how to handle each of these points of interaction based on the client's state.
 
 We use these states to neatly implement multiplayer - by associating two state machines and having them make changes to one another as the two users make actions we can force the two clients to wait for one another's moves and make requests to the controller layer that use the existing observer design to report the model changes to both clients. 
