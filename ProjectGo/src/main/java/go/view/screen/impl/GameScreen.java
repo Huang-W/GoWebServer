@@ -3,6 +3,7 @@ package go.view.screen.impl;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.JTextArea;
 
 import go.view.panel.BoardPanel;
 import go.view.panel.OutputPanel;
@@ -23,11 +24,9 @@ public class GameScreen extends GoScreenImpl {
 	
 	private Container boardPanel;
 	private OutputPanel outputPanel;
-	
 	private JToolBar commandPanel;
-	private JButton undoButton;
 	private JButton passButton;
-	
+	private JTextArea textArea;
 	/**
 	 * Constructor
 	 * Displays the GoBoard to play on and notifies GoView
@@ -37,31 +36,32 @@ public class GameScreen extends GoScreenImpl {
 		super();
 		boardPanel = new BoardPanel();
 		outputPanel = new OutputPanel();
+		textArea = new JTextArea(5, 3);
+		textArea.append("\n\n\n\n\nInstructions To Play:\n\n\n"
+				+"1. The main object of the game is to use your stones to form territories by surrounding vacant areas of the board. \n"
+				+"2. It is also possible to capture your opponent's stones by completely surrounding them.\n"
+				+"3. Players take turns, placing one of their stones on a vacant point at each turn, with Black playing first. \n"
+				+"4. Note that stones are placed on the intersections of the lines rather than in the squares "
+				+"5. once played stones are not moved. \n"
+				+"6. However, they may be captured, in which case they are removed from the board, and kept by the capturing player as prisoners.\n"
+				+"7. The game ends when both the players pass and the winner is decided by the number of prisoners it holds of the opponents\n");
 
 		commandPanel = new JToolBar();
 		commandPanel.setFloatable(false);
 		commandPanel.setRollover(true);
 		commandPanel.setLayout(new BorderLayout());
-        undoButton = new JButton("Undo");
 		passButton = new JButton("Pass");
-		undoButton.setActionCommand("UNDO");
 		passButton.setActionCommand("PASS");
-		undoButton.addActionListener(outputPanel);
 		passButton.addActionListener(outputPanel);
-		undoButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				GameScreen.this.notifyObserversOfActionEvent(e);
-			}
-		});
 		passButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GameScreen.this.notifyObserversOfActionEvent(e);
 			}
 		});
-		commandPanel.add(undoButton, BorderLayout.NORTH);
-		commandPanel.add(passButton, BorderLayout.CENTER);
+		commandPanel.add(passButton, BorderLayout.NORTH);
+		passButton.setOpaque(true);
+		commandPanel.add(textArea);
 
 		JPanel eastPanel = new JPanel();
 		// temporarily make eastPanel larger for debug purposes
