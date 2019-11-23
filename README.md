@@ -22,13 +22,11 @@ The Final Frontier
 
 * [Project Repository](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
 
-<<<<<<< HEAD
 ![WelcomeScreen](/readme/WelcomeScreen.png)
 =======
 * [Web App](http://underwater-softball-go.com/) - [Mirror 1](http://go-underwater-softball.net/) - [Mirror 2](http://gabrielhart.webfactional.com/)
 
 ![WelcomeScreen](WelcomeScreen.png)
->>>>>>> 0fd331a099ace675cbcc3516c4b376a8bb16b12f
 
 ![](/readme/ConfigStart-min.gif)
 
@@ -54,10 +52,7 @@ The Final Frontier
 * Support for multiple Scoring Strategies (defaulted to SimpleStrategy)
 * Memento pattern + Undo Button to rewind the game.
 * Supports multiple board sizes (9, 13, 19)
-<<<<<<< HEAD
-=======
 * Web-App support for single-player and two-player
->>>>>>> 0fd331a099ace675cbcc3516c4b376a8bb16b12f
 
 ## Design Notes
 
