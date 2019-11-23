@@ -51,7 +51,7 @@ We used the Model View Controller architecture for this project.  The Controller
 We implemented the Adapter Design Pattern by including ModelViewAdapter and ViewModelAdapter classes in the project. The ModelViewAdapter translates the game coordinates(For Ex. (1,1)) from the game model into pixel coordinates(For Ex. (280,350)) for the game view. Whereas, the ViewModelAdapter class translates mouse clicks(For Ex. (280,350)) sent from the GoView screens into the game coordinates(For Ex. (1,1)) that can be used by the game model. Moreover, This class forwards pass, undo and the game configuration requests to the game model.
 
 ### Composite
-Composite pattern was used for the main menu screen.  In the menu screen, there is a "Quick Start" button, and a "Config Start" button.  Both of these buttons were added each as a JButton, as we implemented this project in Java Swing.  These two buttons were than added to a single JPanel.  As you can see, a tree like structure of nodes was created, with the panel as the tree and the buttons as subcomponents.  Thus, this implies that composite pattern was used.
+The Ccmposite pattern was used for the main menu screen.  In this menu screen, there is a "Quick Start" button, and a "Config Start" button.  Both of these buttons were added each as a JButton, as we implemented this project in Java Swing.  These two buttons were then added to a single JPanel.  As you can see, a tree like structure of nodes were created, with the panel as acting like the "tree" and the buttons as "subcomponents."  This structure implies that the composite pattern was used.
 
 ### Observer
 We Implemented Observer Design Pattern in the Model as well as View package of the project.
