@@ -1,7 +1,6 @@
 package go.net.socketstate;
 
 import go.controller.GoMoveController;
-import go.controller.impl.GoMoveControllerImpl;
 
 public class InSinglePlayerGameState implements GoWebSocketState {
     private GoWebSocketStateMachine goWebSocketStateMachine;
@@ -25,6 +24,7 @@ public class InSinglePlayerGameState implements GoWebSocketState {
 
     @Override
     public void handleMove(int x, int y) {
+        assert (goMoveController != null);
         goMoveController.makeNextPlayersMove(x, y);
     }
 

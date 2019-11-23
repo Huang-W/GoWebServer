@@ -1,34 +1,36 @@
 package go.net.socketstate;
 
-public class ConnectedPendingGameSelectionState implements GoWebSocketState {
+public class WaitingForOpponentsMoveState implements GoWebSocketState {
     private GoWebSocketStateMachine stateMachine;
 
-    public ConnectedPendingGameSelectionState(GoWebSocketStateMachine stateMachine) {
+    public WaitingForOpponentsMoveState(GoWebSocketStateMachine stateMachine) {
         this.stateMachine = stateMachine;
     }
 
     @Override
     public void handleJoinSinglePlayerGame() {
+        stateMachine.leaveMultiPlayerGame();
         stateMachine.joinSinglePlayerGame();
     }
 
     @Override
     public void handleJoinTwoPlayerGame() {
+        stateMachine.leaveMultiPlayerGame();
         stateMachine.joinTwoPlayerGameQueue();
     }
 
     @Override
     public void handleMove(int x, int y) {
-        stateMachine.alert("Join a single or two player game to get started.");
+        stateMachine.alert("Please wait for your opponent to make their move.");
     }
 
     @Override
     public void handlePass() {
-        stateMachine.alert("Join a single or two player game to get started.");
+        stateMachine.alert("Please wait for your opponent to make their move.");
     }
 
     @Override
     public void handleUndo() {
-        stateMachine.alert("Join a single or two player game to get started.");
+        stateMachine.alert("Please wait for your opponent to make their move.");
     }
 }

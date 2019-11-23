@@ -38,7 +38,9 @@ public class GoWebSocketServer extends WebSocketServer {
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         System.out.printf("Close: from address: %s\n",
                 conn.getRemoteSocketAddress());
-        webSocketStates.remove(conn);
+        GoWebSocketStateMachine disconnectingPlayer = webSocketStates.remove(conn);
+        disconnectingPlayer.leaveMultiPlayerGame();
+        conn.close(code, reason);
     }
 
     @Override

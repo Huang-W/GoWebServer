@@ -13,28 +13,31 @@ public class TwoPlayerGameMyTurnState implements GoWebSocketState {
 
     @Override
     public void handleJoinSinglePlayerGame() {
-        // do nothing - already in game, and we don't want to abandon the other player :(
+        stateMachine.leaveMultiPlayerGame();
+        stateMachine.joinSinglePlayerGame();
     }
 
     @Override
     public void handleJoinTwoPlayerGame() {
-        // do nothing - already in game, and we don't want to abandon the other player :(
+        stateMachine.leaveMultiPlayerGame();
+        stateMachine.joinTwoPlayerGameQueue();
     }
 
     @Override
     public void handleMove(int x, int y) {
-        moveController.makeNextPlayersMove(x, y);
-        stateMachine.multiPlayerMoveMade();
+        if (moveController.makeNextPlayersMove(x, y)) {
+            stateMachine.multiPlayerMoveMade();
+        }
     }
 
     @Override
     public void handlePass() {
-        moveController.pass();
         stateMachine.multiPlayerMoveMade();
+        moveController.pass();
     }
 
     @Override
     public void handleUndo() {
-        // do nothing - undo is not allowed in multiplayer!
+        stateMachine.alert("You may not undo a move in multiplayer games.");
     }
 }

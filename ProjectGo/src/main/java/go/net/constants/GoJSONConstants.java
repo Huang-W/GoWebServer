@@ -10,8 +10,10 @@ public final class GoJSONConstants {
             String ADD_PIECE = "add_piece";
             String REMOVE_PIECE = "remove_piece";
             String GAME_END = "game_end";
+            String ALERT = "alert";
         }
     }
+    public static final String ALERT_MESSAGE = "alert_message";
     public interface INCOMING_EVENT_TYPE {
         String KEY = "event_type";
         interface VALUES {

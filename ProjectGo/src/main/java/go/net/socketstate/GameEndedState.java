@@ -1,9 +1,9 @@
 package go.net.socketstate;
 
-public class ConnectedPendingGameSelectionState implements GoWebSocketState {
+public class GameEndedState implements GoWebSocketState {
     private GoWebSocketStateMachine stateMachine;
 
-    public ConnectedPendingGameSelectionState(GoWebSocketStateMachine stateMachine) {
+    public GameEndedState(GoWebSocketStateMachine stateMachine) {
         this.stateMachine = stateMachine;
     }
 
@@ -19,16 +19,16 @@ public class ConnectedPendingGameSelectionState implements GoWebSocketState {
 
     @Override
     public void handleMove(int x, int y) {
-        stateMachine.alert("Join a single or two player game to get started.");
+        stateMachine.alert("The game is over! No more moves may be made.");
     }
 
     @Override
     public void handlePass() {
-        stateMachine.alert("Join a single or two player game to get started.");
+        stateMachine.alert("The game is over! No more moves may be made.");
     }
 
     @Override
     public void handleUndo() {
-        stateMachine.alert("Join a single or two player game to get started.");
+        stateMachine.alert("The game is over! No more moves may be made.");
     }
 }

@@ -15,7 +15,6 @@ import go.model.observer.GoGameObserver;
 import go.model.observer.GoGameSubject;
 import go.model.observer.GoMoveObserver;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -56,12 +55,12 @@ public class GoGameImpl implements GoGameSubject, GoGame {
     }
 
     @Override
-    public void makeMove(GoPoint point) {
+    public boolean makeMove(GoPoint point) {
     	System.out.println("XY in GameGameImpl: " + point.getX() + " " + point.getY());
     	System.out.println("Size of Board: " + board.size());
     	// Point is already occupied
     	if (board.getStone(point).isPresent())
-    		return;
+    		return false;
         GoMove move = new GoMoveImpl(point, nextPlayer);
         this.notifyObserversOfPiecePlacement(move);
         List<GoPoint> potentiallyCapturedPieces = capture.capturePiecesForMove(board, move);
@@ -69,7 +68,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
         if (potentiallyCapturedPieces.contains(point)) {
         	//the last move was an illegal suicide, this turn is invalid
         	this.notifyObserversOfPieceRemoval(point);
-        	return;
+        	return false;
         }
         else {
             recordMove(move, potentiallyCapturedPieces);
@@ -77,6 +76,7 @@ public class GoGameImpl implements GoGameSubject, GoGame {
         }
         rotateNextPlayer();
         lastMovePassed = false;
+        return true;
     }
 
     private void recordMove(GoMove moveMade, List<GoPoint> capturedPieceLocations) {

@@ -35,6 +35,10 @@ socket.addEventListener('message', (event) => {
             goBoard.endGame(data.winner);
             console.log(goBoard);
             break;
+        case "alert":
+            let message = data.alert_message;
+            alert(message);
+            break;
     }
 });
 
@@ -53,6 +57,7 @@ let submitNewSinglePlayerGame = (event) => {
 };
 let submitNewMultiPlayerGame = (event) => {
     startNewMultiPlayerGame();
+    goBoard = new GoBoard(GAME_SIZE);
     return false;
 };
 let submitPassForm = (event) => {

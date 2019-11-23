@@ -30,9 +30,9 @@ public class GoMoveControllerImpl implements GoMoveController {
     }
 
     @Override
-    public void makeNextPlayersMove(int x, int y) {
+    public boolean makeNextPlayersMove(int x, int y) {
         System.out.printf("GoMoveController: make move %d, %d\n", x, y);
-        game.makeMove(GoPointImpl.of(x, y));
+        return game.makeMove(GoPointImpl.of(x, y));
     }
 
     @Override

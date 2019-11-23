@@ -16,7 +16,7 @@ public class MultiPlayerGameMatchMaker {
     private MultiPlayerGameMatchMaker() {
         this.waitingPlayers = new ArrayDeque<>();
     }
-    public synchronized void enterQueueForGame(GoWebSocketStateMachine stateMachine) {
+    public synchronized void enterQueueOrLeaveIfAlreadyEnqueued(GoWebSocketStateMachine stateMachine) {
         System.out.println("player entered multiplayer queue. size: " + waitingPlayers.size());
         if (this.waitingPlayers.size() != 0) {
             GoWebSocketStateMachine other = this.waitingPlayers.poll();
@@ -25,6 +25,7 @@ public class MultiPlayerGameMatchMaker {
             stateMachine.joinTwoPlayerGameAsWhite(game, other);
         } else {
             this.waitingPlayers.add(stateMachine);
+            stateMachine.alert("No players are currently searching for a multiplayer opponent, but we will find you one as soon as we can!");
         }
     }
 }

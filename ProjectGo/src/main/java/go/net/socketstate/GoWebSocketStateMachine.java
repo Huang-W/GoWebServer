@@ -26,10 +26,15 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
     }
     public void handleMessage(JSONObject message) throws InvalidMessageException {
         String eventType = message.getString(GoJSONConstants.INCOMING_EVENT_TYPE.KEY);
+        System.out.println("handling " + eventType);
+        System.out.println("with state " + state.getClass().getName());
         switch (eventType) {
             case GoJSONConstants.INCOMING_EVENT_TYPE.VALUES.MOVE:
                 int x = message.getInt(GoJSONConstants.MOVE_SERIALIZATION.X);
                 int y = message.getInt(GoJSONConstants.MOVE_SERIALIZATION.Y);
+                System.out.println(webSocket);
+                System.out.println(webSocket.isOpen());
+
                 state.handleMove(x, y);
                 break;
             case GoJSONConstants.INCOMING_EVENT_TYPE.VALUES.PASS:
@@ -50,15 +55,15 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
     }
 
     public void joinSinglePlayerGame() {
-        this.state = new InSinglePlayerGameState(this, currentlyActiveGame);
         currentlyActiveGame = new GoMoveControllerImpl();
+        this.state = new InSinglePlayerGameState(this, currentlyActiveGame);
         currentlyActiveGame.getGameSubject().addMoveObserver(this);
         currentlyActiveGame.getGameSubject().addGameObserver(this);
     }
 
     public void joinTwoPlayerGameQueue() {
-        this.state = new WaitingGameState();
-        MultiPlayerGameMatchMaker.getInstance().enterQueueForGame(this);
+        this.state = new WaitingForOtherPlayerToJoinState(this);
+        MultiPlayerGameMatchMaker.getInstance().enterQueueOrLeaveIfAlreadyEnqueued(this);
     }
 
     public void joinTwoPlayerGameAsBlack(GoMoveController moveController, GoWebSocketStateMachine otherPlayer) {
@@ -69,38 +74,59 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
         this.currentlyActiveGame.getGameSubject().addMoveObserver(this);
         this.otherPlayer = otherPlayer;
         this.state = new TwoPlayerGameMyTurnState(this, moveController);
+        alert("You joined a multiplayer game! You are black, and will go first");
     }
 
     public void joinTwoPlayerGameAsWhite(GoMoveController moveController, GoWebSocketStateMachine otherPlayer) {
-        System.out.println(this);
-        System.out.println("joinTwoPlayerGameAsWhite");
         this.currentlyActiveGame = moveController;
         this.currentlyActiveGame.getGameSubject().addGameObserver(this);
         this.currentlyActiveGame.getGameSubject().addMoveObserver(this);
         this.otherPlayer = otherPlayer;
-        this.state = new WaitingGameState();
+        this.state = new WaitingForOpponentsMoveState(this);
+        alert("You joined a multiplayer game! You are white, and will go second");
     }
 
     public void setMyTurn() {
-        assert(this != this.otherPlayer);
-        System.out.println(this);
-        System.out.println("setMyTurn");
         this.state = new TwoPlayerGameMyTurnState(this, currentlyActiveGame);
     }
     public void multiPlayerMoveMade() {
-        assert(this != this.otherPlayer);
-        System.out.println(this);
-        System.out.println("multiPlayerMoveMade");
-        this.state = new WaitingGameState();
+        this.state = new WaitingForOpponentsMoveState(this);
         this.otherPlayer.setMyTurn();
+        this.otherPlayer.alert("Your opponent made a move.");
+    }
+    public void leaveMultiPlayerGame() {
+        System.out.println("i am leaving multiplayer");
+        System.out.println(this.webSocket);
+        if (null != this.otherPlayer) {
+            System.out.println(this.otherPlayer.webSocket);
+            this.otherPlayer.alert("Your opponent left.");
+            this.otherPlayer.state = new ConnectedPendingGameSelectionState(this.otherPlayer);
+            this.otherPlayer.otherPlayer = null;
+            this.otherPlayer.currentlyActiveGame = null;
+            assert(this.otherPlayer.webSocket.isOpen());
+            System.out.println(this.otherPlayer.webSocket.isOpen());
+        }
+    }
+
+    public void alert(String message) {
+        JSONObject alert = new JSONObject();
+        alert.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.ALERT);
+        alert.put(GoJSONConstants.ALERT_MESSAGE, message);
+        assert(this.webSocket.isOpen());
+        System.out.println(this.webSocket.isOpen());
+        this.webSocket.send(alert.toString());
     }
 
     @Override
     public void handleGameEnd(StoneColor winner) {
+        System.out.println("handling end game ");
         JSONObject jsonWinner = new JSONObject();
         jsonWinner.put(GoJSONConstants.MOVE_SERIALIZATION.WINNER, winner.name());
         jsonWinner.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.GAME_END);
         webSocket.send(jsonWinner.toString());
+        this.otherPlayer = null;
+        this.currentlyActiveGame = null;
+        this.state = new GameEndedState(this);
     }
 
     @Override
