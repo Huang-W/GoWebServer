@@ -22,7 +22,7 @@ The Final Frontier
 
 * [Project Repository](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
 
-![](ConfigStart.gif)
+![](ConfigStart-min.gif)
 
 ## Design
 
