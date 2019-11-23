@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Go: Underwater Softball</title>
+        <link rel="stylesheet" type="text/css" href="theme.css"> 
+        <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="connectGo.js"></script>
+        <script src="sketch.js"></script>
+        
+    </head>
+    <body>
+
+        <div class="centered">
+            <h3> Go: a Game by Team Underwater Softball</h3>
+            <p class=""> There are <span id="liveUsers"></span> users online.</p>
+            <p> There are <span id="multiplayerUsers"></span> users playing or seeking multiplayer games right now.</p>
+        </div>
+        <form class="move-form centered">
+            <input class="form-control-inline move-input" min="0" max="8" placeholder="x (0-8)"type="number" id="x"/>
+            <input class="form-control-inline move-input" min="0" max="8" placeholder="y (0-8)" type="number" id="y"/>
+            <button class="make-move-btn btn btn-primary" onclick="return submitMoveForm();">Make Move</button>
+        </form>
+        <br>
+        <div class="centered">
+            <button class="menu-btn btn btn-secondary" value="pass" onclick="return submitPassForm();">Pass</button>
+            <button class="menu-btn btn btn-danger" value="undo" onclick="return submitUndoForm();">Undo</button>
+        </div>
+        <br>
+        <div class="centered">
+            <button class="menu-btn btn btn-primary"  onclick="return submitNewSinglePlayerGame();">Start New Single Player Game</button>
+            <button class="menu-btn btn btn-primary"  onclick="return submitNewMultiPlayerGame();">Start New Two Player Game</button>
+        </div>
+        <br>
+        <div id="alert"></div>
+        <div class="centered" id="sketch-holder">
+        </div>
+        
+    </body>
+</html>

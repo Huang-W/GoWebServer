@@ -1,0 +1,26 @@
+.centered {
+    margin: auto;
+    width: 40%;
+}
+.menu-btn {
+    width: 40%;
+    display: block;
+}
+.make-move-btn {
+    width: 19.5%;
+}
+.header {
+    margin: auto;
+    width: 40%;
+}
+body {
+    line-height: 2;   
+}
+.move-input {
+    width: 30%;
+    height: 35px;
+}
+.my-alert {
+    margin: auto;
+    width: 50%;
+}
