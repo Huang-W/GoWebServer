@@ -1,9 +1,6 @@
 package go.net;
 
-import go.controller.GoMoveController;
-import go.controller.JsonGoMoveController;
-import go.controller.impl.GoMoveControllerImpl;
-import go.net.impl.WebSocketGoMoveController;
+import go.net.socketstate.GoWebSocketStateMachine;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -23,10 +20,10 @@ import java.util.Map;
  * Library: https://github.com/TooTallNate/Java-WebSocket
  */
 public class GoWebSocketServer extends WebSocketServer {
-    private Map<WebSocket, JsonGoMoveController> gamesByPlayer;
+    private Map<WebSocket, GoWebSocketStateMachine> webSocketStates;
     public GoWebSocketServer(String hostname, int port) throws UnknownHostException {
         super (new InetSocketAddress(InetAddress.getByName(hostname), port));
-        this.gamesByPlayer = new HashMap<>();
+        this.webSocketStates = new HashMap<>();
     }
 
     @Override
@@ -34,15 +31,14 @@ public class GoWebSocketServer extends WebSocketServer {
         System.out.printf("Open: from address %s with handshake resource descriptor %s\n",
                 conn.getRemoteSocketAddress(),
                 handshake.getResourceDescriptor());
-        JsonGoMoveController moveController = new WebSocketGoMoveController(conn);
-        gamesByPlayer.put(conn, moveController);
+        webSocketStates.put(conn, new GoWebSocketStateMachine(conn));
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         System.out.printf("Close: from address: %s\n",
                 conn.getRemoteSocketAddress());
-        gamesByPlayer.remove(conn);
+        webSocketStates.remove(conn);
     }
 
     @Override
@@ -51,15 +47,15 @@ public class GoWebSocketServer extends WebSocketServer {
                 conn.getRemoteSocketAddress(),
                 message);
         try {
-            JsonGoMoveController moveController = gamesByPlayer.get(conn);
+            GoWebSocketStateMachine stateMachine = webSocketStates.get(conn);
             JSONObject jsonMessage = new JSONObject(message);
-            moveController.handleMove(jsonMessage);
+            stateMachine.handleMessage(jsonMessage);
         } catch (JSONException exception) {
             System.out.printf("JSONException encountered: %s\n", exception.getMessage());
             exception.printStackTrace();
             conn.send(exception.getMessage());
         } catch (InvalidMessageException exception) {
-            System.out.printf("INvalidMessageException encountered: %s\n", exception.getMessage());
+            System.out.printf("InvalidMessageException encountered: %s\n", exception.getMessage());
             exception.printStackTrace();
             conn.send(exception.getMessage());
         } catch (RuntimeException exception) {

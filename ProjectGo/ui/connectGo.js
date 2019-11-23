@@ -45,27 +45,35 @@ let submitMoveForm = (event) => {
     document.getElementById('y').value = null;    
     makeMove(x, y);
     return false;
-}
+};
+let submitNewSinglePlayerGame = (event) => {
+    startNewSinglePlayerGame();
+    goBoard = new GoBoard(GAME_SIZE);
+    return false;
+};
 let submitPassForm = (event) => {
     pass();
     return false;
-}
+};
 
 let submitUndoForm = (event) => {
     undo();
     return false;
-}
+};
 
+let startNewSinglePlayerGame = () => {
+    sendEventMessage('start_single_player');
+};
 let makeMove = (x, y) => {
     let move = {x, y};
     sendEventMessage('move', move);
 };
 let pass = () => {
     sendEventMessage('pass');
-}
+};
 let undo = () => {
     sendEventMessage('undo');
-}
+};
 let sendEventMessage = (eventType, extraMessageParams = {}) => {
     let event = {
         "event_type" : eventType,
@@ -74,4 +82,4 @@ let sendEventMessage = (eventType, extraMessageParams = {}) => {
     console.log('sending:');
     console.log(event);
     socket.send(JSON.stringify(event));
-}
+};

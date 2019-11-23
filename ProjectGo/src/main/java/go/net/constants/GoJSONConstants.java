@@ -18,6 +18,8 @@ public final class GoJSONConstants {
             String MOVE = "move";
             String PASS = "pass";
             String UNDO = "undo";
+            String SINGLE_PLAYER = "start_single_player";
+            String MULTI_PLAYER = "start_multi_player";
         }
     }
     public interface MOVE_SERIALIZATION {

@@ -2,6 +2,7 @@ const STONE_COLOR = {
     BLACK: "BLACK",
     WHITE: "WHITE"
 };
+const GAME_SIZE = 9;
 class GoBoard {
     constructor(size) {
         this.board = [];
@@ -33,7 +34,9 @@ class GoBoard {
     drawWinner(length) {
         textSize(36);
         let textBufferLeft = 75;
+        console.log(length/2 - textBufferLeft, length/2);
         text(this.winner + " wins!", length/2 - textBufferLeft, length/2);
+        console.log("drawWinner");
     }
     drawGrid(length) {
         let interval = length/this.size;
@@ -60,8 +63,7 @@ class GoBoard {
         }
     }
 }
-// @todo sync this across net
-const goBoard = new GoBoard(9);
+let goBoard = new GoBoard(GAME_SIZE);
 
 
 console.log(goBoard);
