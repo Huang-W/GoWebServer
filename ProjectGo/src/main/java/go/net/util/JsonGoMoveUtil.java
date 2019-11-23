@@ -2,6 +2,11 @@ package go.net.util;
 
 import go.model.datamodel.GoMove;
 import go.model.datamodel.GoPoint;
+import go.model.datamodel.StoneColor;
+import go.model.datamodel.impl.GoMoveImpl;
+import go.model.datamodel.impl.GoPointImpl;
+import go.net.InvalidMessageException;
+import go.net.constants.GoJSONConstants;
 import org.json.JSONObject;
 
 /**
@@ -16,8 +21,8 @@ public final class JsonGoMoveUtil {
      */
     public static final JSONObject serialize(GoPoint point) {
         JSONObject jsonGoPoint = new JSONObject();
-        jsonGoPoint.put("x", point.getX());
-        jsonGoPoint.put("y", point.getY());
+        jsonGoPoint.put(GoJSONConstants.MOVE_SERIALIZATION.X, point.getX());
+        jsonGoPoint.put(GoJSONConstants.MOVE_SERIALIZATION.Y, point.getY());
         return jsonGoPoint;
     }
 
@@ -31,9 +36,39 @@ public final class JsonGoMoveUtil {
      */
     public static final JSONObject serialize(GoMove move) {
         JSONObject jsonGoMove = new JSONObject();
-        jsonGoMove.put("point", serialize(move.getPoint()));
-        jsonGoMove.put("color", move.getStoneColor().name());
+        jsonGoMove.put(GoJSONConstants.MOVE_SERIALIZATION.POINT, serialize(move.getPoint()));
+        jsonGoMove.put(GoJSONConstants.MOVE_SERIALIZATION.COLOR, move.getStoneColor().name());
         return jsonGoMove;
     }
+
+    /**
+     * Creates a GoMove from a JSON object describing it.
+     * The JSON Object should follow the format as if it was created by {@link JsonGoMoveUtil#serialize(GoMove)}
+     * @param move the JSON object describing the move
+     * @return a GoMove
+     */
+    public static final GoMove deserializeMove(JSONObject move) throws InvalidMessageException{
+        JSONObject jsonGoPoint = move.getJSONObject(GoJSONConstants.MOVE_SERIALIZATION.POINT);
+        GoPoint point = deserializePoint(jsonGoPoint);
+        String colorString = move.getString(GoJSONConstants.MOVE_SERIALIZATION.COLOR);
+        StoneColor color = StoneColor.fromString(colorString);
+        if (null == color) {
+            throw new InvalidMessageException("No such color " + colorString);
+        }
+        return new GoMoveImpl(point, color);
+    }
+    /**
+     * Creates a GoPoint from a JSON object describing it.
+     * The JSON Object should follow the format as if it was created by {@link JsonGoMoveUtil#serialize(GoPoint)}
+     * @param point the JSON object describing the move
+     * @return a GoPoint
+     */
+    public static final GoPoint deserializePoint(JSONObject point) {
+        int x = point.getInt(GoJSONConstants.MOVE_SERIALIZATION.X);
+        int y = point.getInt(GoJSONConstants.MOVE_SERIALIZATION.Y);
+
+        return GoPointImpl.of(x, y);
+    }
+
 
 }

@@ -4,7 +4,7 @@ package go.net.constants;
  * Class that houses string constants used as json keys in describing Go moves.
  */
 public final class GoJSONConstants {
-    interface EVENT_TYPE {
+    public interface INCOMING_EVENT_TYPE {
         String KEY = "event_type";
         interface VALUES {
             String MOVE = "move";
@@ -12,7 +12,11 @@ public final class GoJSONConstants {
             String UNDO = "undo";
         }
     }
-    interface MOVE_SERIALIZATION {
-
+    public interface MOVE_SERIALIZATION {
+        String X = "x";
+        String Y = "y";
+        String COLOR = "color";
+        String WINNER = "winner";
+        String POINT = "point";
     }
 }

@@ -5,4 +5,7 @@ package go.net;
  * received over a websocket. Such messages can be malformed JSON or not contain expected values.
  */
 public class InvalidMessageException extends Exception {
+    public InvalidMessageException(String message) {
+        super(message);
+    }
 }

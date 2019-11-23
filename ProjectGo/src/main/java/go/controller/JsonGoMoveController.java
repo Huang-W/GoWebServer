@@ -1,5 +1,6 @@
 package go.controller;
 
+import go.net.InvalidMessageException;
 import org.json.JSONObject;
 
 /**
@@ -16,5 +17,5 @@ public interface JsonGoMoveController {
      * @todo - reset and resize support
      * @param jsonObject The object describing the move.
      */
-    void handleMove(JSONObject jsonObject);
+    void handleMove(JSONObject jsonObject) throws InvalidMessageException;
 }
