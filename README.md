@@ -32,6 +32,8 @@ We built our model and controller layers to be extensible, so we were able to sl
 
 ![](/readme/GoGame-min.gif)
 
+![](/readme/go_webapp.gif)
+
 ## Design
 
 #### Top Level Diagram
