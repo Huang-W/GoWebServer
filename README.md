@@ -21,7 +21,7 @@ The Final Frontier
 
 * [Project Repository](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
 
-* [WelcomeScreen](/readme/WelcomeScreen.png)
+![WelcomeScreen](/readme/WelcomeScreen.png)
 =======
 * [Web App](http://underwater-softball-go.com/) - [Mirror 1](http://go-underwater-softball.net/) - [Mirror 2](http://gabrielhart.webfactional.com/)
 
@@ -98,7 +98,7 @@ We used a variant of Memento to implement undo functionality. In Memento, undo o
 ### Strategy
 In Go, there are varying rulesets that describe how game boards are to be counted. We used a Strategy to encapsulate the part of this logic - the scoring alogithm - that varies. This lets us be resilient to future opportunities for change, and we could easily add in other scoring rulesets.
 
-## Model and Controller extensibility and their application in the webapp vs the desktop app
+## Model and Controller Extensibility and Their Application In the Webapp VS the Desktop App
 One of the goals of our design was that that the model and controller layer would be able to be reused by multiple different view layers. We demonstrated this ability to change by creating two views for our project: one a desktop app in Swing and the other a webapp using P5JS and websockets. The webapp and desktop app are able to leverage the parts of the model functionality that are the same--the gameplay logic and scoring--while encapsualting the parts that vary. 
 
 ## Webapp View Layer
