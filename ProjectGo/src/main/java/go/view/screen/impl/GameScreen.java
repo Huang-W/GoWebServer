@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.JTextArea;
+import java.awt.*;
 
 import go.view.panel.BoardPanel;
 import go.view.panel.OutputPanel;
@@ -60,7 +61,9 @@ public class GameScreen extends GoScreenImpl {
 			}
 		});
 		commandPanel.add(passButton, BorderLayout.NORTH);
-		passButton.setOpaque(true);
+		passButton.setPreferredSize(new Dimension(50, 50));
+		passButton.setFont(new Font("Arial", Font.PLAIN, 40));
+
 		commandPanel.add(textArea);
 
 		JPanel eastPanel = new JPanel();
