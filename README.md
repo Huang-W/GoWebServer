@@ -25,12 +25,16 @@ The Final Frontier
 
 ## Design
 
+#### Top Level Diagram
 ![Top Level Diagram](/design/TopLeveldiagram.png)
 
+#### Adapter Diagram
 ![Adapter Diagram](/design/GoAdapters.png)
 
+#### Model Diagram
 ![Model Diagram](/design/GoModelDiagram.png)
 
+#### View Diagram
 ![View Diagram](/design/GoViewDiagram.png)
 
 ## Design Notes
