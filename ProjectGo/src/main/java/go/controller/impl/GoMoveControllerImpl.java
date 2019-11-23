@@ -31,16 +31,19 @@ public class GoMoveControllerImpl implements GoMoveController {
 
     @Override
     public void makeNextPlayersMove(int x, int y) {
+        System.out.printf("GoMoveController: make move %d, %d\n", x, y);
         game.makeMove(GoPointImpl.of(x, y));
     }
 
     @Override
     public void pass() {
+        System.out.println("GoMoveController: pass");
         game.pass();
     }
 
     @Override
     public void undo() {
+        System.out.println("GoMoveController: undo");
         game.undo();
     }
 

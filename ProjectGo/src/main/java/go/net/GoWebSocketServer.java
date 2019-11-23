@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -23,6 +24,7 @@ public class GoWebSocketServer extends WebSocketServer {
     private Map<WebSocket, JsonGoMoveController> gamesByPlayer;
     public GoWebSocketServer(int port) {
         super (new InetSocketAddress(port));
+        this.gamesByPlayer = new HashMap<>();
     }
 
     @Override
@@ -51,8 +53,16 @@ public class GoWebSocketServer extends WebSocketServer {
             JSONObject jsonMessage = new JSONObject(message);
             moveController.handleMove(jsonMessage);
         } catch (JSONException exception) {
+            System.out.printf("JSONException encountered: %s\n", exception.getMessage());
+            exception.printStackTrace();
             conn.send(exception.getMessage());
         } catch (InvalidMessageException exception) {
+            System.out.printf("INvalidMessageException encountered: %s\n", exception.getMessage());
+            exception.printStackTrace();
+            conn.send(exception.getMessage());
+        } catch (RuntimeException exception) {
+            System.out.printf("Unexpected exception encountered of type %s: %s\n", exception.getClass().getName(), exception.getMessage());
+            exception.printStackTrace();
             conn.send(exception.getMessage());
         }
     }

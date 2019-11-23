@@ -55,12 +55,14 @@ public class WebSocketGoMoveController implements JsonGoMoveController, GoMoveOb
     @Override
     public void handlePieceAdditionEvent(GoMove move) {
         JSONObject jsonMove = JsonGoMoveUtil.serialize(move);
+        jsonMove.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.ADD_PIECE);
         webSocket.send(jsonMove.toString());
     }
 
     @Override
     public void handlePieceRemovalEvent(GoPoint point) {
         JSONObject goPoint = JsonGoMoveUtil.serialize(point);
+        goPoint.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.REMOVE_PIECE);
         webSocket.send(goPoint.toString());
     }
 }

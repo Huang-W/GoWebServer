@@ -2,13 +2,24 @@
 <html>
     <head>
         <title>Go: Underwater Softball</title>
-        <script src="connectGo.js"></script>
         <link rel="stylesheet" type="text/css" href="theme.css"> 
+        <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+        <script src="connectGo.js"></script>
+        <script src="sketch.js"></script>
+        
     </head>
     <body>
         <form class="my-form">
-            <input type="text" id="msg"/>
-            <input type="submit" value="submit" onclick="return submitForm();" />
+            <input type="number" id="x"/>
+            <input type="number" id="y"/>
+            <input type="submit" value="make move" onclick="return submitMoveForm();" />
         </form>
+        <form class="my-form">
+            <input type="submit" value="pass" onclick="return submitPassForm();" />
+        </form>
+        <form class="my-form">
+            <input type="submit" value="undo" onclick="return submitUndoForm();" />
+        </form>
+        
     </body>
 </html>
