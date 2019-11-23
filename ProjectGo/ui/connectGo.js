@@ -28,7 +28,7 @@ socket.addEventListener('message', (event) => {
             break;
         case "alert":
             let message = data.alert_message;
-            alert(message);
+            myalert(message);
             break;
         case "usage_stats":
             let users = data.live_users;
@@ -39,6 +39,15 @@ socket.addEventListener('message', (event) => {
             break;
     }
 });
+
+let myalert = (message) => {
+    document.getElementById('alert').innerHTML = 
+    `<div class="my-alert alert alert-warning alert-dismissible fade show" role="alert">${message}` + 
+        `<button type="button" class="close" data-dismiss="alert" aria-label="Close">` +    
+            `<span ariajshidden="true">&times;</span>` + 
+        `</button>` + 
+    `</div>`;
+};
 
 let submitMoveForm = (event) => {
     let x = document.getElementById('x').value;

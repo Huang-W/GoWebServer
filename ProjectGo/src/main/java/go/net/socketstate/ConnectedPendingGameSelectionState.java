@@ -19,16 +19,16 @@ public class ConnectedPendingGameSelectionState implements GoWebSocketState {
 
     @Override
     public void handleMove(int x, int y) {
-        stateMachine.alert("Join a single or two player game to get started.");
+        stateMachine.alert("Join a game to get started.");
     }
 
     @Override
     public void handlePass() {
-        stateMachine.alert("Join a single or two player game to get started.");
+        stateMachine.alert("Join a game to get started.");
     }
 
     @Override
     public void handleUndo() {
-        stateMachine.alert("Join a single or two player game to get started.");
+        stateMachine.alert("Join a game to get started.");
     }
 }

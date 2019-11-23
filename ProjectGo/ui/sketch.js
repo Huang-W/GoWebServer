@@ -33,7 +33,7 @@ class GoBoard {
     }
     drawWinner(length) {
         textSize(36);
-        fill(51);
+        fill('#a9a9a9');
         let textBufferLeft = 75;
         text(this.winner + " wins!", length/2 - textBufferLeft, length/2);
     }
