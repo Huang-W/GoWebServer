@@ -22,11 +22,11 @@ The Final Frontier
 
 * [Project Repository](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
 
-![WelcomeScreen](WelcomeScreen.png)
+![WelcomeScreen](/readme/WelcomeScreen.png)
 
-![](ConfigStart-min.gif)
+![](/readme/ConfigStart-min.gif)
 
-![](GoGame-min.gif)
+![](/readme/GoGame-min.gif)
 
 ## Design
 
@@ -41,6 +41,13 @@ The Final Frontier
 
 #### View Diagram
 ![View Diagram](/design/4-GoViewDiagram.png)
+
+## Key Features
+* Interactable user interface
+* Single-Player GO Board with complete capture logic.
+* Support for multiple Scoring Strategies (defaulted to SimpleStrategy)
+* Memento pattern + Undo Button to rewind the game.
+* Supports multiple board sizes (9, 13, 19)
 
 ## Design Notes
 
@@ -82,4 +89,4 @@ We Implemented Observer Design Pattern in the Model as well as View package of t
 
 ## Individual Contributions
 
-![Sprint Sheet](sprint_sheet.png)
+![Sprint Sheet](/readme/sprint_sheet.png)
