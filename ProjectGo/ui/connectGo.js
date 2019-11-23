@@ -1,5 +1,5 @@
 // Reference: https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
-const socket = new WebSocket('ws://localhost:8887');
+const socket = new WebSocket('ws://gabrielhart.webfaction.com:21324');
 
 socket.addEventListener('open', (event) => {
     console.log('socket opened');

@@ -72,8 +72,9 @@ public class GoWebSocketServer extends WebSocketServer {
     @Override
     public void onError(WebSocket conn, Exception ex) {
         System.out.printf("Error: from address %s: %s\n",
-                conn.getRemoteSocketAddress(),
+                conn == null ? "null" : conn.getRemoteSocketAddress(),
                 ex.getMessage());
+        ex.printStackTrace();
     }
 
     @Override
