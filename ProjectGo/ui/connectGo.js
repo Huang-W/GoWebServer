@@ -1,5 +1,18 @@
-// Reference: https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
-const socket = new WebSocket('ws://gabrielhart.webfaction.com:21324');
+
+
+// Reference - https://stackoverflow.com/questions/36921947/read-a-server-side-file-using-javascript
+function loadFile(filePath) {
+    let result;
+    let request = new XMLHttpRequest();
+    request.open("GET", filePath, false);
+    request.send();
+    if (request.status==200) {
+        result = request.responseText;
+    }
+    return result;
+}
+// References: https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
+const socket = new WebSocket('ws://' + loadFile('serverAddress'));
 
 socket.addEventListener('open', (event) => {
     console.log('socket opened');
