@@ -49,6 +49,7 @@ public class WebSocketGoMoveController implements JsonGoMoveController, GoMoveOb
     public void handleGameEnd(StoneColor winner) {
         JSONObject jsonWinner = new JSONObject();
         jsonWinner.put(GoJSONConstants.MOVE_SERIALIZATION.WINNER, winner.name());
+        jsonWinner.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.GAME_END);
         webSocket.send(jsonWinner.toString());
     }
 
@@ -62,7 +63,9 @@ public class WebSocketGoMoveController implements JsonGoMoveController, GoMoveOb
     @Override
     public void handlePieceRemovalEvent(GoPoint point) {
         JSONObject goPoint = JsonGoMoveUtil.serialize(point);
-        goPoint.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.REMOVE_PIECE);
-        webSocket.send(goPoint.toString());
+        JSONObject message = new JSONObject();
+        message.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.REMOVE_PIECE);
+        message.put(GoJSONConstants.MOVE_SERIALIZATION.POINT, goPoint);
+        webSocket.send(message.toString());
     }
 }

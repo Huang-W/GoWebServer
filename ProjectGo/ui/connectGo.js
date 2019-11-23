@@ -8,10 +8,21 @@ socket.addEventListener('open', (event) => {
 
 socket.addEventListener('message', (event) => {
     console.log(event);
-    console.log('Message from server: ', event.data);
+    console.log('Message from server: ');
     let data = JSON.parse(event.data);
     console.log(data);
-    goBoard.addPiece(3, 8, STONE_COLOR.BLACK);
+    switch (data.event_type) {
+        case "add_piece":
+            goBoard.addPiece(data.point.x, data.point.y, data.color);
+            break;
+        case "remove_piece":
+            goBoard.removePiece(data.point.x, data.point.y);
+            break;
+        case "game_end":
+            goBoard.endGame(data.winner);
+            console.log(goBoard);
+            break;
+    }
 });
 
 let submitMoveForm = (event) => {

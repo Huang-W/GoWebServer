@@ -37,7 +37,6 @@ public class Main {
         server.start();
         while ( true ) {
             String in = sysin.readLine();
-            server.broadcast( in );
             if( in.equals( "exit" ) ) {
                 server.stop(1000);
                 break;

@@ -9,6 +9,7 @@ public final class GoJSONConstants {
         interface VALUES {
             String ADD_PIECE = "add_piece";
             String REMOVE_PIECE = "remove_piece";
+            String GAME_END = "game_end";
         }
     }
     public interface INCOMING_EVENT_TYPE {
