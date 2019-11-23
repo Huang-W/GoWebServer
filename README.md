@@ -21,11 +21,9 @@ The Final Frontier
 
 * [Project Repository](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
 
-* [WelcomeScreen](/readme/WelcomeScreen.png)
-
 * [Web App](http://underwater-softball-go.com/) - [Mirror 1](http://go-underwater-softball.net/) - [Mirror 2](http://gabrielhart.webfactional.com/)
 
-![WelcomeScreen](WelcomeScreen.png)
+![WelcomeScreen](/readme/WelcomeScreen.png)
 
 ![](/readme/ConfigStart-min.gif)
 
