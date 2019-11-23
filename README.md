@@ -22,7 +22,13 @@ The Final Frontier
 
 * [Project Repository](https://github.com/nguyensjsu/fa19-202-underwater-softball) 
 
+<<<<<<< HEAD
 ![WelcomeScreen](/readme/WelcomeScreen.png)
+=======
+* [Web App](http://underwater-softball-go.com/) - [Mirror 1](http://go-underwater-softball.net/) - [Mirror 2](http://gabrielhart.webfactional.com/)
+
+![WelcomeScreen](WelcomeScreen.png)
+>>>>>>> 0fd331a099ace675cbcc3516c4b376a8bb16b12f
 
 ![](/readme/ConfigStart-min.gif)
 
@@ -48,6 +54,10 @@ The Final Frontier
 * Support for multiple Scoring Strategies (defaulted to SimpleStrategy)
 * Memento pattern + Undo Button to rewind the game.
 * Supports multiple board sizes (9, 13, 19)
+<<<<<<< HEAD
+=======
+* Web-App support for single-player and two-player
+>>>>>>> 0fd331a099ace675cbcc3516c4b376a8bb16b12f
 
 ## Design Notes
 
@@ -86,6 +96,22 @@ We Implemented Observer Design Pattern in the Model as well as View package of t
 * GoViewConfigSubject is a subject that notifies its observers when the GoGame is being configured and when the BoardSize has   changed
 
 * GoViewSubject is a subject that notifies its observers of user inputs in a game of Go and about the event when the screen is   clicked or when a button is clicked.
+ 
+
+### Undo
+We used a variant of Memento to implement undo functionality. In Memento, undo operations are implemented by remembering the state of the object before a change. We chose to instead keep an artifact of the change itself - so rather than returning the object to its previous state before a change to undo, we simply do the reverse of the change. Our undo behaves somewhat like version control - we keep a history of all the changes that were made to the game state to be able to undo them, rather than keeping track of the state after every change.
+
+### Scoring
+In Go, there are varying rulesets that describe how game boards are to be counted. We used a Strategy to encapsulate the part of this logic - the scoring alogithm - that varies. This lets us be resilient to future opportunities for change, and we could easily add in other scoring rulesets.
+
+### Model and Controller extensibility and their application in the webapp vs the desktop app
+One of the goals of our design was that that the model and controller layer would be able to be reused by multiple different view layers. We demonstrated this ability to change by creating two views for our project: one a desktop app in Swing and the other a webapp using P5JS and websockets. The webapp and desktop app are able to leverage the parts of the model functionality that are the same--the gameplay logic and scoring--while encapsualting the parts that vary. 
+
+### Webapp View Layer
+The neat and exciting bit of design going on in the webapp view layer is our use of the State pattern. In the webpage, there are 5 actions that result in different output and model changes based on the state of a given client. We maintain a map of websockets to state machines. With this map, we can access the state of each client when we receive a message from that client and decide what action to take from their input based on the state. GoWebSocketState describes the interface the client interacts with and its implementations describe how to handle each of these points of interaction based on the client's state.
+
+We use these states to neatly implement multiplayer - by associating two state machines and having them make changes to one another as the two users make actions we can force the two clients to wait for one another's moves and make requests to the controller layer that use the existing observer design to report the model changes to both clients. 
+
 
 ## Individual Contributions
 
