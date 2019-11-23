@@ -1,12 +1,11 @@
 package go.net.socketstate;
 
-public class PendingTwoPlayerGameState implements GoWebSocketState {
-    private GoWebSocketStateMachine stateMachine;
-
-    public PendingTwoPlayerGameState(GoWebSocketStateMachine stateMachine) {
-        this.stateMachine = stateMachine;
-    }
-
+/**
+ * A game state in which messages are discarded. Sockets in such a state
+ * are waiting for other users - either for other users to join the multiplayer queue
+ * or for other users to make a move.
+ */
+public class WaitingGameState implements GoWebSocketState {
     @Override
     public void handleJoinSinglePlayerGame() {
         // do nothing, waiting on another player

@@ -14,7 +14,7 @@ public class ConnectedPendingGameSelectionState implements GoWebSocketState {
 
     @Override
     public void handleJoinTwoPlayerGame() {
-        stateMachine.joinTwoPlayerGame();
+        stateMachine.joinTwoPlayerGameQueue();
     }
 
     @Override

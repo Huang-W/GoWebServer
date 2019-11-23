@@ -51,6 +51,10 @@ let submitNewSinglePlayerGame = (event) => {
     goBoard = new GoBoard(GAME_SIZE);
     return false;
 };
+let submitNewMultiPlayerGame = (event) => {
+    startNewMultiPlayerGame();
+    return false;
+};
 let submitPassForm = (event) => {
     pass();
     return false;
@@ -61,9 +65,14 @@ let submitUndoForm = (event) => {
     return false;
 };
 
+
+
 let startNewSinglePlayerGame = () => {
     sendEventMessage('start_single_player');
 };
+let startNewMultiPlayerGame = () => {
+    sendEventMessage('start_multi_player');
+}
 let makeMove = (x, y) => {
     let move = {x, y};
     sendEventMessage('move', move);

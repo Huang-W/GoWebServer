@@ -7,11 +7,9 @@ public class InSinglePlayerGameState implements GoWebSocketState {
     private GoWebSocketStateMachine goWebSocketStateMachine;
     private GoMoveController goMoveController;
 
-    public InSinglePlayerGameState(GoWebSocketStateMachine goWebSocketStateMachine) {
+    public InSinglePlayerGameState(GoWebSocketStateMachine goWebSocketStateMachine, GoMoveController goMoveController) {
         this.goWebSocketStateMachine = goWebSocketStateMachine;
-        goMoveController = new GoMoveControllerImpl();
-        goMoveController.getGameSubject().addMoveObserver(goWebSocketStateMachine);
-        goMoveController.getGameSubject().addGameObserver(goWebSocketStateMachine);
+        this.goMoveController = goMoveController;
     }
 
     @Override
@@ -22,7 +20,7 @@ public class InSinglePlayerGameState implements GoWebSocketState {
 
     @Override
     public void handleJoinTwoPlayerGame() {
-
+        this.goWebSocketStateMachine.joinTwoPlayerGameQueue();
     }
 
     @Override
