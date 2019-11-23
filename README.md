@@ -26,7 +26,7 @@ The Final Frontier
 
 ![](ConfigStart-min.gif)
 
-![](GamePlay.gif)
+![](GoGame-min.gif)
 
 ## Design
 
