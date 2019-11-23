@@ -38,7 +38,6 @@ public class ViewModelAdapter implements GoViewObserver, GoViewConfigObserver {
     */
     @Override
     public void handleMouseClickEvent(Point point) {
-        // TODO Auto-generated method stub
         int x = translateCoordinate(point.x);
         int y = translateCoordinate(point.y);
         System.out.println(x);
