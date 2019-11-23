@@ -62,6 +62,7 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
         this.state = new InSinglePlayerGameState(this, currentlyActiveGame);
         currentlyActiveGame.getGameSubject().addMoveObserver(this);
         currentlyActiveGame.getGameSubject().addGameObserver(this);
+        alert("You've started a single player game! Test strategies or play with friends!");
     }
 
     public void joinTwoPlayerGameQueue() {
