@@ -104,6 +104,8 @@ public class WelcomeScreen extends GoScreenImpl {
 	{
 		configNewGame = new JButton("Config Start");
 		startNewGame = new JButton("Quick Start");
+		startNewGame.setOpaque(true);
+		configNewGame.setOpaque(true);
 		
 		configNewGame.setActionCommand("CONFIG_START");
 		startNewGame.setActionCommand("QUICK_START");
