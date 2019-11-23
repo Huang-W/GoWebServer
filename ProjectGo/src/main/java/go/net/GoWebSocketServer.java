@@ -35,8 +35,10 @@ public class GoWebSocketServer extends WebSocketServer implements UsageObserver 
         System.out.printf("Open: from address %s with handshake resource descriptor %s\n",
                 conn.getRemoteSocketAddress(),
                 handshake.getResourceDescriptor());
-        webSocketStates.put(conn, new GoWebSocketStateMachine(conn));
+        GoWebSocketStateMachine stateMachine = new GoWebSocketStateMachine(conn);
+        webSocketStates.put(conn, stateMachine);
         broadcastUsageStatistics();
+        stateMachine.alert("Welcome to Go! Select a game to get started.");
     }
 
     @Override
