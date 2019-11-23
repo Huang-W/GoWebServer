@@ -98,10 +98,10 @@ We Implemented Observer Design Pattern in the Model as well as View package of t
 * GoViewSubject is a subject that notifies its observers of user inputs in a game of Go and about the event when the screen is   clicked or when a button is clicked.
  
 
-### Undo
+### Memento
 We used a variant of Memento to implement undo functionality. In Memento, undo operations are implemented by remembering the state of the object before a change. We chose to instead keep an artifact of the change itself - so rather than returning the object to its previous state before a change to undo, we simply do the reverse of the change. Our undo behaves somewhat like version control - we keep a history of all the changes that were made to the game state to be able to undo them, rather than keeping track of the state after every change.
 
-### Scoring
+### Strategy
 In Go, there are varying rulesets that describe how game boards are to be counted. We used a Strategy to encapsulate the part of this logic - the scoring alogithm - that varies. This lets us be resilient to future opportunities for change, and we could easily add in other scoring rulesets.
 
 ### Model and Controller extensibility and their application in the webapp vs the desktop app
