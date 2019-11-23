@@ -32,10 +32,13 @@ public class MultiPlayerGameMatchMaker {
             this.waitingPlayers.add(stateMachine);
             stateMachine.alert("No players are currently searching for a multiplayer opponent, but we will find you one as soon as we can!");
         }
-        observers.forEach(UsageObserver::usageUpdated);
+        updateUsageObservers();
     }
     public void addUsageObserver(UsageObserver observer) {
         this.observers.add(observer);
+    }
+    public void updateUsageObservers() {
+        observers.forEach(UsageObserver::usageUpdated);
     }
     public int getWaitingUsers() {
         return waitingPlayers.size();

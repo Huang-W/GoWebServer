@@ -9,13 +9,13 @@ public class WaitingForOpponentsMoveState implements GoWebSocketState {
 
     @Override
     public void handleJoinSinglePlayerGame() {
-        stateMachine.leaveMultiPlayerGame();
+        stateMachine.leaveMultiPlayerGameIfNecessary();
         stateMachine.joinSinglePlayerGame();
     }
 
     @Override
     public void handleJoinTwoPlayerGame() {
-        stateMachine.leaveMultiPlayerGame();
+        stateMachine.leaveMultiPlayerGameIfNecessary();
         stateMachine.joinTwoPlayerGameQueue();
     }
 

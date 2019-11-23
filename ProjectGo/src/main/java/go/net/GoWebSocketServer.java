@@ -46,7 +46,7 @@ public class GoWebSocketServer extends WebSocketServer implements UsageObserver 
         System.out.printf("Close: from address: %s\n",
                 conn.getRemoteSocketAddress());
         GoWebSocketStateMachine disconnectingPlayer = webSocketStates.remove(conn);
-        disconnectingPlayer.leaveMultiPlayerGame();
+        disconnectingPlayer.leaveMultiPlayerGameIfNecessary();
         conn.close(code, reason);
         broadcastUsageStatistics();
     }

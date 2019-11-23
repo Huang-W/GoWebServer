@@ -58,6 +58,7 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
     }
 
     public void joinSinglePlayerGame() {
+        leaveMultiPlayerGameIfNecessary();
         currentlyActiveGame = new GoMoveControllerImpl();
         this.state = new InSinglePlayerGameState(this, currentlyActiveGame);
         currentlyActiveGame.getGameSubject().addMoveObserver(this);
@@ -66,6 +67,7 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
     }
 
     public void joinTwoPlayerGameQueue() {
+        leaveMultiPlayerGameIfNecessary();
         this.state = new WaitingForOtherPlayerToJoinState(this);
         MultiPlayerGameMatchMaker.getInstance().enterQueueOrLeaveIfAlreadyEnqueued(this);
     }
@@ -78,7 +80,7 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
         this.currentlyActiveGame.getGameSubject().addMoveObserver(this);
         this.otherPlayer = otherPlayer;
         this.state = new TwoPlayerGameMyTurnState(this, moveController);
-        alert("You joined a multiplayer game! You are black, and will go first");
+        alert("You joined a multiplayer game! You are black, and will go first.");
     }
 
     public void joinTwoPlayerGameAsWhite(GoMoveController moveController, GoWebSocketStateMachine otherPlayer) {
@@ -87,7 +89,7 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
         this.currentlyActiveGame.getGameSubject().addMoveObserver(this);
         this.otherPlayer = otherPlayer;
         this.state = new WaitingForOpponentsMoveState(this);
-        alert("You joined a multiplayer game! You are white, and will go second");
+        alert("You joined a multiplayer game! You are white, and will go second.");
     }
 
     public void setMyTurn() {
@@ -98,17 +100,14 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
         this.otherPlayer.setMyTurn();
         this.otherPlayer.alert("Your opponent made a move.");
     }
-    public void leaveMultiPlayerGame() {
-        System.out.println("i am leaving multiplayer");
-        System.out.println(this.webSocket);
+    public void leaveMultiPlayerGameIfNecessary() {
         if (null != this.otherPlayer) {
-            System.out.println(this.otherPlayer.webSocket);
             this.otherPlayer.alert("Your opponent left.");
             this.otherPlayer.state = new ConnectedPendingGameSelectionState(this.otherPlayer);
             this.otherPlayer.otherPlayer = null;
             this.otherPlayer.currentlyActiveGame = null;
-            assert(this.otherPlayer.webSocket.isOpen());
-            System.out.println(this.otherPlayer.webSocket.isOpen());
+            this.otherPlayer = null;
+            MultiPlayerGameMatchMaker.getInstance().updateUsageObservers();
         }
     }
 
@@ -128,9 +127,10 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
         jsonWinner.put(GoJSONConstants.MOVE_SERIALIZATION.WINNER, winner.name());
         jsonWinner.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.GAME_END);
         webSocket.send(jsonWinner.toString());
-        this.otherPlayer = null;
+        leaveMultiPlayerGameIfNecessary();
         this.currentlyActiveGame = null;
         this.state = new GameEndedState(this);
+
     }
 
     @Override
