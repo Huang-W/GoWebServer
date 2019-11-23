@@ -10,7 +10,9 @@ import org.java_websocket.server.WebSocketServer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +24,8 @@ import java.util.Map;
  */
 public class GoWebSocketServer extends WebSocketServer {
     private Map<WebSocket, JsonGoMoveController> gamesByPlayer;
-    public GoWebSocketServer(int port) {
-        super (new InetSocketAddress(port));
+    public GoWebSocketServer(String hostname, int port) throws UnknownHostException {
+        super (new InetSocketAddress(InetAddress.getByName(hostname), port));
         this.gamesByPlayer = new HashMap<>();
     }
 

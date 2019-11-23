@@ -7,8 +7,11 @@ import go.controller.impl.*;
 import go.net.GoWebSocketServer;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.UnknownHostException;
 
 /**
  * Builds UI and starts the game.
@@ -29,10 +32,13 @@ public class Main {
         }
 	}
 
+
 	// Reference: https://github.com/TooTallNate/Java-WebSocket/blob/master/src/main/example/ChatServer.java
     private static void runWebSocketServer() throws IOException, InterruptedException {
-        int port = 8887;
-        GoWebSocketServer server = new GoWebSocketServer(port);
+        String hostname = getHostNameFromFile();
+        int port = getPortNumberFromFile();
+        System.out.println(hostname  + ":" + port);
+        GoWebSocketServer server = new GoWebSocketServer(hostname, port);
         BufferedReader sysin = new BufferedReader( new InputStreamReader( System.in ) );
         server.start();
         while ( true ) {
@@ -42,6 +48,16 @@ public class Main {
                 break;
             }
         }
+    }
+    private static String getHostNameFromFile() throws IOException{
+	    File f = new File("host");
+	    BufferedReader reader = new BufferedReader(new FileReader(f));
+	    return reader.readLine();
+    }
+    private static int getPortNumberFromFile() throws IOException{
+        File f = new File("port");
+        BufferedReader reader = new BufferedReader(new FileReader(f));
+        return Integer.parseInt(reader.readLine());
     }
 
     private static void init() {
