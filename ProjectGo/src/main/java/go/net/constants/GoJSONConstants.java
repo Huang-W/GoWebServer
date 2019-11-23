@@ -11,9 +11,15 @@ public final class GoJSONConstants {
             String REMOVE_PIECE = "remove_piece";
             String GAME_END = "game_end";
             String ALERT = "alert";
+            String USAGE_STATS = "usage_stats";
+        }
+        interface BODY_KEYS {
+            String LIVE_USERS = "live_users";
+            String USERS_IN_MULTIPLAYER = "users_in_multiplayer";
+            String ALERT_MESSAGE = "alert_message";
         }
     }
-    public static final String ALERT_MESSAGE = "alert_message";
+
     public interface INCOMING_EVENT_TYPE {
         String KEY = "event_type";
         interface VALUES {

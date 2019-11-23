@@ -35,9 +35,7 @@ class GoBoard {
         textSize(36);
         fill(51);
         let textBufferLeft = 75;
-        console.log(length/2 - textBufferLeft, length/2);
         text(this.winner + " wins!", length/2 - textBufferLeft, length/2);
-        console.log("drawWinner");
     }
     drawGrid(length) {
         let interval = length/this.size;
@@ -65,10 +63,6 @@ class GoBoard {
     }
 }
 let goBoard = new GoBoard(GAME_SIZE);
-
-
-console.log(goBoard);
-
 let length;
 
 function setup () {
@@ -76,7 +70,7 @@ function setup () {
     let cnv = createCanvas(length, length);
     let x = (windowWidth - width) / 2;
     let y = (windowHeight - height) / 2;
-    let extraBufferY = 75;
+    let extraBufferY = 200;
     cnv.position(x, extraBufferY + y);
     
 }

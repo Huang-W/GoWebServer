@@ -20,10 +20,7 @@ socket.addEventListener('open', (event) => {
 });
 
 socket.addEventListener('message', (event) => {
-    console.log(event);
-    console.log('Message from server: ');
     let data = JSON.parse(event.data);
-    console.log(data);
     switch (data.event_type) {
         case "add_piece":
             goBoard.addPiece(data.point.x, data.point.y, data.color);
@@ -33,11 +30,17 @@ socket.addEventListener('message', (event) => {
             break;
         case "game_end":
             goBoard.endGame(data.winner);
-            console.log(goBoard);
             break;
         case "alert":
             let message = data.alert_message;
             alert(message);
+            break;
+        case "usage_stats":
+            let users = data.live_users;
+            let multiplayerUsers = data.users_in_multiplayer;
+            document.getElementById('liveUsers').innerHTML = users;
+            document.getElementById('multiplayerUsers').innerHTML = multiplayerUsers;
+            
             break;
     }
 });
@@ -93,7 +96,5 @@ let sendEventMessage = (eventType, extraMessageParams = {}) => {
         "event_type" : eventType,
         ...extraMessageParams
     };
-    console.log('sending:');
-    console.log(event);
     socket.send(JSON.stringify(event));
 };

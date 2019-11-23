@@ -1,6 +1,10 @@
-.my-form {
+.centered {
     margin: auto;
-    width: 50%;
+    width: 40%;
+}
+.menu-btn {
+    width: 40%;
+    display: block;
 }
 .p5Canvas {
     margin: 0;
@@ -10,4 +14,8 @@
 
     /* This centers our sketch vertically. */
     align-items: center;
+}
+.header {
+    margin: auto;
+    width: 40%;
 }

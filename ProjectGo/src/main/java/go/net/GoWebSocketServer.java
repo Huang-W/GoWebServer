@@ -1,6 +1,8 @@
 package go.net;
 
+import go.net.constants.GoJSONConstants;
 import go.net.socketstate.GoWebSocketStateMachine;
+import go.net.usage.UsageObserver;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -19,11 +21,13 @@ import java.util.Map;
  * Reference: https://github.com/TooTallNate/Java-WebSocket/blob/master/src/main/example/ChatServer.java
  * Library: https://github.com/TooTallNate/Java-WebSocket
  */
-public class GoWebSocketServer extends WebSocketServer {
+public class GoWebSocketServer extends WebSocketServer implements UsageObserver {
     private Map<WebSocket, GoWebSocketStateMachine> webSocketStates;
     public GoWebSocketServer(String hostname, int port) throws UnknownHostException {
         super (new InetSocketAddress(InetAddress.getByName(hostname), port));
+
         this.webSocketStates = new HashMap<>();
+        MultiPlayerGameMatchMaker.getInstance().addUsageObserver(this);
     }
 
     @Override
@@ -32,6 +36,7 @@ public class GoWebSocketServer extends WebSocketServer {
                 conn.getRemoteSocketAddress(),
                 handshake.getResourceDescriptor());
         webSocketStates.put(conn, new GoWebSocketStateMachine(conn));
+        broadcastUsageStatistics();
     }
 
     @Override
@@ -41,6 +46,7 @@ public class GoWebSocketServer extends WebSocketServer {
         GoWebSocketStateMachine disconnectingPlayer = webSocketStates.remove(conn);
         disconnectingPlayer.leaveMultiPlayerGame();
         conn.close(code, reason);
+        broadcastUsageStatistics();
     }
 
     @Override
@@ -78,5 +84,24 @@ public class GoWebSocketServer extends WebSocketServer {
     @Override
     public void onStart() {
         System.out.println(this.getClass().getName() + " started.");
+    }
+
+    public void broadcastUsageStatistics() {
+        JSONObject usageStatistics = new JSONObject();
+        usageStatistics.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.USAGE_STATS);
+        long usersOnline = webSocketStates.size();
+        long usersInMultiplayer = webSocketStates.values().stream()
+                .filter(GoWebSocketStateMachine::isInMultiplayer)
+                .count() +
+                MultiPlayerGameMatchMaker.getInstance().getWaitingUsers();
+
+        usageStatistics.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.BODY_KEYS.LIVE_USERS, usersOnline);
+        usageStatistics.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.BODY_KEYS.USERS_IN_MULTIPLAYER, usersInMultiplayer);
+        broadcast(usageStatistics.toString());
+    }
+
+    @Override
+    public void usageUpdated() {
+        broadcastUsageStatistics();
     }
 }

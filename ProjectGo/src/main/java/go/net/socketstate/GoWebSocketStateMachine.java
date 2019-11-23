@@ -53,6 +53,9 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
                 throw new InvalidMessageException("No such message type " + eventType);
         }
     }
+    public boolean isInMultiplayer() {
+        return this.otherPlayer != null;
+    }
 
     public void joinSinglePlayerGame() {
         currentlyActiveGame = new GoMoveControllerImpl();
@@ -111,7 +114,7 @@ public class GoWebSocketStateMachine implements GoMoveObserver, GoGameObserver {
     public void alert(String message) {
         JSONObject alert = new JSONObject();
         alert.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.KEY, GoJSONConstants.OUTBOUND_EVENT_TYPE.VALUES.ALERT);
-        alert.put(GoJSONConstants.ALERT_MESSAGE, message);
+        alert.put(GoJSONConstants.OUTBOUND_EVENT_TYPE.BODY_KEYS.ALERT_MESSAGE, message);
         assert(this.webSocket.isOpen());
         System.out.println(this.webSocket.isOpen());
         this.webSocket.send(alert.toString());
