@@ -44,6 +44,14 @@ The Final Frontier
 #### View Diagram
 ![View Diagram](/design/4-GoViewDiagram.png)
 
+## Key Features
+* Interactable user interface
+* Single-Player GO Board with complete capture logic.
+* Support for multiple Scoring Strategies (defaulted to SimpleStrategy)
+* Memento pattern + Undo Button to rewind the game.
+* Supports multiple board sizes (9, 13, 19)
+* Web-App support for single-player and two-player
+
 ## Design Notes
 
 ### Model View Controller (MVC)
