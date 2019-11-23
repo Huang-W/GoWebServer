@@ -29,3 +29,4 @@ https://www.youtube.com/watch?v=v47HjLz63co&feature=youtu.be
 ![Top Level Diagram](/design/TopLeveldiagram.png)
 
 ## Design Notes
+# Model View Controller (MVC)
