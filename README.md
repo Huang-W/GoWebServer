@@ -20,13 +20,18 @@ The Final Frontier
 
 ## User Story Advertisement
 
-Advertisement link for our Go application: <br> 
-https://www.youtube.com/watch?v=v47HjLz63co&feature=youtu.be
+[Advertisement link for our Go application](https://www.youtube.com/watch?v=v47HjLz63co&feature=youtu.be)
 
 
 ## Design
 
 ![Top Level Diagram](/design/TopLeveldiagram.png)
+
+![Adapter Diagram](/design/GoAdapters.png)
+
+![Model Diagram](/design/GoModelDiagram.png)
+
+![View Diagram](/design/GoViewDiagram.png)
 
 ## Design Notes
 
