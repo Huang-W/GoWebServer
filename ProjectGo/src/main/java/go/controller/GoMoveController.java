@@ -13,8 +13,9 @@ public interface GoMoveController {
      * Notify observers of the results of the move.
      * @param x the x location on the go board of the point the stone was added to
      * @param y the y location on the go board of the point the stone was added to
+     * @return true if the move was legal, false if the move was illegal and cannot be made
      */
-    void makeNextPlayersMove(int x, int y);
+    boolean makeNextPlayersMove(int x, int y);
 
     /**
      * Pass for the next player.

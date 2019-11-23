@@ -31,4 +31,5 @@ codesmells:
 
 run: build
 	java -cp build/libs/go-all.jar go.Main 2>debug.log
-
+runserver: build
+	java -cp build/libs/go-all.jar go.Main server

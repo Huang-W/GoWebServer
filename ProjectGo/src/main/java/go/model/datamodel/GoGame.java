@@ -8,8 +8,9 @@ public interface GoGame {
     /**
      * Make a single move for the next player.
      * @param move the location the next player paced a stone
+     * @return true if the move was legal, false if the move was illegal and cannot be made
      */
-    void makeMove(GoPoint move);
+    boolean makeMove(GoPoint move);
 
     /**
      * Pass for the next player.

@@ -1,4 +1,6 @@
-
+ui/serverAddress
+host
+port
 .gradle
 build
 *.class
