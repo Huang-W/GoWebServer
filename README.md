@@ -37,16 +37,8 @@ We built our model and controller layers to be extensible, so we were able to sl
 ## Design
 
 #### Top Level Diagram
-![Top Level Diagram](/design/1-TopLevelDiagram.png)
+![top-level](/design/10-all-together-now-3.png)
 
-#### Adapter Diagram
-![Adapter Diagram](/design/2-GoAdapterDiagram.png)
-
-#### Model Diagram
-![Model Diagram](/design/3-GoModelDiagram.png)
-
-#### View Diagram
-![View Diagram](/design/4-GoViewDiagram.png)
 
 ## Key Features
 * Interactable user interface
